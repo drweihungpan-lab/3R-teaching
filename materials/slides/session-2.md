@@ -39,7 +39,7 @@ UI: choose files and display results
 
 - API means a defined way for programs to communicate.
 - UI means the screen a person uses.
-- UI flow is conceptual here; frontend code is supplied later.
+- UI flow is conceptual here; the supplied frontend is explored in Session 4.
 
 ---
 

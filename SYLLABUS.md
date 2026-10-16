@@ -6,7 +6,7 @@ This practical course introduces the engineering framework and collaborative wor
 
 The emphasis is on understanding and using the workflow. Building a sophisticated model or designing a polished interface is not the goal. A complete healthcare example will support demonstrations and guided exercises; groups will apply the framework to their own datasets and questions.
 
-This syllabus describes planned teaching materials and activities. The application template and detailed materials will be developed through later specifications and tasks.
+The working application template and [teaching materials](materials/README.md) are supplied in this repository. See [setup](docs/setup.md) to run the example and [verification](docs/verification.md) for completed checks and remaining limits. Classroom activities describe how students will use these materials.
 
 ## Audience and workload
 
@@ -41,11 +41,11 @@ By the end of the course, students should be able to:
 
 ## Teaching approach and projects
 
-The supplied example will use synthetic healthcare data from the [clinical-data-teaching repository](https://github.com/drweihungpan-lab/clinical-data-teaching). It will illustrate joining participant and laboratory records, handling missing values, validating inputs, producing summaries, and displaying a simple chart. Model training is not required.
+The supplied example uses [synthetic healthcare data](data/synthetic/README.md) from the [clinical-data-teaching repository](https://github.com/drweihungpan-lab/clinical-data-teaching). It illustrates joining participant and laboratory records, handling missing values, validating inputs, producing summaries, and displaying a simple chart. Model training is not required.
 
 Each group will independently select its own dataset and statistical question. Topic approval is not required; groups may discuss their selected topic with the instructor. Cleaning, processing, summaries, visualization, and modeling are possible project activities. Modeling is optional, and complexity earns no additional credit.
 
-The template will contain a complete working example. Students will inspect it, make small changes, and verify those changes through the full workflow. FastAPI, Streamlit, and Docker Compose are required parts of every group's application.
+The template contains a complete working example. Students will inspect it, make small changes, and verify those changes through the full workflow. FastAPI, Streamlit, and Docker Compose are required parts of every group's application.
 
 Each student must author at least one pull request and review at least one teammate's pull request. Reviews must address behavior, tests, or clarity rather than provide approval alone. The instructor will inspect this evidence in each group's repository.
 
@@ -178,6 +178,6 @@ Sessions 1–4 will initially allocate 45 minutes to explanation, 30 minutes to 
 
 ## Course materials and surveys
 
-Planned materials include a working repository template, editable PowerPoint slides with Markdown sources, guided exercises, and instructor notes.
+The [materials index](materials/README.md) links the five editable PowerPoint decks and Markdown sources, four guided exercises, four homework briefs, five instructor notes, surveys, and final checklist. [Template instructions](docs/template.md) explain repository setup and permissions.
 
-A pre-course survey will cover prior experience, confidence, and setup readiness. A post-course survey will repeat relevant confidence and understanding questions and collect feedback. The surveys will support course evaluation; they are not part of the pass/fail assessment.
+The [pre-course survey](materials/surveys/pre-course.md) covers prior experience, confidence, and setup readiness. The [post-course survey](materials/surveys/post-course.md) repeats relevant confidence and understanding questions and collects feedback. The surveys support course evaluation; they are not part of the pass/fail assessment.
