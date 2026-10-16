@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "three-r-backend"
+version = "0.1.0"
+description = "Synthetic healthcare CSV processing and FastAPI example for the Three-R course"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115,<1",
+    "pydantic>=2.9,<3",
+    "python-dotenv>=1,<2",
+    "python-multipart>=0.0.18,<1",
+    "uvicorn>=0.30,<1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "httpx>=0.27,<1"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["stat_core*", "app*"]

@@ -1,10 +1,14 @@
 # Course-authoring implementation tickets
 
-These 37 approved tickets implement the course framework and materials. They are tasks for the course author or an assisting implementation agent, not student assignments. No implementation has begun as part of ticket publication.
+These 37 approved tickets describe the course framework and materials. They are tasks for the course author or an assisting implementation agent, not student assignments. At original ticket publication, no implementation had begun; individual ticket bodies below preserve that historical planning context.
+
+## Current implementation status
+
+The deliverables for issues #2–#37 are integrated into `implement/course-framework`; issue #38 supplies the final navigation and documentation consistency update. The [materials index](../../materials/README.md) and [repository guide](../../README.md#repository-guide) link the delivered assets. See [verification](../verification.md) for actual evidence and limits. Integration is distinct from release to `main`: GitHub issues remain open until the release workflow closes them. This index does not claim that classroom teaching or student assessment has occurred.
 
 Parent specification: [GitHub issue #1](https://github.com/drweihungpan-lab/3R-teaching/issues/1).
 
-Each issue is labeled `ready-for-agent`, linked as a sub-issue of the parent, and carries native GitHub blocking relationships. Start with an issue whose blockers are complete, and implement one task at a time. The component-based split is an explicit user decision; the backend and Python package are combined, while the frontend and other artifacts have separate tickets.
+At publication, each issue was labeled `ready-for-agent`, linked as a sub-issue of the parent, and given native GitHub blocking relationships. Those relationships remain canonical; during course authoring, dependency readiness means implementation is integrated, not that issues are manually closed. The component-based split is an explicit user decision; the backend and Python package are combined, while the frontend and other artifacts have separate tickets.
 
 The prior 11 broad drafts have been replaced; they remain recoverable in Git history. Planning task numbers below are not necessarily GitHub issue numbers because issues were published in dependency order.
 
