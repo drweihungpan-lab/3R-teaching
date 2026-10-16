@@ -10,7 +10,7 @@ The emphasis is on understanding how the parts connect and practicing the workfl
 - [Course design](docs/course-design.md): agreed scope and teaching decisions.
 - [Glossary](GLOSSARY.md): the course-specific meanings of the three Rs.
 - [Specification](docs/specs/course-framework-and-teaching-materials.md): the course deliverables and agreed implementation boundaries; published as [GitHub issue #1](https://github.com/drweihungpan-lab/3R-teaching/issues/1).
-- [Ticket drafts](docs/tickets/): proposed implementation slices and dependencies, awaiting approval before publication as GitHub issues.
+- [Implementation tickets](docs/tickets/README.md): 37 approved course-authoring tasks published as GitHub issues, with dependencies and acceptance criteria.
 
 ## Course at a glance
 
@@ -45,7 +45,7 @@ During the final presentation, groups will demonstrate their application, tests,
 
 This repository currently contains basic course documentation and agent configuration. The application template, datasets, tests, CI workflow, Docker setup, slides, exercises, and pre/post-course surveys are planned deliverables and are not yet implemented here.
 
-Implementation will be specified and divided into tasks one at a time through `to-spec` and `to-ticket`. There are no application installation or startup steps at this stage.
+The course specification and 37 implementation tickets are published on GitHub. Implementation will proceed one task at a time through the approved dependencies. There are no application installation or startup steps at this stage.
 
 ## Repository guide
 

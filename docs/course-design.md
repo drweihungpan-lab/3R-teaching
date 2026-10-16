@@ -2,7 +2,7 @@
 
 ## Current stage
 
-This stage records the agreed course design only. Use `to-spec` and then `to-ticket` in later steps to define and create implementation tasks one at a time. Application code, repository scaffolding, slides, surveys, and exercises remain planned deliverables; they have not been implemented or validated.
+The agreed course design has been synthesized into a specification and 37 approved course-authoring tickets, published on GitHub and indexed in `tickets/README.md`. Implementation will proceed one task at a time following their dependencies. Application code, repository scaffolding, slides, surveys, and exercises remain planned deliverables; they have not been implemented or validated.
 
 ## Scope
 
