@@ -1,0 +1,40 @@
+# Local Python environments
+.venv/
+venv/
+env/
+
+# Python bytecode, build artifacts, and package metadata
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Test, coverage, lint, and type-check caches
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.ruff_cache/
+.mypy_cache/
+
+# Local configuration and secrets (keep shareable examples)
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Notebook checkpoints and generated run evidence
+.ipynb_checkpoints/
+outputs/
+*.log
+
+# OS and editor temporary files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+~$*
+
+# Keep teaching sources, datasets, slides, Dockerfiles, and Compose files tracked.
