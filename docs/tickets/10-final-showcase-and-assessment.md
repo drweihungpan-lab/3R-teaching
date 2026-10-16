@@ -1,6 +1,8 @@
-# Draft 10: Provide the final showcase and pass/fail review kit
+# Draft 10: Create the Session 5 presentation and assessment materials
 
-Publication status: proposed; awaiting approval of the breakdown. Draft numbers are not GitHub issue numbers.
+Publication status: proposed; awaiting approval of the revised breakdown. Draft numbers are not GitHub issue numbers.
+
+Implementation owner: the course author or an assisting implementation agent. This ticket creates course assets; it is not an assignment for students. Student exercises are authored deliverables, not actions students must complete to close this ticket.
 
 ## Parent
 
@@ -8,7 +10,7 @@ https://github.com/drweihungpan-lab/3R-teaching/issues/1
 
 ## What to build
 
-Groups can prepare the evidence required for their final presentation, and the instructor can inspect all mandatory engineering requirements during Session 5 using a consistent pass/fail checklist.
+As the course author, produce the final-showcase teaching and assessment kit. Deliver an editable PowerPoint briefing with Markdown source, a flexible three-hour presentation run sheet, a student-facing preparation brief, and an instructor pass/fail checklist covering all agreed engineering evidence.
 
 ## Acceptance criteria
 
@@ -20,10 +22,11 @@ Groups can prepare the evidence required for their final presentation, and the i
 - [ ] State that assessment occurs only during the final presentation, with no separate submission, resubmission, or reassessment.
 - [ ] Provide a flexible showcase schedule that fits the actual three-to-four-person groups within three hours; do not hard-code five groups.
 - [ ] Keep the instructor's questions focused on the framework, workflow, and student contributions.
+- [ ] Make checklist items usable by the instructor during the presentation without requiring a submission system, automatic grading, or later student completion to finish this ticket.
 
 ## Blocked by
 
-- Draft 03: Use a group template with reviewed pull requests and CI
-- Draft 04: Run the healthcare stack in Docker and compare outputs
+- Draft 03: Prepare the reusable course template and Git/CI demonstration
+- Draft 04: Implement Docker execution and first-two-R demonstration tools
 
-When approved, publish as a ready-for-agent sub-issue of the parent, replacing draft dependencies with native GitHub blocking links where supported. Implementation is a later step.
+When approved, publish as a ready-for-agent sub-issue of the parent, replacing draft dependencies with native GitHub blocking links where supported. No course implementation is performed while drafting or publishing these tickets.

@@ -1,6 +1,8 @@
-# Draft 06: Teach Session 1: environments, Git, and CI foundations
+# Draft 06: Create the Session 1 teaching materials
 
-Publication status: proposed; awaiting approval of the breakdown. Draft numbers are not GitHub issue numbers.
+Publication status: proposed; awaiting approval of the revised breakdown. Draft numbers are not GitHub issue numbers.
+
+Implementation owner: the course author or an assisting implementation agent. This ticket creates course assets; it is not an assignment for students. Student exercises are authored deliverables, not actions students must complete to close this ticket.
 
 ## Parent
 
@@ -8,7 +10,7 @@ https://github.com/drweihungpan-lab/3R-teaching/issues/1
 
 ## What to build
 
-The instructor can teach Session 1 and students can complete a guided change-and-review workflow in their own group repository using the working template.
+As the course author, produce a complete teachable Session 1 kit covering environment isolation, Git collaboration, configuration hygiene, and CI foundations. Deliver editable PowerPoint slides with Markdown sources, a timed instructor run sheet, a worked demonstration, guided exercises with expected observations and recovery notes, and a two-hour homework brief.
 
 ## Acceptance criteria
 
@@ -20,9 +22,10 @@ The instructor can teach Session 1 and students can complete a guided change-and
 - [ ] Use the provisional 45-minute explanation, 30-minute demonstration, 90-minute practice, and 15-minute break allocation with room for adjustment.
 - [ ] Describe the checkpoint as preparation for the final presentation, not a separate submission or graded milestone.
 - [ ] Document how the PowerPoint deck is generated or maintained from its Markdown source.
+- [ ] Include an author rehearsal checklist with exact demo steps, expected observations, timing estimates, and recovery guidance; completion of the ticket means the kit is authored and checked, not that students have completed the activities.
 
 ## Blocked by
 
-- Draft 03: Use a group template with reviewed pull requests and CI
+- Draft 03: Prepare the reusable course template and Git/CI demonstration
 
-When approved, publish as a ready-for-agent sub-issue of the parent, replacing draft dependencies with native GitHub blocking links where supported. Implementation is a later step.
+When approved, publish as a ready-for-agent sub-issue of the parent, replacing draft dependencies with native GitHub blocking links where supported. No course implementation is performed while drafting or publishing these tickets.

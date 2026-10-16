@@ -1,6 +1,8 @@
-# Draft 01: Run a minimal healthcare workflow locally
+# Draft 01: Build the local healthcare demonstration framework
 
-Publication status: proposed; awaiting approval of the breakdown. Draft numbers are not GitHub issue numbers.
+Publication status: proposed; awaiting approval of the revised breakdown. Draft numbers are not GitHub issue numbers.
+
+Implementation owner: the course author or an assisting implementation agent. This ticket creates course assets; it is not an assignment for students. Student exercises are authored deliverables, not actions students must complete to close this ticket.
 
 ## Parent
 
@@ -8,7 +10,7 @@ https://github.com/drweihungpan-lab/3R-teaching/issues/1
 
 ## What to build
 
-A student can install the supplied package in a Python 3.12 virtual environment, start the supplied FastAPI and Streamlit services locally, upload a small supplied synthetic lab CSV, and view a simple processed result. This is a thin working path across the framework, not a completed statistical project.
+As the course author, implement the first runnable demonstration: a Python 3.12 package, FastAPI backend, and Streamlit frontend that accept the supplied synthetic laboratory CSV and display a simple processed result. Deliver working code, focused tests, configuration examples, and instructor setup notes for this narrow complete path.
 
 ## Acceptance criteria
 
@@ -18,9 +20,10 @@ A student can install the supplied package in a Python 3.12 virtual environment,
 - [ ] Support editable package installation, type hints, and logging with processing logic separate from HTTP and presentation.
 - [ ] Document local environment setup, starting both services, and a shareable configuration example; keep local settings ignored.
 - [ ] Include focused processing and API behavior tests that pass locally. Do not add the declined course-level acceptance scenario.
+- [ ] Provide an instructor rehearsal procedure for the delivered behavior and record focused test results and any environment limits; do not wait for student participation to complete this authoring ticket.
 
 ## Blocked by
 
 None (can start immediately).
 
-When approved, publish as a ready-for-agent sub-issue of the parent, replacing draft dependencies with native GitHub blocking links where supported. Implementation is a later step.
+When approved, publish as a ready-for-agent sub-issue of the parent, replacing draft dependencies with native GitHub blocking links where supported. No course implementation is performed while drafting or publishing these tickets.

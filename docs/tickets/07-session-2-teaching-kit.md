@@ -1,6 +1,8 @@
-# Draft 07: Teach Session 2: modules, packaging, types, and logging
+# Draft 07: Create the Session 2 teaching materials
 
-Publication status: proposed; awaiting approval of the breakdown. Draft numbers are not GitHub issue numbers.
+Publication status: proposed; awaiting approval of the revised breakdown. Draft numbers are not GitHub issue numbers.
+
+Implementation owner: the course author or an assisting implementation agent. This ticket creates course assets; it is not an assignment for students. Student exercises are authored deliverables, not actions students must complete to close this ticket.
 
 ## Parent
 
@@ -8,7 +10,7 @@ https://github.com/drweihungpan-lab/3R-teaching/issues/1
 
 ## What to build
 
-The instructor can teach Session 2 and students can trace the working healthcare processing package, install it in editable mode, and make a small maintainable change through their group workflow.
+As the course author, produce a complete teachable Session 2 kit covering modules, packaging, type hints, and logging using the implemented healthcare example. Deliver editable PowerPoint slides with Markdown sources, a timed instructor run sheet, a worked demonstration, guided exercises and instructor explanations, and a two-hour homework brief.
 
 ## Acceptance criteria
 
@@ -19,9 +21,10 @@ The instructor can teach Session 2 and students can trace the working healthcare
 - [ ] Reinforce meaningful PR review and keep the provisional three-hour session allocation.
 - [ ] Provide an explanation or reference solution for the exercise without shipping an intentionally incomplete default template.
 - [ ] Keep model complexity and unnecessary class abstractions outside the core learning objective.
+- [ ] Include an author rehearsal checklist with exact demo steps, expected observations, timing estimates, and recovery guidance; completion of the ticket means the kit is authored and checked, not that students have completed the activities.
 
 ## Blocked by
 
-- Draft 02: Process participant and lab data with explicit validation
+- Draft 02: Complete the healthcare cleaning and validation demonstration
 
-When approved, publish as a ready-for-agent sub-issue of the parent, replacing draft dependencies with native GitHub blocking links where supported. Implementation is a later step.
+When approved, publish as a ready-for-agent sub-issue of the parent, replacing draft dependencies with native GitHub blocking links where supported. No course implementation is performed while drafting or publishing these tickets.
