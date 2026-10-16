@@ -118,7 +118,7 @@ git commit -m "Restore correct mean and explain the worked denominator"
 git push
 ```
 
-Expect **175 passed**, with the existing Starlette TestClient deprecation warning in the authoring environment. Inspect the **new commit's** successful **Backend tests** check; rerunning the old commit does not test the correction. CI reports results; a separate required-check rule controls whether failure prevents merging. Do not merge the failing version.
+Expect **all tests passing** (205 in the completed supplied framework), with the existing Starlette TestClient deprecation warning in the authoring environment. Inspect the **new commit's** successful **Backend tests** check; rerunning the old commit does not test the correction. CI reports results; a separate required-check rule controls whether failure prevents merging. Do not merge the failing version.
 
 Ask a teammate to inspect the final diff and rerun the focused test. They should leave a concrete review explaining the independently worked mean, the DM denominator, or why the tolerance catches the wrong expectation; approval alone is insufficient. Address useful feedback and rerun affected checks. Put valid/invalid HTTP observations, local fail/pass output, both hosted run links/SHAs, and review evidence in the PR description. Keep `.venv`, `.env`, outputs, and unrelated edits out of commits.
 

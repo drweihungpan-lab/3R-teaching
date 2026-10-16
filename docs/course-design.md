@@ -2,7 +2,7 @@
 
 ## Current stage
 
-The agreed course design has been synthesized into a specification and 37 approved course-authoring tickets, published on GitHub and indexed in `tickets/README.md`. Implementation will proceed one task at a time following their dependencies. Application code, repository scaffolding, slides, surveys, and exercises remain planned deliverables; they have not been implemented or validated.
+The working example, data, tests, CI, containers, and teaching materials are implemented. Start at the [materials index](../materials/README.md) and [setup guide](setup.md); the [verification report](verification.md) records actual checks and remaining limits. The [37-ticket index](tickets/README.md) distinguishes implementation status from historical task publication and GitHub issue closure. The original specification and ticket bodies retain their planning context.
 
 ## Scope
 
@@ -43,13 +43,13 @@ The agreed course design has been synthesized into a specification and 37 approv
 
 | Session | Framework and workflow focus | Practice using the supplied working example |
 | --- | --- | --- |
-| 1 | Environment isolation, Git, configuration hygiene, and CI introduction | Create a group repository from the eventual template, use a virtual environment and local configuration, open a draft PR, and inspect checks |
+| 1 | Environment isolation, Git, configuration hygiene, and CI introduction | Create a group repository from the supplied template, use a virtual environment and local configuration, open a draft PR, and inspect checks |
 | 2 | Modules, packaging, type hints, and logging | Trace processing code, install the package in editable mode, and make a small reviewed change |
 | 3 | FastAPI, validation, pytest, and CI | Trace a request into processing logic, exercise invalid inputs, and inspect failing and passing tests locally and on a PR |
 | 4 | Streamlit, Docker, and Compose | Trace UI-to-API communication, inspect service configuration, and compare local and container outputs |
 | 5 | Final presentation and engineering review | Demonstrate the application and all required workflow evidence; make the final pass/fail decision |
 
-The supplied example centers on simple healthcare cleaning and processing rather than mandatory model training. Detailed exercises, commands, and presentation schedules will be developed through later specifications and tasks.
+The supplied example centers on simple healthcare cleaning and processing rather than mandatory model training. [Exercises and instructor notes](../materials/README.md) supply commands and timings; adapt the Session 5 schedule to the actual groups.
 
 ## Assessment
 

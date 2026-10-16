@@ -143,7 +143,7 @@ git diff -- backend/stat_core/processing.py
 
 Expect `Processing result unchanged: True`, no whitespace errors, and a one-line message change. Complete equality is appropriate for this logging-only edit in the same environment: no numeric calculation changed. This is a focused regression check, not the later local/Docker comparison activity. Follow the [course glossary](../../GLOSSARY.md) when describing repeatability and replicability; no Docker comparison is claimed here.
 
-If the supplied checkout includes the later formal test suite, run its documented command before review as well. See [the backend test task/reference](../../docs/tickets/04-backend-tests.md); do not invent test files or claim tests passed if they are unavailable. You are changing working code, not implementing missing functions.
+Before review, also run the supplied suite from the repository root: `python -m pytest backend/tests`. Follow [testing instructions](../../docs/testing.md) and record the actual result. You are changing working code, not implementing missing functions.
 
 ## 5. Record and review the change — 20 minutes
 

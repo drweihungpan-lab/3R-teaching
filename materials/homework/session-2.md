@@ -111,7 +111,7 @@ For a logging change or an isolated own-data preparation rule, expect `Reference
 
 This exact comparison is a focused check in the same environment. It does not replace tests of your own data, nor demonstrate local/Docker replicability. Later comparisons use the [course glossary](../../GLOSSARY.md) and documented criteria: records/counts exactly, calculated decimals within the declared tolerance. Do not invent a tolerance or equate null with zero.
 
-If the formal backend suite is present in your checkout, run its documented command too; follow [backend setup](../../docs/setup.md) and the [backend test task/reference](../../docs/tickets/04-backend-tests.md). If it has not arrived, use the exact processing check above plus your declared own-data checks and say the formal suite is unavailable. Do not invent test filenames, commands, or passing results. Session 3 will develop the testing workflow further. After source edits, use a fresh Python process; restart any running API. An editable install needs reinstalling only when dependency metadata changes.
+Run the supplied backend suite too: `python -m pytest backend/tests` from the repository root; follow [backend setup](../../docs/setup.md) and [testing instructions](../../docs/testing.md). Record the actual result alongside the processing check above and your declared own-data checks. Session 3 develops the testing workflow further. After source edits, use a fresh Python process; restart any running API. An editable install needs reinstalling only when dependency metadata changes.
 
 ## 5. Publish a PR and review a teammate — 30 minutes
 
