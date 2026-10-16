@@ -263,15 +263,7 @@ Expect a content conflict: both feature branches changed the same original line.
 
 ## Resolve deliberately, or abort the merge
 
-Open `conflict-demo.txt`; Git shows both proposals between these markers:
-
-```text
-<<<<<<< HEAD
-Session plan: review first
-=======
-Session plan: test first
->>>>>>> practice/conflict-a
-```
+Open `conflict-demo.txt`: `<<<<<<< HEAD` starts the current branch's `Session plan: review first`; `=======` separates the incoming `Session plan: test first`; `>>>>>>> practice/conflict-a` ends the block.
 
 Agree on `Session plan: test, then review`. Replace the entire marked block with that line; save, then run:
 
