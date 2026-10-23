@@ -25,7 +25,7 @@ flowchart TD
     S3 --> S4["4. Install Git, set name and email"]
     S4 --> S5["5. Create an SSH key, add it to GitHub"]
     S5 --> T{"ssh -T git@github.com says Hi username?"}
-    T -->|No| F["Fix it with Troubleshooting, then test again"]
+    T -->|No| F["Fix it using the Troubleshooting section, then test again"]
     F --> T
     T -->|Yes| S6["6. Install Python 3.12 and VS Code"]
     S6 --> S7["7. Check in: comment on the pinned issue"]
@@ -74,7 +74,30 @@ Jump to a step:
 
 ## Step 2 (Windows): Install WSL and open Ubuntu
 
-The Windows steps are being added; they will appear here before the course starts. Mac and Linux users can continue with Step 3.
+**What you'll do.** Install WSL (Windows Subsystem for Linux) with **Ubuntu 24.04 LTS**. WSL gives you a real Linux terminal inside Windows, so you type exactly the same commands as every Mac student. You need Windows 10 (version 2004 or later) or Windows 11.
+
+**Steps and commands.** This is the only time you use PowerShell.
+
+1. Click Start, type `PowerShell`, right-click **Windows PowerShell** and choose **Run as administrator**. Click **Yes**.
+2. Paste this command and press `Enter`:
+
+```text
+wsl --install -d Ubuntu-24.04
+```
+
+3. When it finishes, **restart your computer** if asked.
+4. After the restart, **Ubuntu 24.04 LTS** opens by itself (or open it from the Start menu). Wait for it to finish setting up, then choose a **username** and **password** when asked. These are only for this Ubuntu; they are unrelated to GitHub. When you type the password nothing appears on screen; that is normal.
+5. Close PowerShell. **From now on, use only the Ubuntu window** for every course command.
+
+**What you should see.** A window with a prompt like `jane@DESKTOP-ABC123:~$`. Check the version:
+
+```bash
+lsb_release -d
+```
+
+It prints `Description: Ubuntu 24.04.x LTS`.
+
+**If it fails.** See [WSL will not install](#wsl-will-not-install-or-virtualization-is-disabled) in Troubleshooting. If the version printed is not 24.04, ask for help in a reply on your check-in comment before continuing. Mac and Linux users can continue with Step 3.
 
 ## Step 3: Terminal basics
 
@@ -132,7 +155,27 @@ git config --global --list
 
 ## Step 4 (Windows): Install Git and set your name and email
 
-The Windows steps are being added; they will appear here before the course starts.
+**What you'll do.** Install Git inside Ubuntu with `apt`, then tell Git who you are so your future work carries your name.
+
+**Commands.** In the Ubuntu window (you will be asked for the password you chose in Step 2):
+
+```bash
+sudo apt update
+sudo apt install -y git
+git --version
+```
+
+Set your name and the email you used for GitHub. Replace the text in quotes with your own.
+
+```bash
+git config --global user.name "Jane Chen"
+git config --global user.email "jane@example.com"
+git config --global --list
+```
+
+**What you should see.** `git --version` prints something like `git version 2.43.0`. The last command lists `user.name` and `user.email` with your values.
+
+**If it fails.** If `sudo` asks for a password and nothing appears as you type, that is normal; type it and press `Enter`. If `apt update` shows `Temporary failure resolving`, check your internet connection and try again. If you mistyped your name or email, run the `git config` line again with the correct text.
 
 ## Step 5 (Mac): Create an SSH key and add it to GitHub
 
@@ -197,7 +240,7 @@ ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
 Are you sure you want to continue connecting (yes/no/[fingerprint])?
 ```
 
-This is your computer meeting GitHub for the first time. Check that the line after `ED25519 key fingerprint is` matches the one above (it is also published on [GitHub's documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints)), then type `yes` and press `Return`. If it does not match, answer `no`.
+This is your computer meeting GitHub for the first time. Check that the line after `ED25519 key fingerprint is` matches the one above (it is also published on [GitHub's documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints)), then type `yes` and press `Return`. If it does not match, answer `no`. More in [the fingerprint prompt](#the-first-connection-asks-are-you-sure-you-want-to-continue-connecting).
 
 **What you should see.**
 
@@ -207,17 +250,65 @@ Hi your-username! You've successfully authenticated, but GitHub does not provide
 
 That message is a success, even though it sounds like a refusal. Your username appears in place of `your-username`.
 
-**If it fails.** Look at the last line of the output.
-
-- `Permission denied (publickey).`: GitHub does not recognize your key. Check that you added the `.pub` file's contents in 5b, then run `ssh-add --apple-use-keychain ~/.ssh/id_ed25519` and test again.
-- `Connection timed out` or `Connection refused`: a network (often a campus or office network) may block SSH. Try a different network, such as your phone's hotspot, and test again.
-- Anything else: copy the whole output into a reply on your check-in comment (Step 7) and ask for help. Do not paste your private key.
-
-Repeat the test until you see the `Hi ...` message, then continue.
+**If it fails.** Find your message in [Troubleshooting](#troubleshooting), fix it, and run the test again. Repeat until you see the `Hi ...` message, then continue.
 
 ## Step 5 (Windows): Create an SSH key and add it to GitHub
 
-The Windows steps are being added; they will appear here before the course starts.
+**What you'll do.** An SSH key is a pair of files that lets GitHub recognize your computer without a password. The **private key** stays on your computer and is secret. The **public key** goes to GitHub. Do everything in the Ubuntu window.
+
+> **Never share your private key.** It is the file named `id_ed25519` with no ending. Never paste it anywhere: not in the check-in, not in a chat, not in an email. The file you share is `id_ed25519.pub`, the one ending in `.pub`.
+
+### 5a. Create the key
+
+Replace the email with the one you used for GitHub.
+
+```bash
+ssh-keygen -t ed25519 -C "jane@example.com"
+```
+
+Press `Enter` to accept the default file location. When asked for a passphrase you may press `Enter` twice for none, or choose one you will remember.
+
+```bash
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+```
+
+**What you should see.** `ssh-keygen` prints "Your public key has been saved in /home/jane/.ssh/id_ed25519.pub" and a small picture made of characters. `ssh-add` prints `Identity added`.
+
+### 5b. Add the public key to GitHub
+
+Copy your public key to the Windows clipboard:
+
+```bash
+clip.exe < ~/.ssh/id_ed25519.pub
+```
+
+Then in your browser:
+
+1. Sign in to GitHub, click your profile picture, and choose **Settings**.
+2. Choose **SSH and GPG keys**, then **New SSH key**.
+3. Give it a **Title** such as `My Windows PC`, leave **Key type** as **Authentication Key**, and paste into the **Key** box (`Ctrl` + `V`).
+4. Click **Add SSH key**. GitHub may ask for your password.
+
+**What you should see.** Your key listed under **SSH keys**, with the title you chose.
+
+### 5c. Test the connection
+
+```bash
+ssh -T git@github.com
+```
+
+The first time, the terminal asks whether to continue connecting. Follow [the fingerprint prompt](#the-first-connection-asks-are-you-sure-you-want-to-continue-connecting), then type `yes`.
+
+**What you should see.**
+
+```text
+Hi your-username! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+That message is a success, even though it sounds like a refusal. Your username appears in place of `your-username`.
+
+**If it fails.** Find your message in [Troubleshooting](#troubleshooting), fix it, and run the test again. Repeat until you see the `Hi ...` message, then continue.
 
 ## Step 6 (Mac): Install Python 3.12 and VS Code
 
@@ -241,7 +332,33 @@ python3.12 --version
 
 ## Step 6 (Windows): Install Python 3.12 and VS Code
 
-The Windows steps are being added; they will appear here before the course starts.
+**What you'll do.** Install Python 3.12 inside Ubuntu and VS Code on Windows, with the WSL extension so VS Code can edit files inside Ubuntu.
+
+**Commands.** In the Ubuntu window:
+
+```bash
+sudo apt update
+sudo apt install -y python3.12 python3.12-venv
+python3.12 --version
+```
+
+`python3.12-venv` is the package that lets you create virtual environments in Session 1.
+
+**Install VS Code.**
+
+1. In Windows (not in Ubuntu), download VS Code from <https://code.visualstudio.com/> and install it with the default choices.
+2. Open VS Code, click the Extensions icon on the left (four squares), search for **WSL** (publisher: Microsoft), and click **Install**.
+3. In the Ubuntu window, run:
+
+```bash
+mkdir -p ~/3r-practice
+cd ~/3r-practice
+code .
+```
+
+**What you should see.** `python3.12 --version` prints `Python 3.12.` followed by a number. The last command opens VS Code with `WSL: Ubuntu-24.04` in the bottom-left corner.
+
+**If it fails.** If `python3.12` is not found, see [`python3.12` not found](#python312-not-found). If `code .` says `command not found`, install VS Code first, then close the Ubuntu window, reopen it and retry. If the bottom-left corner does not say `WSL`, click it and choose **Connect to WSL**.
 
 ## Step 7: Check in
 
@@ -273,7 +390,62 @@ Comment on the existing issue; do **not** open a new issue. If you rerun the che
 
 ## Troubleshooting
 
-Troubleshooting entries for both platforms are being added; for now use the **If it fails** part of each step.
+Each entry gives what you see, why it happens, and the fix. These apply to Mac, Windows (inside Ubuntu) and Linux unless stated. If your problem is not here, reply under your own check-in comment with the exact output (never a private key).
+
+### WSL will not install, or virtualization is disabled
+
+- **You see:** `wsl --install` ends with an error such as `WslRegisterDistribution failed with error: 0x80370102`, or a message saying virtualization is not enabled, or `The Virtual Machine Platform Windows feature is not enabled`.
+- **Cause:** WSL needs your computer's virtualization feature, which is sometimes switched off in the BIOS/UEFI or in Windows features.
+- **Fix:**
+  1. Open **Task Manager** (`Ctrl` + `Shift` + `Esc`) → **Performance** → **CPU**. If it says **Virtualization: Disabled**, restart the computer, open its BIOS/UEFI settings (usually by pressing `F2`, `F10`, `Del` or `Esc` while it starts; search for your computer model), and turn on **Intel Virtualization Technology**, **SVM Mode** or **Virtualization**. Save and restart.
+  2. Start → type `Turn Windows features on or off` → tick **Virtual Machine Platform** and **Windows Subsystem for Linux** → **OK** → restart.
+  3. Run `wsl --update` in an administrator PowerShell, then `wsl --install -d Ubuntu-24.04` again.
+  4. If it still fails, reply to your check-in comment with the full error text.
+
+### The first connection asks "Are you sure you want to continue connecting?"
+
+- **You see:** `The authenticity of host 'github.com (...)' can't be established.` followed by `ED25519 key fingerprint is SHA256:...` and `Are you sure you want to continue connecting (yes/no/[fingerprint])?`
+- **Cause:** your computer has never talked to GitHub before and asks you to confirm it is the real GitHub.
+- **Fix:** compare the fingerprint with `SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU` (also on [GitHub's documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints)). If it matches, type `yes` and press `Enter`. If it does not match, type `no` and ask for help. You are asked only once.
+
+### Permission denied (publickey)
+
+- **You see:** `git@github.com: Permission denied (publickey).`
+- **Cause:** GitHub does not recognize the key your computer offers: the public key was not added to GitHub, a different or partial key was pasted, or the key is not loaded.
+- **Fix:**
+  1. Print your public key with `cat ~/.ssh/id_ed25519.pub` and compare it with the key shown under GitHub → **Settings → SSH and GPG keys**. Re-add it if it is missing or differs. Copy the whole line, starting with `ssh-ed25519`.
+  2. Load the key: on Mac `ssh-add --apple-use-keychain ~/.ssh/id_ed25519`; in Ubuntu `eval "$(ssh-agent -s)"` then `ssh-add ~/.ssh/id_ed25519`.
+  3. Ask SSH what it is doing with `ssh -vT git@github.com`. Look for `Offering public key: ... id_ed25519`. If you see `No such file`, the key was not created; redo Step 5a.
+  4. On Windows, make sure you ran every command in Ubuntu; a key created anywhere else is in a different place.
+  5. Test again with `ssh -T git@github.com`.
+
+### Port 22 is blocked
+
+- **You see:** `ssh: connect to host github.com port 22: Connection timed out` (or `Connection refused`, or `Network is unreachable`). This is common on campus, office and hotel networks.
+- **Cause:** the network blocks the standard SSH port (22).
+- **Fix:** use GitHub's SSH over port 443, which networks rarely block. Run:
+
+```bash
+mkdir -p ~/.ssh
+cat >> ~/.ssh/config <<'EOF'
+Host github.com
+  Hostname ssh.github.com
+  Port 443
+  User git
+EOF
+ssh -T git@github.com
+```
+
+Answer `yes` to a new fingerprint question. Your clone addresses stay `git@github.com:OWNER/REPO.git`. On a Mac, Step 5a already created a `Host github.com` block in `~/.ssh/config`; add the `Hostname ssh.github.com` and `Port 443` lines to that block instead of creating a second one. If it still times out, try another network, such as your phone's hotspot.
+
+### `python3.12` not found
+
+- **You see:** `python3.12: command not found` (Mac: `command not found: python3.12`).
+- **Cause:** Python 3.12 is not installed yet, the terminal was opened before the installer finished, or only a different version is installed.
+- **Fix:**
+  - **Mac:** close Terminal fully and open it again. If it still fails, run the python.org **3.12.x** installer again (Step 6) and check that it finished without errors. Other versions such as 3.13 do not count; the command must be `python3.12`.
+  - **Windows:** make sure you are in the Ubuntu window, then run `sudo apt update` and `sudo apt install -y python3.12 python3.12-venv`. If apt says `Unable to locate package python3.12`, check that this is Ubuntu 24.04 with `lsb_release -d`.
+  - Run `python3.12 --version` again.
 
 ## What comes next
 
