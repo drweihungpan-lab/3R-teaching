@@ -15,3 +15,13 @@ _Avoid_: Replicability for the independent simulation meaning used here.
 **Replicability**:
 Agreement between results from the same process under slightly different conditions, using declared comparison criteria.
 _Avoid_: Reproducibility for small changes in execution conditions within this course.
+
+## Teaching examples
+
+**Device example**:
+The running synthetic example of daily measurement counts for medical devices, used to predict when each device reaches its usage limit; it evolves through seven stages across the course.
+_Avoid_: Time-series example, device demo
+
+**Stage**:
+One snapshot of the device example, each showing one engineering pain point that the next stage fixes.
+_Avoid_: Version, step, level
