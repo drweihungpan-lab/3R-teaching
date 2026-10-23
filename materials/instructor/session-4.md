@@ -4,7 +4,7 @@ Use the supplied working example with 20 students in groups of three or four.
 The goal is to explain a connected system and retain evidence of agreement.
 Follow the [syllabus](../../SYLLABUS.md) and
 [course glossary](../../GLOSSARY.md). This provisional 180-minute plan uses
-45 minutes explanation, 30 demonstration, 15 break, and 90 guided practice.
+45 minutes explanation (a 10-minute device-example segment, then 35 minutes), 30 demonstration, 15 break, and 90 guided practice.
 The checkpoint supports the final presentation; it is not a separate assessment.
 
 Open with the slide “Back at the bubble tea shop” (about 2 minutes, taken from the first block). Ask students one at a time, at random, and leave the question open: do not explain it or connect it to today's topic. The questions continue the Session 1 bubble tea example; reword them before class if you like.
@@ -40,10 +40,11 @@ the exercise's 20/20/20/20/10 phases, still totaling 90 minutes.
 
 | Clock | Minutes | Actual slide titles / exercise phase | Delivery and observation |
 | --- | ---: | --- | --- |
-| 0–10 | 10 | “Our 180-minute agenda”; “Trace the complete request” | Trace browser → Streamlit Python → multipart `POST /process` → FastAPI → `stat_core` → JSON → tables/chart. Ask which process makes the API request. |
-| 10–20 | 10 | “An image is a recipe's built result”; “Read the two supplied Dockerfiles” | Read both Dockerfiles. Image is the built package; container is its running instance. A venv isolates packages; containers also isolate processes/network and share a host kernel. |
-| 20–35 | 15 | “Compose connects two services”; “Addresses depend on who is calling”; “Started is different from ready” | Read ports and service names in Compose; distinguish listening, published addresses, and readiness. Ask students to name the caller before choosing an address. |
-| 35–45 | 10 | “The course's three Rs”; “Decide agreement before comparing” | Same conditions twice = repeatability; same process locally/Docker = replicability. Independent simulation is conceptual reproducibility only. Declare exact fields and derived tolerance before running. |
+| 0–10 | 10 | “Device example, Stage 6: an API and a page”; “Device example, Stage 7: Docker” | Demonstrate Stages 6 → 7 with the [device example steps](#device-example-stages-6--7-about-10-minutes) below. Name the tool the stage shows; the session teaches it. |
+| 10–18 | 8 | “Our 180-minute agenda”; “Trace the complete request” | Trace browser → Streamlit Python → multipart `POST /process` → FastAPI → `stat_core` → JSON → tables/chart. Ask which process makes the API request. |
+| 18–25 | 7 | “An image is a recipe's built result”; “Read the two supplied Dockerfiles” | Read both Dockerfiles. Image is the built package; container is its running instance. A venv isolates packages; containers also isolate processes/network and share a host kernel. |
+| 25–37 | 12 | “Compose connects two services”; “Addresses depend on who is calling”; “Started is different from ready” | Read ports and service names in Compose; distinguish listening, published addresses, and readiness. Ask students to name the caller before choosing an address. |
+| 37–45 | 8 | “The course's three Rs”; “Decide agreement before comparing” | Same conditions twice = repeatability; same process locally/Docker = replicability. Independent simulation is conceptual reproducibility only. Declare exact fields and derived tolerance before running. |
 | 45–53 | 8 | “Demo: launch the supplied stack”; “Demo: upload and inspect the results” | Start, check health, upload both files, inspect 24/96/95/1, missing observation, summaries and chart. |
 | 53–60 | 7 | “Demo: isolate a connection problem”; “Demo: cause a recoverable local failure”; “Demo: restore the working connection” | Show wrong process-scoped local address and explicit restoration below. Explain how the exercise uses a disposable Compose override for the same diagnosis. |
 | 60–75 | 15 | “Demo: capture repeated local outputs”; “Demo: capture the actual Docker run”; “Read the evidence and diagnose disagreement” | Run local twice, then real Docker capture; compare and inspect hashes/environment. |
@@ -53,6 +54,21 @@ the exercise's 20/20/20/20/10 phases, still totaling 90 minutes.
 | 130–150 | 20 | Exercise “40–60 minutes: capture twice locally and explain agreement” | Run local captures twice; require agreement and unchanged code/input hashes. Ask what null means. |
 | 150–170 | 20 | Exercise “60–80 minutes: compare Docker and demonstrate a controlled failure” | Capture inside backend, compare to local; change only generated evidence count, observe exit 1, restore and observe exit 0. |
 | 170–180 | 10 | Exercise “80–90 minutes: stopping point and recovery reference”; “Checkpoint and presentation preparation”; “Source map for rehearsal” | Partners explain conditions and evidence; check restored address, preserve captures/logs/SHA, then `docker compose down`. Point to existing presentation preparation. |
+
+## Device example: Stages 6 → 7 (about 10 minutes)
+
+The slides follow “Back at the bubble tea shop”. This is a demonstration; students do not run it. Prepare a clone of the [device example](https://github.com/drweihungpan-lab/3R-device-example) with a Python 3.12 environment and a running Docker engine with Compose v2. Pull the base image and build once beforehand (`docker compose build` in `stage-7-docker/`) so the demo is not waiting on downloads.
+
+```bash
+python3.12 -m venv .venv312
+.venv312/bin/python -m pip install -e 'stage-6-api-ui/backend[dev]' -r stage-6-api-ui/frontend/requirements.txt
+```
+
+**Stage 6 ([folder](https://github.com/drweihungpan-lab/3R-device-example/tree/main/stage-6-api-ui), about 5 minutes).** Two terminals, from `stage-6-api-ui/`, as in its README: `uvicorn app.main:app --app-dir backend --port 8001` and `streamlit run frontend/app.py --server.port 8501` with `BACKEND_URL=http://127.0.0.1:8001`. Show `curl http://127.0.0.1:8001/limits` (three devices, 2026-06-30, 2026-04-01, 2026-01-16) and the page. Stop the API terminal and refresh: “Could not reach the API”. Say: it works, but only here, with two terminals and the right setup.
+
+**Stage 7 ([folder](https://github.com/drweihungpan-lab/3R-device-example/tree/main/stage-7-docker), about 5 minutes).** Keep the local API on port 8001 (restart it if stopped). From `stage-7-docker/`, run `docker compose up --build -d --wait`; the Docker API is on port 8000. Then run `python3 compare_limit_dates.py http://127.0.0.1:8001 http://127.0.0.1:8000`: expect `MATCH: local and Docker limit dates are identical`. Finish with `docker compose down` and stop the local processes. This is the session's own topic in miniature; the guided practice does the same with the healthcare template.
+
+**If time runs short,** show the README's expected output (Stage 6 and Stage 7) instead of running everything. If the Docker build is slow, use the pre-built images and say so.
 
 ## Demo cues and expected observations
 
