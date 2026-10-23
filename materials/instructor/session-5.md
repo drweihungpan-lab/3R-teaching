@@ -2,6 +2,8 @@
 
 Deliver the final showcase in 180 minutes using the [actual slide source](../slides/session-5.md) and [final presentation brief/checklist](../assessment/final-presentation.md). These notes implement [issue #37](https://github.com/drweihungpan-lab/3R-teaching/issues/37) under the [specification](../../docs/specs/course-framework-and-teaching-materials.md), [syllabus](../../SYLLABUS.md#assessment-policy), and [course glossary](../../GLOSSARY.md).
 
+Open with the slide “Back at the bubble tea shop” (about 2 minutes, taken from the first block). Ask students one at a time, at random, and leave the question open: do not explain it or connect it to today's topic. The questions continue the Session 1 bubble tea example; reword them before class if you like.
+
 ## Prepare before the session
 
 - Confirm the actual group count `G`, three or four students per group, repository access, member names/GitHub usernames, and presentation order. Open each group's README evidence links before class; preserve access to CI artifacts before expiry.

@@ -2,6 +2,8 @@
 
 Use this provisional 180-minute delivery plan with the [Session 2 slides](../slides/session-2.md) and [guided exercise](../exercises/session-2.md). It is an instructor preparation resource for GitHub issue #31, locally planned as [ticket 32](../../docs/tickets/32-session-2-instructor-notes.md). Teach students to locate responsibilities, run the supplied package, and explain evidence from a small logging change.
 
+Open with the slide “Back at the bubble tea shop” (about 2 minutes, taken from the first block). Ask students one at a time, at random, and leave the question open: do not explain it or connect it to today's topic. The questions continue the Session 1 bubble tea example; reword them before class if you like.
+
 Follow the [syllabus](../../SYLLABUS.md), [course specification](../../docs/specs/course-framework-and-teaching-materials.md), and [glossary](../../GLOSSARY.md). Students know functions, pandas, and basic regression. Work in groups of three or four; rotate keyboard, tracing, and review roles. The checkpoint prepares evidence for Session 5. All pass/fail assessment takes place at the final presentation; there is no separate assessed submission, resubmission, reassessment, or later final-session retry. Every student must eventually author one PR and meaningfully review a teammate's PR.
 
 ## Resolve the two logging activities before teaching

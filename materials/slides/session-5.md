@@ -7,6 +7,12 @@
 
 ---
 
+## Back at the bubble tea shop
+
+**How would you prove to a customer that both shops make the same tea?**
+
+---
+
 ## Our 180-minute showcase
 
 - Opening brief: 10 minutes. Group slots: 150 minutes in total.

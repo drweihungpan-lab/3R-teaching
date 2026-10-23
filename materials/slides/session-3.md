@@ -7,6 +7,12 @@
 
 ---
 
+## Back at the bubble tea shop
+
+**A customer orders a tea with −20% sugar. What do you do?**
+
+---
+
 ## Our 180-minute agenda
 
 - 0–45: explanation — contracts, validation, fixtures, comparisons.

@@ -21,8 +21,8 @@ python scripts/build_slides.py \
 
 ## Verification results
 
-Generation and the saved-artifact check preserve 22 source slides across 34
-PowerPoint slides (12 continuations): 154 source elements, 158 body text boxes,
+Generation and the saved-artifact check preserve 23 source slides across 35
+PowerPoint slides (12 continuations): 155 source elements, 159 body text boxes,
 and 21 distinct clickable link targets. Exact source text and order, including
 code whitespace, are checked after removing inserted soft line breaks. Local
 link existence, shape bounds, body overlap and line-height budgets, slide XML,

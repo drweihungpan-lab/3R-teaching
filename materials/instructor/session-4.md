@@ -7,6 +7,8 @@ and [course glossary](../../GLOSSARY.md). This provisional 180-minute plan uses
 45 minutes explanation, 30 demonstration, 15 break, and 90 guided practice.
 The checkpoint supports the final presentation; it is not a separate assessment.
 
+Open with the slide “Back at the bubble tea shop” (about 2 minutes, taken from the first block). Ask students one at a time, at random, and leave the question open: do not explain it or connect it to today's topic. The questions continue the Session 1 bubble tea example; reword them before class if you like.
+
 ## Prepare before students arrive
 
 - Have Git, Python 3.12, a virtual environment with backend and frontend dependencies,

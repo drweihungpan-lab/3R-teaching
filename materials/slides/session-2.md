@@ -7,6 +7,12 @@
 
 ---
 
+## Back at the bubble tea shop
+
+**Your best staff member is sick today. Can someone else still make your tea?**
+
+---
+
 ## Our 180-minute agenda
 
 - 0–45: explanation — modules, boundaries, packaging, types, logs.

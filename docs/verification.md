@@ -14,7 +14,7 @@ This report consolidates actual course-authoring evidence as of 16 October 2026.
 
 ## Navigation checks for issue #38
 
-Temporary documentation checks passed for **553 local Markdown file links**, including **47 heading anchors** (fenced examples and inline syntax examples excluded). All five existing-converter `--check-only` runs passed exact source text/order, hyperlink, geometry, and XML/ZIP checks: Sessions 1–5 contain 31, 32, 22, 34, and 18 editable slides respectively. Independent artifact checks found no empty slides or out-of-bounds shapes. Inventory and course facts were checked against the syllabus and glossary; `git diff --check` passed. No application code or testing framework was added.
+Temporary documentation checks passed for **553 local Markdown file links**, including **47 heading anchors** (fenced examples and inline syntax examples excluded). All five existing-converter `--check-only` runs passed exact source text/order, hyperlink, geometry, and XML/ZIP checks: Sessions 1–5 contain 33, 33, 23, 35, and 19 editable slides respectively. Independent artifact checks found no empty slides or out-of-bounds shapes. Inventory and course facts were checked against the syllabus and glossary; `git diff --check` passed. No application code or testing framework was added.
 
 ## Remaining limits
 

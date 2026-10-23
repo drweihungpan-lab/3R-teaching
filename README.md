@@ -21,7 +21,7 @@ The emphasis is on understanding how the parts connect and practicing the workfl
 | --- | --- |
 | Audience | 20 statistics students familiar with Python functions, pandas, and basic regression |
 | Classroom time | Five three-hour sessions, 15 hours total |
-| Homework | Mandatory; approximately two hours after each of Sessions 1–4, eight hours total |
+| Homework | Mandatory; approximately two hours after each of Sessions 1–4, eight hours total, plus any guided practice not finished in class |
 | Groups | Three or four students, each group with its own GitHub repository |
 | Language | English |
 | Assessment | Pass/fail at the final presentation; all engineering requirements must be met |

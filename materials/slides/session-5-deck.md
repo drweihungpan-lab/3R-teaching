@@ -19,8 +19,8 @@ python scripts/build_slides.py \
   --output materials/slides/session-5.pptx --check-only
 ```
 
-Generation and the saved-artifact check preserve all 16 source slides across
-18 PowerPoint slides (two continuations), with 67 source elements, 69 body text
+Generation and the saved-artifact check preserve all 17 source slides across
+19 PowerPoint slides (two continuations), with 68 source elements, 70 body text
 boxes, and 14 distinct clickable link targets. Checks cover exact content and
 order, code whitespace, local link existence, shape bounds, body overlap and
 line-height budgets, slide XML, relationships, and ZIP integrity. No raster
