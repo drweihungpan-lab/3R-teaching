@@ -1,0 +1,46 @@
+# Shared repository-root context for backend and later frontend images.
+**/.git
+**/.DS_Store
+**/.idea
+**/.vscode
+**/.agents
+**/.codex
+
+# Local configuration, credentials, and private keys.
+**/.env
+**/.env.*
+!**/.env.example
+**/.aws
+**/.ssh
+**/.netrc
+**/.pypirc
+**/.npmrc
+**/secrets
+**/secrets.*
+**/credentials
+**/credentials.*
+**/*.pem
+**/*.key
+**/*.p12
+**/*.pfx
+
+# Environments, dependencies, and generated Python/build artifacts.
+**/.venv
+**/venv
+**/env
+**/node_modules
+**/__pycache__
+**/*.py[cod]
+**/*.egg-info
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+**/.cache
+**/.tox
+**/.nox
+**/build
+**/dist
+**/.coverage
+**/.coverage.*
+**/htmlcov
+**/coverage.xml
