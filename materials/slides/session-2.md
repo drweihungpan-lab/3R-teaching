@@ -13,9 +13,40 @@
 
 ---
 
+## Device example, Stage 3: dependencies declared
+
+- Last time, Stage 2 crashed on a newer pandas. Stage 3 adds `requirements.txt`, and the crash is gone.
+- It is still a notebook plus helper files. Run once, in order:
+
+```text
+DEV-C reaches the limit on 2026-01-16
+```
+
+- Rerun one cell that updates the data in place, and no error appears:
+
+```text
+DEV-C reaches the limit on 2026-01-04
+```
+
+- The answer depends on which cells ran, and in what order.
+- Today's tool for this pain: functions with inputs and outputs, in a package.
+
+---
+
+## Device example, Stage 4: an installable package
+
+- The analysis is now the package `device_limit`: `predict_limit_dates(counts)` takes a table and returns dates.
+- Run from another folder, it fails: `FileNotFoundError: 'data/device_counts.csv'`. The data path is relative to where you stand.
+- A harmless-looking cleanup (drop days with zero measurements) moves `DEV-C` from 2026-01-16 to 2026-01-06, with no error or warning.
+- Nothing checks the answer. Next session's tool: tests.
+- Files: [3R-device-example](https://github.com/drweihungpan-lab/3R-device-example).
+
+---
+
 ## Our 180-minute agenda
 
-- 0–45: explanation — modules, boundaries, packaging, types, logs.
+- 0–10: device example — Stages 3 to 4.
+- 10–45: explanation — modules, boundaries, packaging, types, logs.
 - 45–75: demonstration — install, trace, run, save a baseline.
 - 75–90: break — 15 minutes.
 - 90–180: guided practice — change, check, and review.
