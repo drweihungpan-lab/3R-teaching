@@ -1,6 +1,6 @@
 # Session 3 instructor notes: validation, pytest, and automated CI
 
-Teach students to trace a request, explain missingness and rejection, read a test failure, and connect the correction to its PR check. Use the complete synthetic example. These delivery notes implement [issue #32](https://github.com/drweihungpan-lab/3R-teaching/issues/32) under the [course specification](../../docs/specs/course-framework-and-teaching-materials.md) and [syllabus](../../SYLLABUS.md#session-3-defensive-engineeringfastapi-pytest-and-automated-ci).
+Teach students to trace a request, explain missingness and rejection, read a test failure, and connect the correction to its PR check. Use the complete synthetic example. Follow the [syllabus](../../SYLLABUS.md#session-3-defensive-engineeringfastapi-pytest-and-automated-ci).
 
 Open with the slide “Back at the bubble tea shop” (about 2 minutes, taken from the first block). Ask students one at a time, at random, and leave the question open: do not explain it or connect it to today's topic. The questions continue the Session 1 bubble tea example; reword them before class if you like.
 
@@ -103,4 +103,4 @@ The checkpoint is preparation. Remind students of approximately two hours of man
 - Rehearse one meaningful review comment; reserve practice time for review and identifying evidence gaps.
 - Check links and timing, stop the API with Ctrl+C, and leave the failing PR version unmerged.
 
-Authoring verification for these notes is limited to source/content, local links/anchors, and command-reference checks. No backend behavior changed, so backend tests were not rerun for this document. Live requests, deliberate hosted failure/recovery, browser interaction, Windows execution, and student participation were not rehearsed for this change. Docker and LibreOffice are unavailable; no container run or rendered deck inspection is claimed.
+See [verification](../../docs/verification.md) for recorded checks and the remaining limits to rehearse on the delivery machine.

@@ -84,6 +84,6 @@ docker compose down
 
 This stops and removes this project's containers and default network. Built images and host CSVs remain. In attached mode, Ctrl-C stops the services; run `docker compose down` afterward to remove their containers and network.
 
-## Verification limits
+## Recorded evidence
 
-Docker is absent in the implementation environment. YAML parsing, build paths, environment defaults, documentation links/commands, and the health-probe code can be checked locally, as can the existing public API with the supplied CSVs. Image builds, Compose configuration validation, container startup/readiness/networking, published ports, and the browser upload/chart demonstration were not executed there. Run the commands above on a Docker-equipped machine to collect that evidence; local checks do not establish local/container replicability.
+See [verification](verification.md) for the hosted run that built both images, started Compose, and compared outputs.

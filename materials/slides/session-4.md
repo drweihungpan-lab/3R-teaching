@@ -269,16 +269,6 @@ PYTHONPATH=backend python -m stat_core.comparison \
 
 ---
 
-## What has actually been verified?
-
-- [Remote Docker CI run 38876609585](https://github.com/drweihungpan-lab/3R-teaching/actions/runs/38876609585) completed successfully for commit `c5fc92a37ec660492c7238f55f88b023a9200775`.
-- Its Docker output comparison job builds real images, checks readiness and service DNS/HTTP, compares local/container captures, and compares multipart API results.
-- This is evidence for that commit and environment; rerun for later changes. The [workflow](../../.github/workflows/backend-tests.yml) retains available evidence for seven days.
-- Docker is absent on the slide-authoring host: local captures can be checked there; container execution and browser behavior cannot be claimed from those checks.
-- PowerPoint rendering is also unverified here. Markdown is maintained for the [editable converter](README.md).
-
----
-
 ## Break, then 90 minutes of guided practice
 
 - Take a 15-minute break before practice.
@@ -304,8 +294,8 @@ PYTHONPATH=backend python -m stat_core.comparison \
 
 ## Source map for rehearsal
 
-- [Course specification](../../docs/specs/course-framework-and-teaching-materials.md), [syllabus](../../SYLLABUS.md), and [three-R glossary](../../GLOSSARY.md).
+- [Syllabus](../../SYLLABUS.md) and [three-R glossary](../../GLOSSARY.md).
 - [Local frontend and recovery](../../docs/frontend.md), [Compose operation](../../docs/compose.md), and [output capture/comparison commands](../../docs/comparisons.md).
 - [Backend image](../../backend/Dockerfile), [frontend image](../../frontend/Dockerfile), and [service configuration](../../compose.yaml).
 - [Synthetic input provenance](../../data/synthetic/README.md) and [API contract](../../docs/api.md).
-- [Session 4 authoring ticket](../../docs/tickets/16-session-4-markdown-slides.md) and [supported slide Markdown](README.md).
+- [Supported slide Markdown](README.md).

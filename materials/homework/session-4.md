@@ -83,8 +83,6 @@ In the group's README, link the demonstrated SHA and a compact evidence index: i
 
 For **each student**, record name/GitHub username, at least one personally authored PR URL, and a permalink to a substantive review of a teammate's PR. Open the branch/commit history, specific behavior/test/clarity comments, responses and follow-up, and matching CI run/SHA. Approval alone is insufficient. Each member rehearses explaining their contribution and review. Copied template history and instructor/agent work do not count as student participation. Complete missing small contributions through the [reviewed group workflow](../../docs/collaboration.md) before Session 5; one shared PR cannot establish everyone's authorship.
 
-Existing course-template [CI run 38876609585](https://github.com/drweihungpan-lab/3R-teaching/actions/runs/38876609585) verified real builds, health/service HTTP, repeated local and local/Docker agreement, and multipart API agreement; its backend suite had 205 passing tests. Totals may change: use all passing, with actual counts. This is prior implementation evidence, not your group's execution, browser rehearsal, or student participation. This document's authoring checks do not repeat backend/Docker runs; Docker is unavailable on the authoring host.
-
 ## 6. Self-check and stop — 10 minutes
 
 - Can we launch both services, upload our own CSVs, explain visible results, and reject invalid input clearly?

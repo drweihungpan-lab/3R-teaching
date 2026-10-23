@@ -2,8 +2,8 @@
 
 Use the supplied working example with 20 students in groups of three or four.
 The goal is to explain a connected system and retain evidence of agreement.
-Follow the [syllabus](../../SYLLABUS.md), [specification](../../docs/specs/course-framework-and-teaching-materials.md),
-and [course glossary](../../GLOSSARY.md). This provisional 180-minute plan uses
+Follow the [syllabus](../../SYLLABUS.md) and
+[course glossary](../../GLOSSARY.md). This provisional 180-minute plan uses
 45 minutes explanation, 30 demonstration, 15 break, and 90 guided practice.
 The checkpoint supports the final presentation; it is not a separate assessment.
 
@@ -46,7 +46,7 @@ the exercise's 20/20/20/20/10 phases, still totaling 90 minutes.
 | 35–45 | 10 | “The course's three Rs”; “Decide agreement before comparing” | Same conditions twice = repeatability; same process locally/Docker = replicability. Independent simulation is conceptual reproducibility only. Declare exact fields and derived tolerance before running. |
 | 45–53 | 8 | “Demo: launch the supplied stack”; “Demo: upload and inspect the results” | Start, check health, upload both files, inspect 24/96/95/1, missing observation, summaries and chart. |
 | 53–60 | 7 | “Demo: isolate a connection problem”; “Demo: cause a recoverable local failure”; “Demo: restore the working connection” | Show wrong process-scoped local address and explicit restoration below. Explain how the exercise uses a disposable Compose override for the same diagnosis. |
-| 60–75 | 15 | “Demo: capture repeated local outputs”; “Demo: capture the actual Docker run”; “Read the evidence and diagnose disagreement”; “What has actually been verified?” | Run local twice, then real Docker capture; compare and inspect hashes/environment. Distinguish prior remote evidence from today's observations. |
+| 60–75 | 15 | “Demo: capture repeated local outputs”; “Demo: capture the actual Docker run”; “Read the evidence and diagnose disagreement” | Run local twice, then real Docker capture; compare and inspect hashes/environment. |
 | 75–90 | 15 | “Break, then 90 minutes of guided practice” | Break; leave commands and exercise visible. |
 | 90–110 | 20 | Exercise “0–20 minutes: launch and inspect the working application” | Groups launch, check both health endpoints, upload DM/LB. Confirm counts and missingness. |
 | 110–130 | 20 | Exercise “20–40 minutes: trace HTTP and recover a wrong address” | Trace code, check service DNS, apply disposable wrong `BACKEND_URL`, observe failure, restore base Compose frontend. |
@@ -157,7 +157,7 @@ not a fresh processing run.
 | Decimal disagrees / null versus zero | Inspect reported field and dependencies/processing; preserve declared tolerance and missingness. Retain originals and failure logs. |
 | “Do we need an independent simulation?” | No. Reproducibility is conceptual here; practical evidence covers repeatability and replicability using the course definitions. |
 
-## Rehearsal checklist and evidence boundary
+## Rehearsal checklist
 
 - [ ] Time the 45/30/15/90 plan; keep exercise phases and slide titles ready.
 - [ ] Verify tools, environment, root directory, SHA, clean/fixed inputs, free ports,
@@ -169,14 +169,4 @@ not a fresh processing run.
   compare results, rehearse generated-count failure and recovery. Preserve actual
   commands, statuses, captures and logs; finish with `docker compose down`.
 
-Prior [remote Docker CI run 38876609585](https://github.com/drweihungpan-lab/3R-teaching/actions/runs/38876609585)
-succeeded for `c5fc92a37ec660492c7238f55f88b023a9200775`: real image builds,
-both service health endpoints, service DNS/HTTP, repeated local/local-Docker
-captures and multipart API agreement. This supports that commit and environment,
-not a claim that today's browser or wrong-address exercise was rehearsed.
-The [workflow](../../.github/workflows/backend-tests.yml) retains available
-evidence for seven days; rerun for current code when needed.
-Docker and a PowerPoint renderer are unavailable on the authoring host; local
-command checks do not establish Docker execution, rendered slides, browser uploads
-or chart behavior. Complete those rehearsal items on the delivery machine and
-report any skipped checks as unverified.
+See [verification](../../docs/verification.md) for recorded checks and the remaining limits to rehearse on the delivery machine.

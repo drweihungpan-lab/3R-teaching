@@ -89,24 +89,3 @@ and `1 failed`. Restore the expectation to `15.0` and repeat the command:
 `1 passed`. Then run the full suite. The committed tests contain the correct
 expectation. This demonstrates reading a failure without changing the processing
 contract or distributing a deliberately failing application.
-
-## Actual verification
-
-Issue #5 was checked on macOS with Python 3.12.1 and pytest 9.1.1 using the shared
-temporary environment, from the issue worktree's repository root:
-
-```bash
-PYTHONPATH=backend /private/tmp/3r-implementation.eIFtRw/venv/bin/python -m pytest backend/tests -q
-/private/tmp/3r-implementation.eIFtRw/venv/bin/python -m pytest backend/tests
-```
-
-Both commands: **175 passed, 1 warning** (14 processing, 131 validation, 30 API cases).
-Before this change, the same suite target did not exist: pytest collected no
-tests and exited with code 4. Tests were added against existing behavior; no
-backend implementation defect or production-code fix was needed. The controlled
-failure/recovery above was also executed, not merely proposed.
-
-The shared environment emits a `StarletteDeprecationWarning` about TestClient's
-httpx integration. Requests pass; the warning is left visible. Docker is not
-installed, so no container execution or local/container replicability result is
-claimed. CI execution belongs to its separate task and was not run here.

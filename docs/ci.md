@@ -8,8 +8,8 @@ also run it. This makes integration PR checks visible before changes reach
 `main`; students continue to use feature branches and PRs into `main`.
 
 The job is named **Backend tests**. It checks processing results, rejected inputs,
-and API requests/responses. Container output comparisons belong to issue #10 and
-will be added separately.
+and API requests/responses. A second job, **Docker output
+comparison**, compares local and container outputs; see [comparisons](comparisons.md).
 
 ## What the workflow does
 
@@ -63,13 +63,6 @@ the earlier failed run as evidence. Re-running the old commit does not test the
 correction. Merge only the corrected version; the supplied default example stays
 passing.
 
-For issue #6, the failure and correction were executed locally against a temporary
-copy of the existing test and fixtures, using `PYTHONPATH=backend` and the shared
-Python 3.12.1 environment. The repository's application and tests were untouched.
-The full suite passed: **175 passed, 1 warning**. The existing Starlette TestClient
-deprecation warning remains visible. This local demonstration is not evidence of
-a deliberately failed GitHub Actions run; inspect the PR check for hosted results.
-
 ## Reporting versus requiring checks
 
 This workflow reports success or failure. Copying it into a repository does not
@@ -81,15 +74,12 @@ rule to `implement/course-framework` if enforcing checks during course authoring
 See GitHub's [required status check documentation](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches#require-status-checks-before-merging).
 
 Repository settings, actor bypass permissions, and review requirements remain
-separate from the workflow. This issue does not change them. If the job name
+separate from the workflow. If the job name
 changes later, update any required-check rule to match it.
 
-## Verification limits
+## What a passing run shows
 
-Local checks can validate YAML, workflow structure, links, commands, and pytest
-behavior. Only a hosted run verifies GitHub's runner, action downloads, dependency
-installation, cache service, and check reporting together. Consult the PR's check
-and logs for that result. Passing backend tests alone do not demonstrate
-local/container replicability under the [course definitions](../GLOSSARY.md).
-Docker is unavailable in the authoring environment; no container execution is
-claimed here.
+A hosted run is the only check of GitHub's runner, action downloads, dependency
+installation, cache, and check reporting together. Passing backend tests alone do
+not demonstrate local/container replicability under the
+[course definitions](../GLOSSARY.md); see [comparisons](comparisons.md).

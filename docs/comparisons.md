@@ -111,21 +111,13 @@ the original capture to recover. The focused
 IDs/counts, raw/baseline perturbations, null versus zero, types, structure/order,
 derived values inside/outside tolerance, differing hashes, and CLI failures.
 
-## Verification and retained evidence
+## Evidence from CI
 
-Local implementation checks use Python 3.12.1 on macOS with the shared virtual
-environment and `PYTHONPATH=backend`. Two real local captures and their comparison
-are run; the public tests cover controlled mismatch failures. Docker is absent
-on that host, so it cannot establish local/container agreement there.
-
-The existing [GitHub Actions workflow](../.github/workflows/backend-tests.yml)
-adds **Docker output comparison** on pull requests (including the integration
-branch) and the configured branch pushes. It builds both real images, starts
-Compose, checks both health endpoints and frontend-to-backend DNS/HTTP, captures
-local and container results, and compares a real multipart API response. Its
-`output-comparison-evidence` artifact retains captures, comparison outputs,
-health responses, Compose status, and logs for seven days, including available
-diagnostics after failure. A successful run supplies real Docker evidence;
-a proposed workflow or passing local pytest alone does not. Consult the issue
-PR's linked run for actual remote status. This focused command verification
-adds no course assessment or independent end-to-end framework.
+The [GitHub Actions workflow](../.github/workflows/backend-tests.yml) runs
+**Docker output comparison** on pull requests and configured branch pushes. It
+builds both real images, starts Compose, checks both health endpoints and
+frontend-to-backend DNS/HTTP, captures local and container results, and compares
+a real multipart API response. Its `output-comparison-evidence` artifact retains
+captures, comparison outputs, health responses, Compose status, and logs for seven
+days, including diagnostics after failure. A successful run supplies real Docker
+evidence; passing local pytest alone does not.

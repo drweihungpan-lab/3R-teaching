@@ -35,7 +35,7 @@ REQUEST_TIMEOUT=30
 
 `BACKEND_URL` is the API base address without `/process`. `REQUEST_TIMEOUT` is a finite, positive number of seconds for HTTP connection/read inactivity, not a total processing deadline. The frontend loads the root `.env` relative to `frontend/app.py`; exported environment variables take precedence. Restart Streamlit after changing settings. Keep `.env` out of Git.
 
-If the backend uses a different port, update `BACKEND_URL`. For later Docker Compose use, the frontend service addresses the backend service as `http://backend:8000`; `localhost` inside a frontend container refers to that frontend container. The browser still uses the frontend's published host port. Container setup is a separate task.
+If the backend uses a different port, update `BACKEND_URL`. Under Docker Compose, the frontend service addresses the backend service as `http://backend:8000`; `localhost` inside a frontend container refers to that frontend container. The browser still uses the frontend's published host port. See [Compose](compose.md).
 
 ## Demonstrate the supplied data
 

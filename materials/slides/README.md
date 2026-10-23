@@ -70,9 +70,4 @@ These are structural checks, not a PowerPoint render. A shape inside the slide
 can still clip text if a viewer substitutes a wider font. Open the deck in
 PowerPoint before teaching and review long titles, wrapped code, continuation
 boundaries, and links in presentation mode. Do not claim visual inspection from
-the XML checks alone. PowerPoint and LibreOffice are unavailable in the build
-environment, so rendered clipping and viewer-specific layout remain unverified.
-
-Session 2 keeps the approved 25 source slides across 33 PowerPoint slides,
-including eight continuation slides. The Markdown agenda and
-all explanation, demonstration, break, and practice content remain unchanged.
+the XML checks alone.

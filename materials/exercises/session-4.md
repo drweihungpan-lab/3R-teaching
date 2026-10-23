@@ -134,12 +134,3 @@ If startup fails, inspect `docker compose logs --tail=100 backend frontend` and
 For hash mismatches restore the same code/inputs and rebuild; for numerical mismatches
 inspect dependency/processing differences. See [Compose recovery](../../docs/compose.md),
 [frontend behavior](../../docs/frontend.md), and [comparison rules](../../docs/comparisons.md).
-
-Verification boundary: local authoring checks execute capture/comparison and the
-controlled count failure/recovery. Docker is absent on the authoring host. Existing
-[CI run 38876609585](https://github.com/drweihungpan-lab/3R-teaching/actions/runs/38876609585)
-verified real builds, both service health endpoints, service DNS/HTTP, repeated local,
-local/Docker, and multipart API agreement. It does not verify this classroom's browser
-upload/chart or temporary wrong-address exercise; rehearse those on a Docker machine.
-For prior test evidence, report “all tests pass” with the run's actual count (205 in
-that run); counts can change. No unchanged full-suite rerun is needed for this brief.
