@@ -13,7 +13,7 @@ Open with the slide “Back at the bubble tea shop” (about 2 minutes, taken fr
 
 - Have Git, Python 3.12, a virtual environment with backend and frontend dependencies,
   Docker with a running engine and Compose v2, curl, a browser, and two terminals.
-  Use a POSIX shell (bash/zsh; WSL on Windows). Complete installs and image downloads
+  Use a POSIX shell (bash/zsh; on Windows, the WSL Ubuntu terminal with Docker Desktop's WSL backend). Complete installs and image downloads
   before class: [backend setup](../../docs/setup.md), [frontend setup](../../docs/frontend.md).
   Activate the environment in each terminal; run commands at the repository root.
   With a shared environment, use `PYTHONPATH=backend` for captures/comparisons to

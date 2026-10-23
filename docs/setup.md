@@ -9,7 +9,7 @@ python -m pip install --upgrade pip
 python -m pip install -e './backend[dev]'
 ```
 
-On Windows PowerShell, activate with `.venv\Scripts\Activate.ps1` instead. The `dev` extra installs pytest and the HTTP test client; processing/service use alone needs only `python -m pip install -e ./backend`. An editable install makes changes under `backend/` available immediately; reinstall when dependency metadata changes. The distribution is named `three-r-backend`; the import packages are `stat_core` and `app`. Dependency ranges are declared in [backend/pyproject.toml](../backend/pyproject.toml). A resolved lockfile is not supplied; record installed versions alongside environment comparison evidence, for example with `python -m pip freeze`.
+On Windows, run these same commands in the WSL Ubuntu terminal ([Session 0](session-0.md#step-2-windows-install-wsl-and-open-ubuntu)). The `dev` extra installs pytest and the HTTP test client; processing/service use alone needs only `python -m pip install -e ./backend`. An editable install makes changes under `backend/` available immediately; reinstall when dependency metadata changes. The distribution is named `three-r-backend`; the import packages are `stat_core` and `app`. Dependency ranges are declared in [backend/pyproject.toml](../backend/pyproject.toml). A resolved lockfile is not supplied; record installed versions alongside environment comparison evidence, for example with `python -m pip freeze`.
 
 ## Configuration
 
