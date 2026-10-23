@@ -1,10 +1,10 @@
 # Session 2 instructor notes: from scripts to reusable modules
 
-Use this provisional 180-minute delivery plan with the [Session 2 slides](../slides/session-2.md) and [guided exercise](../exercises/session-2.md). It is an instructor preparation resource for GitHub issue #31, locally planned as [ticket 32](../../docs/tickets/32-session-2-instructor-notes.md). Teach students to locate responsibilities, run the supplied package, and explain evidence from a small logging change.
+Use this provisional 180-minute delivery plan with the [Session 2 slides](../slides/session-2.md) and [guided exercise](../exercises/session-2.md). Teach students to locate responsibilities, run the supplied package, and explain evidence from a small logging change.
 
 Open with the slide “Back at the bubble tea shop” (about 2 minutes, taken from the first block). Ask students one at a time, at random, and leave the question open: do not explain it or connect it to today's topic. The questions continue the Session 1 bubble tea example; reword them before class if you like.
 
-Follow the [syllabus](../../SYLLABUS.md), [course specification](../../docs/specs/course-framework-and-teaching-materials.md), and [glossary](../../GLOSSARY.md). Students know functions, pandas, and basic regression. Work in groups of three or four; rotate keyboard, tracing, and review roles. The checkpoint prepares evidence for Session 5. All pass/fail assessment takes place at the final presentation; there is no separate assessed submission, resubmission, reassessment, or later final-session retry. Every student must eventually author one PR and meaningfully review a teammate's PR.
+Follow the [syllabus](../../SYLLABUS.md) and [glossary](../../GLOSSARY.md). Students know functions, pandas, and basic regression. Work in groups of three or four; rotate keyboard, tracing, and review roles. The checkpoint prepares evidence for Session 5. All pass/fail assessment takes place at the final presentation; there is no separate assessed submission, resubmission, reassessment, or later final-session retry. Every student must eventually author one PR and meaningfully review a teammate's PR.
 
 ## Resolve the two logging activities before teaching
 
@@ -159,12 +159,4 @@ Student PRs target their **group repository's `main`**, as in the exercise. That
 - [ ] Fit the handover before minute 75 and keep practice checkpoints at 105/125/140/160/180. Prepare pairing recovery for installation trouble.
 - [ ] Rehearse the one-line PR diff and meaningful review prompt; restate final-presentation-only assessment and course glossary meanings.
 
-## Author verification and practical limits
-
-This documentation task uses content, command, and link checks rather than adding artificial tests. Processing/API/result-comparison boundaries are the supplied public interfaces. Rehearsal uses Python 3.12 in the shared temporary environment with `PYTHONPATH=backend`; it does not change the shared environment's editable-install target. Logging edits are exercised only in disposable copies, never in this issue's application source.
-
-The standalone slide calls/snapshot comparisons, teacher DEBUG visibility at DEBUG versus INFO, exercise §3/§4 before/after commands, complete-result equality, and the in-process API fallback were checked against the supplied backend. Expected counts, missingness, identifiers, and eight summaries agreed. Timing, actual slide titles, exercise section references, relative file links, and whitespace were checked.
-
-Installation guidance is sourced from setup and the exercise's recorded author verification: editable installation was checked there in a disposable environment with existing dependencies using `--no-deps --no-build-isolation`; fresh dependency downloads were not rehearsed here. Live Uvicorn/curl behavior is supported by the shared implementation `verification.md` record: port 18000 returned HTTP 200 and 24/96/95/1 with eight summaries; setup and slides use port 8000. The backend-contract record separately documents TestClient checks. Those shared authoring records are outside the published repository; portable commands and behavior are documented in [setup](../../docs/setup.md) and the [API contract](../../docs/api.md).
-
-Docker is unavailable; no container run or local/Docker comparison is claimed. No LibreOffice/PowerPoint renderer is available, so source-title/link checks do not verify rendered layout or clipping. Windows/PowerShell execution, fresh installation downloads, and student GitHub permissions/peer reviews were not exercised. Check these delivery conditions on the teaching machines before class.
+See [verification](../../docs/verification.md) for recorded checks and the remaining limits to rehearse on the delivery machine.

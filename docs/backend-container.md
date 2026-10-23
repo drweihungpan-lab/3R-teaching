@@ -63,8 +63,8 @@ docker stop three-r-backend
 docker stop three-r-backend-configured
 ```
 
-`--rm` removes each stopped container; the built image remains available. This task supplies the backend image. The frontend image and Compose configuration are separate tickets.
+`--rm` removes each stopped container; the built image remains available. The [frontend image](frontend-container.md) and [Compose configuration](compose.md) are documented separately.
 
-## Verification limits
+## Recording versions
 
-Docker is not installed in the implementation environment, so the image build, Docker startup, published port, and curl requests against a container could not be executed there. Local checks use the shared Python 3.12 environment with `PYTHONPATH=backend`: the public processing function and FastAPI test client return the counts above. Package building, Dockerfile source paths/command, documentation links, and ignore rules are checked separately. These checks do not replace a real image build/run or establish local/container replicability. Dependency versions are ranges, not a lockfile; record the code revision and installed versions when collecting comparison evidence.
+Dependency versions are ranges, not a lockfile; record the code revision and installed versions when collecting comparison evidence. See [verification](verification.md) for recorded container evidence.

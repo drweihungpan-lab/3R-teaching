@@ -44,13 +44,11 @@ docker logs three-r-backend
 docker logs three-r-frontend
 ```
 
-## Cleanup and verification limits
+## Cleanup
 
 ```bash
 docker stop three-r-frontend three-r-backend
 docker network rm three-r-network
 ```
 
-`--rm` removes the stopped containers; built images remain available. Compose orchestration is a separate task ([issue #9](https://github.com/drweihungpan-lab/3R-teaching/issues/9)).
-
-Docker is absent in the implementation environment, so image builds, container startup, networking, and browser uploads against containers were not executed. Verification is limited to Dockerfile source/dependency/command checks, documentation links and command syntax, and review of the existing ignore rules. These checks do not establish local/container replicability. Dependencies use version ranges rather than a lockfile; record the code revision and installed versions when collecting comparison evidence.
+`--rm` removes the stopped containers; built images remain available. To run both services together, use [Compose](compose.md). Dependency versions are ranges, not a lockfile; record the code revision and installed versions when collecting comparison evidence.

@@ -45,7 +45,7 @@ curl --fail-with-body http://127.0.0.1:8000/process \
 
 The health response is `{"status":"ok"}`. Processing returns counts of 24 participants, 96 records, 95 observed and one missing, plus joined records and arm/visit summaries. Open <http://127.0.0.1:8000/docs> to upload the same two files interactively. The [API contract](api.md) documents every response field, validation rule and error format. If port 8000 is occupied, choose another `--port` and update the request address.
 
-The `--app-dir backend` option makes `backend/app` importable when starting from the root. Keep the root as the working directory so `.env` resolves consistently. For a later container service, bind to `--host 0.0.0.0`; other containers use the Compose service address such as `http://backend:8000`, while host tools use the published localhost port. This ticket provides no Docker configuration.
+The `--app-dir backend` option makes `backend/app` importable when starting from the root. Keep the root as the working directory so `.env` resolves consistently. For a later container service, bind to `--host 0.0.0.0`; other containers use the Compose service address such as `http://backend:8000`, while host tools use the published localhost port. See [Compose](compose.md) for the container configuration.
 
 ## Call processing without HTTP
 
@@ -70,4 +70,4 @@ Expected: `{'participants': 24, 'records': 96, 'observed': 95, 'missing': 1}`. F
 
 Try a copy of DM with AGE changed to `not-a-number`, or an LB copy with units changed to `mg/dL`. `/process` returns 422 with a file, CSV line, field and repair message. Missing results remain null; they never become zero. An unavailable baseline produces null changes, and zero baseline produces null percentage change. See [api.md](api.md) for full rules and worked values.
 
-Backend issue #3 is verified with temporary external public smoke scripts. The formal pytest suite and its execution instructions belong to [issue #5](tickets/04-backend-tests.md). Frontend, CI, containers and output-comparison tooling have separate tickets. No container execution is claimed during backend verification; Docker and LibreOffice are unavailable in the implementation environment.
+See [testing](testing.md) for the pytest suite and how to run it.

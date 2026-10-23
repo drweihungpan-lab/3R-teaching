@@ -1,6 +1,6 @@
 # Session 5 instructor notes: final showcase and engineering review
 
-Deliver the final showcase in 180 minutes using the [actual slide source](../slides/session-5.md) and [final presentation brief/checklist](../assessment/final-presentation.md). These notes implement [issue #37](https://github.com/drweihungpan-lab/3R-teaching/issues/37) under the [specification](../../docs/specs/course-framework-and-teaching-materials.md), [syllabus](../../SYLLABUS.md#assessment-policy), and [course glossary](../../GLOSSARY.md).
+Deliver the final showcase in 180 minutes using the [actual slide source](../slides/session-5.md) and [final presentation brief/checklist](../assessment/final-presentation.md). Follow the [syllabus](../../SYLLABUS.md#assessment-policy), and [course glossary](../../GLOSSARY.md).
 
 Open with the slide “Back at the bubble tea shop” (about 2 minutes, taken from the first block). Ask students one at a time, at random, and leave the question open: do not explain it or connect it to today's topic. The questions continue the Session 1 bubble tea example; reword them before class if you like.
 
@@ -105,4 +105,4 @@ At each presentation, record Pass/Fail, URL/path and a short observation for eve
 - Open every student's authored PR, teammate review and follow-up; rehearse evidence questions and recording all mandatory rows.
 - Rehearse five-minute closing and finality wording; check slide titles, links and command references against the brief.
 
-Authoring evidence: [testing guide](../../docs/testing.md#actual-verification) records issue #5's earlier local 175-pass run; [comparison PR #58](https://github.com/drweihungpan-lab/3R-teaching/pull/58) at `c5fc92a` has [remote run 38876609585](https://github.com/drweihungpan-lab/3R-teaching/actions/runs/38876609585), recorded in coordination verification as successful backend tests and real Docker comparisons. These are historical implementation evidence, not this document's checks, current student evidence, or classroom delivery. This document receives content/link/command/timing checks only; backend tests are not rerun. Docker and LibreOffice are unavailable locally; no local container execution, rendered deck inspection, student participation or classroom rehearsal is claimed.
+See [verification](../../docs/verification.md) for recorded checks and the remaining limits to rehearse on the delivery machine.
