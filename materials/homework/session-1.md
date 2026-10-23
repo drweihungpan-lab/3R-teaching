@@ -1,6 +1,6 @@
 # Session 1 mandatory homework: choose, change, and review
 
-Spend approximately **120 minutes per student** before Session 2, coordinating with your group of three or four. Extend the [Session 1 exercise](../exercises/session-1.md): independently select a dataset and question, document your collaboration plan, and complete a small change through a reviewed PR in your group's repository. Topic approval is not required; instructor discussion is optional. Modeling is optional and complexity earns no extra credit.
+Spend approximately **120 minutes per student** before Session 2, coordinating with your group of three or four. First finish any [guided exercise](../exercises/session-1.md) steps not completed in class; that time is in addition to the 120 minutes. Extend the [Session 1 exercise](../exercises/session-1.md): independently select a dataset and question, document your collaboration plan, and complete a small change through a reviewed PR in your group's repository. Topic approval is not required; instructor discussion is optional. Modeling is optional and complexity earns no extra credit.
 
 ## Preparation
 

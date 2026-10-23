@@ -2,6 +2,8 @@
 
 Teach students to trace a request, explain missingness and rejection, read a test failure, and connect the correction to its PR check. Use the complete synthetic example. These delivery notes implement [issue #32](https://github.com/drweihungpan-lab/3R-teaching/issues/32) under the [course specification](../../docs/specs/course-framework-and-teaching-materials.md) and [syllabus](../../SYLLABUS.md#session-3-defensive-engineeringfastapi-pytest-and-automated-ci).
 
+Open with the slide “Back at the bubble tea shop” (about 2 minutes, taken from the first block). Ask students one at a time, at random, and leave the question open: do not explain it or connect it to today's topic. The questions continue the Session 1 bubble tea example; reword them before class if you like.
+
 ## Prepare before class
 
 Have Python 3.12 with backend development dependencies, Git, an editor, two terminals, a browser, curl (or `/docs`), and GitHub access to a disposable teaching PR and each group's repository. Follow [setup](../../docs/setup.md) before class; check Python, imports, repository root, permissions, and a recent passing **Backend tests** check. Students work in groups of three or four and rotate driving/review roles. Docker is not needed today.

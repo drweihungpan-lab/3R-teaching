@@ -10,12 +10,30 @@ Make a small, explainable change to a complete working example.
 
 ## Our three-hour route
 
-- 00–45: Explanation — environments, configuration, Git, and CI.
-- 45–75: Demonstration — template to a checked draft PR.
-- 75–90: Break — 15 minutes.
-- 90–180: Guided practice — repeat the workflow and resolve a conflict.
+- 00–35: Opening — introductions, a bubble tea question, and why results must hold.
+- 35–65: Explanation — environments, configuration, Git, and CI.
+- 65–85: Demonstration — template to a checked draft PR.
+- 85–100: Break — 15 minutes.
+- 100–180: Guided practice — repeat the workflow; the conflict drill if time permits.
 
-These provisional timings total 45 minutes explanation, 30 demonstration, 15 break, and 90 practice.
+These flexible timings total 35 minutes opening, 30 explanation, 20 demonstration, 15 break, and 80 practice. Unfinished practice continues at home, in addition to the homework.
+
+---
+
+## Your bubble tea shop
+
+At the student demo day, your bubble tea got great reviews.
+
+Now you want to open a shop in front of NTHU. You already have the best location and the decor.
+
+**What do you need to take care of so every customer gets the tea they loved?**
+
+---
+
+## Can we trust published biomedical research?
+
+- An estimated **>50%** of preclinical biomedical research is irreproducible, costing about **US$28 billion a year** in the US. ([Freedman et al., PLoS Biol 2015](https://doi.org/10.1371/journal.pbio.1002165))
+- Cancer biology: only **46%** of replications succeeded, and **74%** of planned experiments could not be done at all, partly because methods were not described in enough detail. ([Errington et al., eLife 2021](https://doi.org/10.7554/eLife.71601))
 
 ---
 
@@ -26,6 +44,8 @@ These provisional timings total 45 minutes explanation, 30 demonstration, 15 bre
 - Reproducibility: matching results under very different conditions, such as an independent simulation; conceptual here.
 
 These are the [course definitions](../../GLOSSARY.md). Later comparisons require exact records/counts and declared tolerances for calculated decimals.
+
+Keep your bubble tea answers in mind.
 
 ---
 
@@ -205,15 +225,15 @@ See [collaboration guidance](../../docs/collaboration.md). After merging, switch
 
 ---
 
-## Break, then 90 minutes of practice
+## Break, then 80 minutes of practice
 
 Take a 15-minute break after the demonstration.
 
-- First 30 minutes: create the group repository, prepare each environment, run the example and baseline checks.
+- First 45 minutes: create the group repository, prepare each environment, run the example and baseline checks.
 - Next 30 minutes: each student makes a small purposeful change, opens a draft PR, and reviews a teammate's PR.
-- Last 30 minutes: rehearse the controlled conflict below, resolve it, rerun checks, and discuss evidence.
+- Last 5 minutes: record evidence and your stopping point. Rehearse the controlled conflict below only if time permits.
 
-Use the setup and collaboration guides when stuck. Work in the group's repository and keep changes small enough to explain.
+Finish any unfinished practice at home, in addition to the homework. Use the setup and collaboration guides when stuck. Work in the group's repository and keep changes small enough to explain.
 
 ---
 
@@ -306,7 +326,7 @@ Keep authored PR links, submitted review permalinks, and CI links with commit SH
 
 ## Prepare for the final presentation
 
-Mandatory homework after Session 1 is approximately two hours: continue the PR/review workflow and document the group's dataset and question.
+Mandatory homework after Session 1 is approximately two hours, plus any unfinished guided practice: continue the PR/review workflow and document the group's dataset and question.
 
 - Today's checkpoint is preparation: isolated environment, configuration hygiene, and visible branch/PR history.
 - Assessment is pass/fail, entirely at the final presentation. All engineering requirements must be met, including tests, CI, validation, and later output comparisons.

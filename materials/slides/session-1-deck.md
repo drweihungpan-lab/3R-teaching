@@ -17,10 +17,10 @@ python scripts/build_slides.py \
   --output materials/slides/session-1.pptx --check-only
 ```
 
-Both commands passed: 22 source slides become 31 editable 16:9 slides,
-with nine continuation slides, 136 source elements, 142 body text boxes,
-and 10 distinct clickable link targets. All source text and ordering are
-preserved, including the agenda, demonstrations, conflict rehearsal, and
+Both commands passed: 24 source slides become 33 editable 16:9 slides,
+with nine continuation slides, 143 source elements, 148 body text boxes,
+and 12 distinct clickable link targets. All source text and ordering are
+preserved, including the agenda, bubble tea and research-statistics openers, demonstrations, conflict rehearsal, and
 final-presentation requirements. Continuations repeat their source title
 and identify the source slide and continuation number.
 

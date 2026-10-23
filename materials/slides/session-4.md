@@ -7,6 +7,12 @@
 
 ---
 
+## Back at the bubble tea shop
+
+**You open a second shop in Hsinchu Science Park. How do you make sure it tastes the same?**
+
+---
+
 ## Our 180-minute agenda
 
 - 0–45: explanation — request flow, images, networking, readiness, agreement.

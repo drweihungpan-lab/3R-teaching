@@ -36,7 +36,7 @@ The working example, data, tests, CI, containers, and teaching materials are imp
 
 ## Classroom plan and collaboration
 
-- Provisional allocation for each three-hour session: 45 minutes of explanation, 30 minutes of demonstration, 90 minutes of guided practice, and a 15-minute break. Adjust as the materials develop; the final showcase needs its own presentation schedule.
+- Provisional allocation for each three-hour session: 45 minutes of explanation, 30 minutes of demonstration, 90 minutes of guided practice, and a 15-minute break. Adjust as the materials develop; the final showcase needs its own presentation schedule. Session 1 opens with about 35 flexible minutes for introductions and the bubble tea example, so it uses 30 minutes of explanation, 20 of demonstration, and 80 of practice; unfinished practice continues at home.
 - Use feature branches, pull requests, peer review, and merges into `main`; do not introduce a separate `develop` branch.
 
 ## Provisional session sequence

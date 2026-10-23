@@ -1,6 +1,6 @@
 # Session 1 instructor notes: environments, Git, and CI
 
-Delivery and rehearsal notes for 20 statistics students in groups of three or four. Students inspect a complete application and make a small README change. Use the [slides](../slides/session-1.md), [guided exercise](../exercises/session-1.md), [syllabus](../../SYLLABUS.md), and [course definitions](../../GLOSSARY.md).
+Delivery and rehearsal notes for 20 statistics students in groups of three or four. The session opens with introductions and an open bubble tea question, then students inspect a complete application and make a small README change. Use the [slides](../slides/session-1.md), [guided exercise](../exercises/session-1.md), [syllabus](../../SYLLABUS.md), and [course definitions](../../GLOSSARY.md).
 
 ## Prepare before class
 
@@ -10,34 +10,44 @@ Delivery and rehearsal notes for 20 statistics students in groups of three or fo
 - Use only the bundled synthetic [DM](../../data/synthetic/dm.csv) and [LB](../../data/synthetic/lb.csv); read their [provenance](../../data/synthetic/README.md). No patient data or neighboring repository is needed. Prepare two terminals in the same clone and environment, with ports 8000/8501 free.
 - Preinstall dependencies for a clean demonstration clone and keep a checked baseline available if downloads are slow. Show `python --version` and `python -c 'import sys; print(sys.executable)'`: expect 3.12.x and that clone's `.venv`. Activation is needed in each terminal; it does not install packages. Version ranges are not a lockfile; `python -m pip freeze` records installed versions.
 - Follow exercise §2's non-overwriting copy, `test -e .env || cp .env.example .env`. Inspect `git check-ignore .env .venv/` and `git ls-files -- .env .env.example`: local settings/environment ignored, only `.env.example` tracked. Check local `BACKEND_URL=http://127.0.0.1:8000`, `LOG_LEVEL=INFO`, and `MAX_UPLOAD_BYTES=5242880`. Exported variables override `.env`; restart services after edits. Never stage credentials.
-- Prepare an unused local conflict rehearsal clone with the slide drill's committed base and two branches; preserve the original clean baseline. Keep an earlier, clearly labeled CI run ready in case the live run is still pending. Never present an old run as checking the new commit.
+- Optionally prepare an unused local conflict rehearsal clone with the slide drill's committed base and two branches; preserve the original clean baseline. Keep an earlier, clearly labeled CI run ready in case the live run is still pending. Never present an old run as checking the new commit.
 
 ## Provisional 180-minute run sheet
 
 Slide titles below are the actual Markdown headings, not proposed slides. Exercise section numbers refer to the linked guided exercise.
 
+### Flexible opening: about 35 minutes
+
+The opening times are guides, not fixed limits. If the opening runs long, students finish unfinished guided practice at home, in addition to the two-hour homework.
+
+- **Introduce yourself (about 5 minutes).** No slide.
+- **Get to know students (about 10 minutes).** No slide. Ask random students informal questions: name, major, year, and their favorite bubble tea shop near campus.
+- **Your bubble tea shop (about 12 minutes).** Read the scene, then ask students one at a time, at random, what they would need to take care of. Do not explain, steer answers toward the three Rs, or ask students to match them; leave space for imagination.
+- **Can we trust published biomedical research? (about 5 minutes).** Present the two cited figures. Say aloud, without adding a slide, that in a 2016 *Nature* survey of 1,576 researchers across all sciences, more than half reported failing to reproduce their own experiments ([Baker 2016](https://doi.org/10.1038/533452a)). Freedman's figure is an estimate; present it as one.
+- **What are we trying to preserve? (about 3 minutes).** Read the course definitions and the closing line, “Keep your bubble tea answers in mind.” Do not map students' answers to the definitions.
+
+### Explanation, demonstration, and practice
+
 | Clock | Mode | Actual slide titles | Delivery and activity reference |
 | --- | --- | --- | --- |
-| 00–05 | Explanation | Our three-hour route; What are we trying to preserve? | State matching conditions and declared comparisons; independent simulation is conceptual. |
-| 05–15 | Explanation | Start with a working application; A Python environment belongs to one project | Trace Streamlit → FastAPI → `stat_core`; explain isolation versus pinned versions. Exercise §§2–3. |
-| 15–23 | Explanation | Local configuration and shareable examples | Show ignored local settings versus tracked example; ignore rules do not remove tracked secrets. Exercise §2. |
-| 23–33 | Explanation | Git records changes; GitHub hosts collaboration | Explain branch, staging, commit, push, draft PR, review, merge. Exercise §§4–5. |
-| 33–40 | Explanation | CI reports; repository rules require | Read commit-specific checks versus separately configured merge rules. Exercise §5 and CI reference. |
-| 40–45 | Explanation | A meaningful review helps the next reader; Your group owns the question and evidence; Prepare for the final presentation | Explain individual PR/review evidence and final-only assessment. Exercise §§5–6. |
-| 45–51 | Demonstration | Demo: create your group's repository; Demo: prepare Python and check the baseline | Show template/collaborator steps, interpreter, settings and baseline checks; use preinstalled clone if downloads continue. Exercise §§1–2. |
-| 51–56 | Demonstration | Demo: see the example work | Start services with the canonical commands; health response, upload selections, counts, tables/chart. Exercise §3. |
-| 56–63 | Demonstration | Demo: one small README change; Demo: record and publish the change | Stop services, show clean tree, branch, small diff, intended staging, descriptive commit and push. Exercise §4. |
-| 63–70 | Demonstration | Demo: open a draft PR and inspect checks; A meaningful review helps the next reader | Use supplied PR template; show latest SHA/log and a specific comment plus author response. Exercise §5. |
-| 70–75 | Demonstration | Controlled conflict: seed a disposable file; Controlled conflict: two feature branches; Resolve deliberately, or abort the merge; Use the same recovery on real PRs | Use prepared local branches to show conflict, abort, retry and manual resolution below. Exercise §6 previews the recovery. |
-| 75–90 | Break | Break, then 90 minutes of practice | Full 15-minute break. |
-| 90–105 | Practice | Demo: create your group's repository | Exercise §1: create/clone group repository; verify remote and accepted access. |
-| 105–125 | Practice | Demo: prepare Python and check the baseline | Exercise §2: each student checks interpreter, installs, ignore rules and baseline tests. |
-| 125–140 | Practice | Demo: see the example work | Exercise §3: each student inspects uploads and explains counts/missingness. |
-| 140–155 | Practice | Demo: one small README change; Demo: record and publish the change | Exercise §4: unique branch and author heading, candidate dataset/question, intended diff. |
-| 155–175 | Practice | Demo: open a draft PR and inspect checks; A meaningful review helps the next reader | Exercise §5: draft PR, current CI result, specific peer feedback and response. |
+| 35–45 | Explanation | Start with a working application; A Python environment belongs to one project | Trace Streamlit → FastAPI → `stat_core`; explain isolation versus pinned versions. Exercise §§2–3. |
+| 45–51 | Explanation | Local configuration and shareable examples | Show ignored local settings versus tracked example; ignore rules do not remove tracked secrets. Exercise §2. |
+| 51–58 | Explanation | Git records changes; GitHub hosts collaboration | Explain branch, staging, commit, push, draft PR, review, merge. Exercise §§4–5. |
+| 58–62 | Explanation | CI reports; repository rules require | Read commit-specific checks versus separately configured merge rules. Exercise §5 and CI reference. |
+| 62–65 | Explanation | A meaningful review helps the next reader; Your group owns the question and evidence; Prepare for the final presentation | Explain individual PR/review evidence and final-only assessment. Exercise §§5–6. |
+| 65–69 | Demonstration | Demo: create your group's repository; Demo: prepare Python and check the baseline | Show template/collaborator steps, interpreter, settings and baseline checks in the preinstalled clone. Exercise §§1–2. |
+| 69–73 | Demonstration | Demo: see the example work | Start services with the canonical commands; health response, upload selections, counts, tables/chart. Exercise §3. |
+| 73–78 | Demonstration | Demo: one small README change; Demo: record and publish the change | Show both slides as one step: clean tree, branch, small diff, intended staging, descriptive commit and push. Exercise §4. |
+| 78–85 | Demonstration | Demo: open a draft PR and inspect checks; A meaningful review helps the next reader | Use supplied PR template; show latest SHA/log and a specific comment plus author response. Exercise §5. |
+| 85–100 | Break | Break, then 80 minutes of practice | Full 15-minute break. |
+| 100–115 | Practice | Demo: create your group's repository | Exercise §1: create/clone group repository; verify remote and accepted access. |
+| 115–130 | Practice | Demo: prepare Python and check the baseline | Exercise §2: each student checks interpreter, installs, ignore rules and baseline tests. |
+| 130–145 | Practice | Demo: see the example work | Exercise §3: each student inspects uploads and explains counts/missingness. |
+| 145–160 | Practice | Demo: one small README change; Demo: record and publish the change | Exercise §4: unique branch and author heading, candidate dataset/question, intended diff. |
+| 160–175 | Practice | Demo: open a draft PR and inspect checks; A meaningful review helps the next reader | Exercise §5: draft PR, current CI result, specific peer feedback and response. |
 | 175–180 | Practice | Use the same recovery on real PRs; Prepare for the final presentation | Exercise §6: inspect recovery, record evidence/stopping point, explain next steps. |
 
-Totals: explanation 45, demonstration 30, break 15, practice 90 = 180 minutes. Follow the exercise's detailed 15/20/15/15/20/5 practice allocation; the slide “Break, then 90 minutes of practice” has a broader provisional 30/30/30 outline. The prepared conflict demonstration above supplies the live drill without adding a second 90-minute exercise. Learners inspect recovery in §6; further hands-on conflict rehearsal is supervised when time permits. Leave incomplete PR/CI work explicit rather than compressing recovery or claiming completion.
+Totals: opening about 35, explanation 30, demonstration 20, break 15, practice 80 = 180 minutes. Follow the exercise's detailed 15/15/15/15/15/5 practice allocation; the slide “Break, then 80 minutes of practice” has a broader 45/30/5 outline. The controlled conflict demonstration (four slides) is optional: show it only if time permits, otherwise students inspect recovery in §6. Leave incomplete PR/CI work explicit rather than compressing recovery or claiming completion; students finish unfinished practice at home.
 
 ## Demo observations and questions
 
@@ -57,7 +67,7 @@ Use exercise §§2–5 and the [collaboration guide](../../docs/collaboration.md
 
 ## Controlled conflict and safe recovery
 
-Follow the four conflict/recovery slides and [Update and merge](../../docs/collaboration.md#update-and-merge). Use unused branch names and a new `conflict-demo.txt`, in the local rehearsal clone only. Start with `git status` clean and all other work committed; never practice against shared student `main`.
+This drill is optional in the run sheet; use it only if time permits. Follow the four conflict/recovery slides and [Update and merge](../../docs/collaboration.md#update-and-merge). Use unused branch names and a new `conflict-demo.txt`, in the local rehearsal clone only. Start with `git status` clean and all other work committed; never practice against shared student `main`.
 
 1. Seed `practice/conflict-base` with exactly `Session plan: draft`. Branch `practice/conflict-a`, change it to `Session plan: test first`, and commit. From the base, branch `practice/conflict-b`, change it to `Session plan: review first`, and commit. The slides contain the exact branch/add/commit commands.
 2. On B, `git merge practice/conflict-a` must report a content conflict. Inspect `git status` and the file: `<<<<<<< HEAD` begins B's “review first”, `=======` separates A's “test first”, and `>>>>>>> practice/conflict-a` ends it. Explain both intentions before choosing text.
@@ -76,7 +86,7 @@ Follow the four conflict/recovery slides and [Update and merge](../../docs/colla
 | Counts wrong or validation error | Reselect the bundled DM/LB in the correct upload fields; keep original data intact. Inspect the file/row/field message using the [API contract](../../docs/api.md). Never replace missing values with zero to make counts match. |
 | No CI, pending CI, or failing CI | Check Actions permission, branch/SHA and first failing step. Pending is not passing; retain the run URL and exact limit. Correct the cause and push to the same branch; an old rerun cannot verify a new commit. A prepared run is historical evidence only. |
 | Pull refuses or a merge conflicts | Inspect status and preserve work before following recovery above. Do not discard changes or force-push. A conflicted merge can be aborted before its resolution commit; keep both intentions. |
-| Time runs out before review/merge | Keep the draft/open PR and record outstanding checks/feedback. Merging is not required in this practice. Continue the approximately two-hour mandatory Session 1 homework described in the syllabus. |
+| Time runs out before review/merge | Keep the draft/open PR and record outstanding checks/feedback. Merging is not required in this practice. Students finish unfinished practice at home, in addition to the approximately two-hour mandatory Session 1 homework described in the syllabus. |
 
 ## Rehearsal checklist and evidence boundary
 

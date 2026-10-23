@@ -1,6 +1,6 @@
 # Session 1 guided practice: environment, branch, and first PR
 
-Work in groups of three or four for 90 minutes. Inspect the complete synthetic healthcare application and make a small README change; no application construction is needed. Choose your own dataset and question without prior approval; modeling is optional. FastAPI, Streamlit, and Docker Compose remain required for the final project.
+Work in groups of three or four for 80 minutes. Finish any unfinished steps at home, in addition to the Session 1 homework. Inspect the complete synthetic healthcare application and make a small README change; no application construction is needed. Choose your own dataset and question without prior approval; modeling is optional. FastAPI, Streamlit, and Docker Compose remain required for the final project.
 
 Prerequisites: Python 3.12, Git, an editor, internet for dependencies, individual GitHub accounts, and the instructor's completed template URL. The instructor must first publish the completed framework on the template's default branch and enable **Template repository**; see [template setup](../../docs/template.md). One group member needs permission to create a repository and invite teammates; everyone needs write access. Use synthetic inputs today, not patient data.
 
@@ -9,11 +9,11 @@ Commands below use macOS/Linux shells from the repository root. Windows users sh
 | Minutes | Activity | Expected observation |
 | --- | --- | --- |
 | 0–15 | Create and clone group repository | Teammates can open their own group's repository |
-| 15–35 | Prepare environment and settings | Python 3.12, ignored local settings, passing tests |
-| 35–50 | Run and inspect supplied application | Healthy API and 24/96/95/1 displayed counts |
-| 50–65 | Make and commit README change | One small diff on a feature branch |
-| 65–85 | Open draft PR, inspect CI, exchange feedback | Check for current commit and specific reviewer comment |
-| 85–90 | Inspect conflict guidance and record evidence | Clear stopping point and recovery plan |
+| 15–30 | Prepare environment and settings | Python 3.12, ignored local settings, passing tests |
+| 30–45 | Run and inspect supplied application | Healthy API and 24/96/95/1 displayed counts |
+| 45–60 | Make and commit README change | One small diff on a feature branch |
+| 60–75 | Open draft PR, inspect CI, exchange feedback | Check for current commit and specific reviewer comment |
+| 75–80 | Inspect conflict guidance and record evidence | Clear stopping point and recovery plan |
 
 ## 1. Create your group's repository — 15 minutes
 
@@ -30,7 +30,7 @@ git status --short
 
 Expect `origin` to name the group repository and no changed files. Find `backend/`, `frontend/`, and `data/synthetic/`; you already have the working example. Do not clone the instructor repository as your group's project.
 
-## 2. Prepare an isolated environment — 20 minutes
+## 2. Prepare an isolated environment — 15 minutes
 
 An environment keeps this project's installed packages separate from global Python. From the root:
 
@@ -95,7 +95,7 @@ git push -u origin HEAD
 
 Expect only the intended README addition in the staged diff, with no `.env`, `.venv`, or data changes. Check any added links and factual statements manually. Existing backend tests check the application; they do not verify the clarity of your question. Do not invent tests for a README edit.
 
-## 5. Inspect the draft PR and review — 20 minutes
+## 5. Inspect the draft PR and review — 15 minutes
 
 In the **group repository**, select **Compare & pull request** (or **Pull requests → New pull request**), base `main`, and your feature branch as compare. Fill in the supplied PR template: purpose, before/after README content, actual local commands/results, and limits. Use the create-button dropdown to select **Create draft pull request**. Inspect **Files changed** for your intended diff.
 

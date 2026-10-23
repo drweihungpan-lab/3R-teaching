@@ -18,8 +18,8 @@ python scripts/build_slides.py \
 
 ## Generation and checks
 
-The approved 22 source slides produce 22 editable PowerPoint slides, with no
-continuation slides: 139 source body elements, 139 body text boxes, and 15 unique
+The approved 23 source slides produce 23 editable PowerPoint slides, with no
+continuation slides: 140 source body elements, 140 body text boxes, and 15 unique
 clickable link targets. The request workflow remains editable monospace text.
 The deck uses the shared 16:9 layout, 32 pt Arial titles, 21 pt Arial body text,
 and 18 pt Courier New code.

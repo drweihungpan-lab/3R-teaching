@@ -73,6 +73,6 @@ boundaries, and links in presentation mode. Do not claim visual inspection from
 the XML checks alone. PowerPoint and LibreOffice are unavailable in the build
 environment, so rendered clipping and viewer-specific layout remain unverified.
 
-Session 2 keeps the approved 24 source slides across 32 PowerPoint slides,
+Session 2 keeps the approved 25 source slides across 33 PowerPoint slides,
 including eight continuation slides. The Markdown agenda and
 all explanation, demonstration, break, and practice content remain unchanged.

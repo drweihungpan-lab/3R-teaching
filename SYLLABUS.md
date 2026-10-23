@@ -12,7 +12,7 @@ The working application template and [teaching materials](materials/README.md) a
 
 - **Audience:** 20 statistics students familiar with Python functions, pandas, and basic regression.
 - **Classroom time:** 15 hours across five three-hour sessions.
-- **Mandatory homework:** approximately two hours after each of Sessions 1–4, eight hours in total.
+- **Mandatory homework:** approximately two hours after each of Sessions 1–4, eight hours in total. Guided practice not finished in class is completed at home, in addition to this time.
 - **Group size:** three or four students, with one GitHub repository per group.
 - **Language:** English.
 
@@ -69,7 +69,7 @@ Create a group repository from the supplied template, prepare a local environmen
 
 ### Mandatory homework: approximately 2 hours
 
-Practice the branch and pull-request workflow in the group repository. Inspect a teammate's change and document the group's chosen dataset and question.
+Practice the branch and pull-request workflow in the group repository. Inspect a teammate's change and document the group's chosen dataset and question. First finish any guided practice not completed in class; this is in addition to the two hours.
 
 **Progress checkpoint:** a group repository with environment isolation, configuration hygiene, and a visible branch/PR workflow. This is preparation for the final presentation, not a separate submission.
 
@@ -174,7 +174,7 @@ All assessment takes place at the final presentation. There is no separate submi
 
 ## Provisional classroom timing
 
-Sessions 1–4 will initially allocate 45 minutes to explanation, 30 minutes to demonstration, 90 minutes to guided practice, and 15 minutes to a break. This allocation may change as the materials develop. Session 5 uses a separate showcase schedule.
+Sessions 1–4 will initially allocate 45 minutes to explanation, 30 minutes to demonstration, 90 minutes to guided practice, and 15 minutes to a break. Session 1 instead opens with about 35 flexible minutes for introductions and a motivating example, followed by 30 minutes of explanation, 20 of demonstration, a 15-minute break, and 80 of guided practice. This allocation may change as the materials develop. Session 5 uses a separate showcase schedule.
 
 ## Course materials and surveys
 
