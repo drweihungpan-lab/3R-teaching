@@ -180,7 +180,7 @@ All assessment takes place at the final presentation. There is no separate submi
 
 ## Provisional classroom timing
 
-Sessions 1–4 will initially allocate 45 minutes to explanation, 30 minutes to demonstration, 90 minutes to guided practice, and 15 minutes to a break. Session 1 instead opens with about 35 flexible minutes for introductions and a motivating example, followed by 30 minutes of explanation, 20 of demonstration, a 15-minute break, and 80 of guided practice. This allocation may change as the materials develop. Session 5 uses a separate showcase schedule.
+Sessions 1–4 will initially allocate 45 minutes to explanation (including a 10-minute [device example](GLOSSARY.md) segment in Sessions 2–4), 30 minutes to demonstration, 90 minutes to guided practice, and 15 minutes to a break. Session 1 instead opens with about 35 flexible minutes for introductions and a motivating example, followed by a 10-minute device-example segment, 20 minutes of explanation, 20 of demonstration, a 15-minute break, and 80 of guided practice. This allocation may change as the materials develop. Session 5 uses a separate showcase schedule.
 
 ## Course materials and surveys
 

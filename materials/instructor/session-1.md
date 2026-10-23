@@ -30,11 +30,12 @@ The opening times are guides, not fixed limits. If the opening runs long, studen
 
 | Clock | Mode | Actual slide titles | Delivery and activity reference |
 | --- | --- | --- | --- |
-| 35–45 | Explanation | Start with a working application; A Python environment belongs to one project | Trace Streamlit → FastAPI → `stat_core`; explain isolation versus pinned versions. Exercise §§2–3. |
-| 45–51 | Explanation | Local configuration and shareable examples | Show ignored local settings versus tracked example; ignore rules do not remove tracked secrets. Exercise §2. |
-| 51–58 | Explanation | Git records changes; GitHub hosts collaboration | Explain branch, staging, commit, push, draft PR, review, merge. Exercise §§4–5. |
-| 58–62 | Explanation | CI reports; repository rules require | Read commit-specific checks versus separately configured merge rules. Exercise §5 and CI reference. |
-| 62–65 | Explanation | A meaningful review helps the next reader; Your group owns the question and evidence; Prepare for the final presentation | Explain individual PR/review evidence and final-only assessment. Exercise §§5–6. |
+| 35–45 | Device example | Device example: one analysis, seven stages; Stage 1: one notebook, copied three times; Stage 2: helper files, no declared dependencies | Demonstrate Stages 1 → 2 with the [device example steps](#device-example-stages-1--2-about-10-minutes) below. Name the tool that fixes each pain; do not teach the tool yet. |
+| 45–51 | Explanation | Start with a working application; A Python environment belongs to one project | Trace Streamlit → FastAPI → `stat_core`; explain isolation versus pinned versions. Exercise §§2–3. |
+| 51–55 | Explanation | Local configuration and shareable examples | Show ignored local settings versus tracked example; ignore rules do not remove tracked secrets. Exercise §2. |
+| 55–60 | Explanation | Git records changes; GitHub hosts collaboration | Explain branch, staging, commit, push, draft PR, review, merge. Exercise §§4–5. |
+| 60–63 | Explanation | CI reports; repository rules require | Read commit-specific checks versus separately configured merge rules. Exercise §5 and CI reference. |
+| 63–65 | Explanation | A meaningful review helps the next reader; Your group owns the question and evidence; Prepare for the final presentation | Explain individual PR/review evidence and final-only assessment. Exercise §§5–6. |
 | 65–69 | Demonstration | Demo: create your group's repository; Demo: prepare Python and check the baseline | Show template/collaborator steps, interpreter, settings and baseline checks in the preinstalled clone. Exercise §§1–2. |
 | 69–73 | Demonstration | Demo: see the example work | Start services with the canonical commands; health response, upload selections, counts, tables/chart. Exercise §3. |
 | 73–78 | Demonstration | Demo: one small README change; Demo: record and publish the change | Show both slides as one step: clean tree, branch, small diff, intended staging, descriptive commit and push. Exercise §4. |
@@ -47,7 +48,31 @@ The opening times are guides, not fixed limits. If the opening runs long, studen
 | 160–175 | Practice | Demo: open a draft PR and inspect checks; A meaningful review helps the next reader | Exercise §5: draft PR, current CI result, specific peer feedback and response. |
 | 175–180 | Practice | Use the same recovery on real PRs; Prepare for the final presentation | Exercise §6: inspect recovery, record evidence/stopping point, explain next steps. |
 
-Totals: opening about 35, explanation 30, demonstration 20, break 15, practice 80 = 180 minutes. Follow the exercise's detailed 15/15/15/15/15/5 practice allocation; the slide “Break, then 80 minutes of practice” has a broader 45/30/5 outline. The controlled conflict demonstration (four slides) is optional: show it only if time permits, otherwise students inspect recovery in §6. Leave incomplete PR/CI work explicit rather than compressing recovery or claiming completion; students finish unfinished practice at home.
+Totals: opening about 35, device example 10, explanation 20, demonstration 20, break 15, practice 80 = 180 minutes. Follow the exercise's detailed 15/15/15/15/15/5 practice allocation; the slide “Break, then 80 minutes of practice” has a broader 45/30/5 outline. The controlled conflict demonstration (four slides) is optional: show it only if time permits, otherwise students inspect recovery in §6. Leave incomplete PR/CI work explicit rather than compressing recovery or claiming completion; students finish unfinished practice at home.
+
+## Device example: Stages 1 → 2 (about 10 minutes)
+
+The [device example](https://github.com/drweihungpan-lab/3R-device-example) is a synthetic analysis that grows up in seven stages across the course (see the [glossary](../../GLOSSARY.md)). Today shows Stages 1 and 2. This is a demonstration; students do not run it. The slides follow the “What are we trying to preserve?” slide.
+
+**Prepare two environments before class** (about 10 minutes, with a network). Clone the device-example repository, then from its root:
+
+```bash
+# "My laptop": Python 3.11 with pandas 1.5 (pandas 1.5 does not support Python 3.12)
+python3.11 -m venv .venv311
+.venv311/bin/python -m pip install "pandas==1.5.3" "numpy<2"
+
+# "Colleague's laptop": Python 3.12 with pandas 2.x
+python3.12 -m venv .venv312
+.venv312/bin/python -m pip install "pandas>=2.2,<3" jupyter
+```
+
+If Python 3.11 is not installed, install it first (for example from python.org), and rehearse both runs the day before.
+
+**Stage 1 ([folder](https://github.com/drweihungpan-lab/3R-device-example/tree/main/stage-1-notebook-copies), about 3 minutes).** Open the three notebooks side by side and run each from `stage-1-notebook-copies/` (use `.venv312`). Expected: three different `DEV-C` dates, 2026-01-30, 2026-01-28 and 2026-01-26. Ask: “Last month's report said a date. Which notebook made it?” Nothing records the answer. Name the fix: Git, in today's session.
+
+**Stage 2 ([folder](https://github.com/drweihungpan-lab/3R-device-example/tree/main/stage-2-python-files), about 4 minutes).** From `stage-2-python-files/`, run `../.venv311/bin/python report.py` (prints three dates, with a harmless deprecation warning), then `../.venv312/bin/python report.py`. Expected: `AttributeError: 'DataFrame' object has no attribute 'append'`. Ask: “Same files, same data. What differs?” (Python and pandas versions; nothing in the folder says which are needed.) Name the fix: an isolated environment with declared dependencies, in today's session and Session 2.
+
+**Close (about 1 minute).** Say that the next stages come in Sessions 2 to 4 and that the repository is public if students are curious. Do not ask students to open it now. Keep the run-sheet timing: if a demo stalls, show the README's expected output instead of waiting.
 
 ## Demo observations and questions
 
