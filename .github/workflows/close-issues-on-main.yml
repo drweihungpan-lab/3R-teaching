@@ -1,0 +1,60 @@
+name: Close issues on main merge
+
+on:
+  pull_request:
+    types:
+      - closed
+
+permissions:
+  issues: write
+  pull-requests: read
+
+jobs:
+  close-linked-issues:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close issues named by closing keywords
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        with:
+          script: |
+            const body = context.payload.pull_request.body || '';
+            const issueNumbers = new Set();
+            const closingReference = /\b(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?)\s+(?:(?:https:\/\/github\.com\/[^\s/]+\/[^\s/]+\/issues\/)|(?:[^\s/#]+\/[^\s/#]+#)|#)(\d+)\b/gi;
+
+            for (const match of body.matchAll(closingReference)) {
+              issueNumbers.add(Number(match[1]));
+            }
+
+            for (const issueNumber of issueNumbers) {
+              const { data: issue } = await github.rest.issues.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+              });
+
+              if (issue.state === 'open') {
+                await github.rest.issues.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber,
+                  state: 'closed',
+                  state_reason: 'completed',
+                });
+
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber,
+                  body: `Closed automatically because #${context.payload.pull_request.number} was merged into main.`,
+                });
+              } else {
+                core.info(`#${issueNumber} is already closed; skipping duplicate comment.`);
+              }
+            }
+
+            core.info(
+              issueNumbers.size === 0
+                ? 'No closing-keyword issue references found.'
+                : `Closed ${issueNumbers.size} issue(s).`,
+            );

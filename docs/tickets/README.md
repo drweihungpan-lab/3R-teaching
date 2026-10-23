@@ -4,7 +4,7 @@ These 37 approved tickets describe the course framework and materials. They are 
 
 ## Current implementation status
 
-The deliverables for issues #2–#37 are integrated into `implement/course-framework`; issue #38 supplies the final navigation and documentation consistency update. The [materials index](../../materials/README.md) and [repository guide](../../README.md#repository-guide) link the delivered assets. See [verification](../verification.md) for actual evidence and limits. Integration is distinct from release to `main`: GitHub issues remain open until the release workflow closes them. This index does not claim that classroom teaching or student assessment has occurred.
+The deliverables for issues #2–#37 are integrated into `implement/course-framework`; issue #38 supplies the final navigation and documentation consistency update. The [materials index](../../materials/README.md) and [repository guide](../../README.md#repository-guide) link the delivered assets. See [verification](../verification.md) for actual evidence and limits. Integration is distinct from release to `main`: put a GitHub closing keyword such as `Closes #38` in the pull request, and the repository workflow closes that issue after the pull request is merged into `main`. This index does not claim that classroom teaching or student assessment has occurred.
 
 Parent specification: [GitHub issue #1](https://github.com/drweihungpan-lab/3R-teaching/issues/1).
 

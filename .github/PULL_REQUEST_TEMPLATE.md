@@ -3,6 +3,14 @@
 <!-- Explain why this change is needed and its visible before/after behavior.
 Link a relevant issue if one exists. Keep one understandable purpose per PR. -->
 
+## Issues resolved
+
+<!-- Use GitHub closing keywords for issues completed by this PR. These issues
+close automatically only after this PR is merged into main, for example:
+Closes #123
+Use one closing line per issue. Keep a plain reference such as #456 here if
+the issue should remain open. -->
+
 ## Local checks and evidence
 
 <!-- Record exact commands and actual results, including failures/limits.
