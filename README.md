@@ -12,7 +12,7 @@ The emphasis is on understanding how the parts connect and practicing the workfl
 - [Setup](docs/setup.md): Python 3.12 environment, dependencies, and local backend commands.
 - [Course design](docs/course-design.md): teaching decisions not covered by the syllabus.
 - [Verification](docs/verification.md): recorded local and hosted checks and remaining limits.
-- [Specification](docs/specs/course-framework-and-teaching-materials.md): the original planning document.
+- [Specification](https://github.com/drweihungpan-lab/3R-teaching/issues/1): the original planning document, kept as GitHub issue #1.
 
 ## Repository guide
 
