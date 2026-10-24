@@ -4,7 +4,7 @@ Work in groups of three or four for 80 minutes. Finish any unfinished steps at h
 
 Prerequisites: Python 3.12, Git, an editor, internet for dependencies, individual GitHub accounts, and the instructor's completed template URL. The instructor must first publish the completed framework on the template's default branch and enable **Template repository**; see [template setup](../../docs/template.md). One group member needs permission to create a repository and invite teammates; everyone needs write access. Use synthetic inputs today, not patient data.
 
-Commands below use macOS/Linux shells from the repository root. Windows users should follow [setup](../../docs/setup.md) and [template setup](../../docs/template.md) for Python launcher/activation equivalents and ask for help with shell differences.
+Commands below use macOS/Linux shells from the repository root. Windows users run the same commands in the WSL Ubuntu terminal ([Session 0](../../docs/session-0.md#step-2-windows-install-wsl-and-open-ubuntu)); see [setup](../../docs/setup.md) and [template setup](../../docs/template.md).
 
 | Minutes | Activity | Expected observation |
 | --- | --- | --- |

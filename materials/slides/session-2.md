@@ -191,7 +191,7 @@ python -c 'import stat_core; print(stat_core.__file__)'
 - The printed path should end in `backend/stat_core/__init__.py`.
 - Editable means imports use this checkout's source files.
 - Start a new process after edits; reinstall after metadata changes.
-- Windows activation and setup help: [setup.md](../../docs/setup.md).
+- Windows: run in the WSL Ubuntu terminal ([Session 0](../../docs/session-0.md#step-2-windows-install-wsl-and-open-ubuntu)); setup help: [setup.md](../../docs/setup.md).
 
 ---
 
