@@ -13,9 +13,39 @@
 
 ---
 
+## Device example, Stage 6: an API and a page
+
+- A FastAPI endpoint returns each device's predicted limit date. A one-page Streamlit app shows it to someone who does not program.
+- It uses the same layout as our healthcare template: `backend/`, `frontend/`, `data/`.
+- It works only on a correctly set-up machine: the right Python, the right packages, and two terminals running at once.
+
+```text
+terminal 1: uvicorn app.main:app   (API on port 8000)
+terminal 2: streamlit run frontend/app.py   (page on port 8501)
+```
+
+---
+
+## Device example, Stage 7: Docker
+
+- Docker Compose starts the API and the page together, with one command.
+- Compare the limit dates from a local run and a Docker run, exactly:
+
+```text
+local  DEV-C 2026-01-16
+docker DEV-C 2026-01-16
+MATCH: local and Docker limit dates are identical
+```
+
+- Same code and data, a slightly different environment, the same answer: replicability.
+- Session 5 recaps all seven stages. Files: [3R-device-example](https://github.com/drweihungpan-lab/3R-device-example).
+
+---
+
 ## Our 180-minute agenda
 
-- 0–45: explanation — request flow, images, networking, readiness, agreement.
+- 0–10: device example — Stages 6 to 7.
+- 10–45: explanation — request flow, images, networking, readiness, agreement.
 - 45–75: demonstration — launch 8, diagnose/recover 7, compare outputs 15 minutes.
 - 75–90: break — 15 minutes.
 - 90–180: guided practice — trace 15, run 20, recover 15, compare 25, review 15 minutes.
