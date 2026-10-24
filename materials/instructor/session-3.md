@@ -18,9 +18,10 @@ Slide titles below are the actual headings in the slide source. The exercise's f
 
 | Minutes | Mode | Actual slide titles / activity | Instructor action and observation |
 | --- | --- | --- | --- |
-| 0–10 | Explain | “Follow the request across public boundaries”; “A contract tells callers what to expect” | Trace uploads → API → `process_csv` → `ProcessResult` → JSON. Ask which layer knows HTTP and which accepts CSV text. |
-| 10–25 | Explain | “Validate meaning as well as type”; “Missing values carry information”; “HTTP status and error location guide repair” | Work through keys, units, AGE, null versus zero, and file/row/field errors against the API contract. |
-| 25–40 | Explain | “Test behavior callers can observe”; “Fixtures provide reusable inputs”; “Work out the expected answer independently”; “Declare exact and approximate agreement” | Read the tiny fixture and calculate mean 15 independently. Distinguish public behavior from internal calls. |
+| 0–10 | Device example | “Device example, Stage 5: tests and CI” | Demonstrate Stage 5 with the [device example steps](#device-example-stage-5-about-10-minutes) below. Name the tool the stage shows; the session teaches it. |
+| 10–18 | Explain | “Follow the request across public boundaries”; “A contract tells callers what to expect” | Trace uploads → API → `process_csv` → `ProcessResult` → JSON. Ask which layer knows HTTP and which accepts CSV text. |
+| 18–28 | Explain | “Validate meaning as well as type”; “Missing values carry information”; “HTTP status and error location guide repair” | Work through keys, units, AGE, null versus zero, and file/row/field errors against the API contract. |
+| 28–40 | Explain | “Test behavior callers can observe”; “Fixtures provide reusable inputs”; “Work out the expected answer independently”; “Declare exact and approximate agreement” | Read the tiny fixture and calculate mean 15 independently. Distinguish public behavior from internal calls. |
 | 40–45 | Explain | “Connect checks to the course's three Rs”; “Reporting a check is different from requiring it” | Ask what CI proves and what requires a separate comparison or branch rule. |
 | 45–55 | Demo | “Demo: start from the working backend”; “Demo: send a valid multipart request”; “Demo: reject an invalid age” | Show health, valid counts, missing record, AGE rejection, and original-file recovery. |
 | 55–65 | Demo | “Demo: run tests and read one public behavior”; “Demo: introduce one controlled failure”; “Demo: correct the expectation and check again” | Execute focused pass → fail → pass; explain obtained versus expected; run full suite after correction. |
@@ -32,7 +33,26 @@ Slide titles below are the actual headings in the slide source. The exercise's f
 | 135–155 | Practice | Exercise §4 “Read tests and create a controlled failure” | Read fixtures, run the focused test, change 15 to 16, and save the assertion failure. |
 | 155–180 | Practice | Exercise §5 “Inspect PR checks, recover, and review”; “Checkpoint and next step” | Inspect failed check, restore 15, add the useful explanatory comment, run focused/full checks, push, and review the corrected SHA. Reserve the last few minutes for evidence gaps and homework reminder. |
 
-Totals: explanation 45 + demonstration 30 + break 15 + practice 90 = 180 minutes. If hosted checks lag, continue local interpretation and peer review; record the outstanding remote result.
+Totals: device example 10 + explanation 35 + demonstration 30 + break 15 + practice 90 = 180 minutes. If hosted checks lag, continue local interpretation and peer review; record the outstanding remote result.
+
+## Device example: Stage 5 (about 10 minutes)
+
+The slide follows “Back at the bubble tea shop”. This is a demonstration; students do not run it. Prepare a clone of the [device example](https://github.com/drweihungpan-lab/3R-device-example) and its pull request from `demo/cleanup-drops-zero-days` into `main` before class (open it as a **draft**, never merge it), plus a Python 3.12 environment:
+
+```bash
+python3.12 -m venv .venv312
+.venv312/bin/python -m pip install -e 'stage-5-tests-ci/backend[dev]'
+```
+
+**Steps ([folder](https://github.com/drweihungpan-lab/3R-device-example/tree/main/stage-5-tests-ci), about 10 minutes).**
+
+1. Remind students of Stage 4: the cleanup moved the dates and nothing noticed.
+2. On `main`, run `python -m pytest stage-5-tests-ci/backend`: `6 passed`. Show the Actions tab: `main` is green.
+3. Open `backend/tests/test_model.py` and read the pinned `EXPECTED_LIMIT_DATES` (2026-06-30, 2026-04-01, 2026-01-16).
+4. Open the prepared pull request: CI is **red**, with `test_limit_dates_are_pinned_for_the_fixed_synthetic_data` failing (3 failed, 3 passed). The diff is the same cleanup as Stage 4. Explain that the test, not a person, caught it. Use a rehearsal run if hosted checks are slow, and label it as one.
+5. Show that Stage 5 runs from any folder (`python -m device_limit` from a different directory prints the same dates).
+
+Name what this session teaches: pytest and CI. If time runs short, show the README's expected output instead of running everything.
 
 ## Demo cue card and expected observations
 
