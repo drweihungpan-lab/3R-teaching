@@ -74,7 +74,47 @@ Jump to a step:
 
 ## Step 2 (Windows): Install WSL and open Ubuntu
 
-The Windows steps are being added; they will appear here before the course starts. Mac and Linux users can continue with Step 3.
+**What you'll do.** Install WSL 2 (Windows Subsystem for Linux) with **Ubuntu 24.04 LTS**. WSL 2 gives you a real Linux terminal inside Windows, so you type exactly the same commands as every Mac student. This is the only step where you use PowerShell.
+
+**Before you start.** You need Windows 10 version 2004 or later (build 19041+), or Windows 11. To check, press `Windows` + `R`, type `winver` and press `Enter`. Your computer must also have virtualization turned on; it usually is. If the install fails, see [Troubleshooting](#troubleshooting).
+
+**Steps and commands.**
+
+1. Click Start, type `PowerShell`, right-click **Windows PowerShell** and choose **Run as administrator**. Click **Yes**.
+2. Paste this command and press `Enter`. It turns on the Windows features WSL 2 needs, installs the Linux kernel and downloads Ubuntu 24.04. This can take several minutes.
+
+   ```text
+   wsl --install -d Ubuntu-24.04
+   ```
+
+3. **Restart your computer** when asked (or if the command says a restart is required).
+4. After the restart, **Ubuntu 24.04 LTS** opens by itself. If it does not, open it from the Start menu. Wait for "Installing, this may take a few minutes", then choose a **username** (lowercase, no spaces) and a **password** when asked. These are only for this Ubuntu and are unrelated to GitHub. When you type the password nothing appears on screen; that is normal. Remember it: you will need it for `sudo`.
+5. Make sure the installation is WSL 2. Open PowerShell again (a normal window is fine) and run:
+
+   ```text
+   wsl --list --verbose
+   ```
+
+   The row for `Ubuntu-24.04` should show `VERSION` **2**. If it shows `1`, convert it and make 2 the default:
+
+   ```text
+   wsl --set-default-version 2
+   wsl --set-version Ubuntu-24.04 2
+   ```
+
+6. Close PowerShell. **From now on, use only the Ubuntu window** for every course command. To open it later, click Start, type `Ubuntu 24.04` and press `Enter`.
+
+**What you should see.** A window with a prompt like `jane@DESKTOP-ABC123:~$`. Check the version:
+
+```bash
+lsb_release -d
+```
+
+It prints `Description: Ubuntu 24.04.x LTS`.
+
+**If it fails.** See [Troubleshooting](#troubleshooting) in Troubleshooting. If `wsl` is not recognized, update Windows (Settings → Windows Update) and try again. If the version printed is not 24.04, ask for help in a reply on your check-in comment before continuing.
+
+Mac and Linux users skip this step.
 
 ## Step 3: Terminal basics
 
