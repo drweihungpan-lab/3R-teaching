@@ -19,7 +19,7 @@ Use `S = 150 / G` minutes per group. Publish exact start/end times using fractio
 
 | Period | Minutes from start | Delivery cue |
 | --- | --- | --- |
-| Opening | 0–10 | State the same brief and mandatory checklist for everyone; demonstrate evidence navigation briefly. |
+| Opening | 0–10 | State the same brief and mandatory checklist for everyone; demonstrate evidence navigation briefly. Include the device-example recap (about 2 minutes, right after the bubble tea question). |
 | First `k` groups | 10 to `10 + k*S` | Each group: `S/2` demo, `S/3` evidence inspection, `S/6` questions/individual explanations. |
 | Shared break | `10 + k*S` to `25 + k*S` | Stop at a slot boundary; announce the exact return time. |
 | Remaining groups | `25 + k*S` to 175 | Repeat the same slot fractions and checklist for every group. |
@@ -34,6 +34,7 @@ The activity is the group's live presentation and the checklist evidence record,
 | Actual slide title | Instructor cue / checklist activity |
 | --- | --- |
 | Session 5: Final showcase and engineering review | Introduce group-owned datasets/questions; explain the engineering focus. |
+| The device example: seven stages, pain to fix | Recap in about 2 minutes: read each stage's pain and the session tool that fixed it, matching the [stage READMEs](https://github.com/drweihungpan-lab/3R-device-example#the-seven-stages). Tell students they can tell their own project's story the same way. This is part of the 10-minute opening; the run sheet still totals 180. |
 | Our 180-minute showcase | Publish `G`, slot times, break boundary, and closing time. |
 | Use your group slot | Announce demo/evidence/questions fractions and transitions. |
 | Final-only pass/fail assessment | Read finality and every-mandatory-row rules from the brief. |
