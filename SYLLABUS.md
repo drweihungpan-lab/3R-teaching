@@ -49,6 +49,12 @@ The template contains a complete working example. Students will inspect it, make
 
 Each student must author at least one pull request and review at least one teammate's pull request. Reviews must address behavior, tests, or clarity rather than provide approval alone. The instructor will inspect this evidence in each group's repository.
 
+## Session 0: Required self-paced setup (pre-course)
+
+**Duration:** none in class. This is a pre-course requirement, separate from the five sessions and 15 classroom hours.
+
+Students complete the [Session 0 guide](docs/session-0.md) at home: a GitHub account, a terminal (Mac Terminal, or WSL with Ubuntu 24.04 LTS on Windows), Git, an SSH key connected to GitHub, Python 3.12 and VS Code. They then check in by commenting the output of three commands on a pinned issue in a public sandbox repository, by **3 days before Session 1**. Session 0 does not teach commit or push. See the [instructor notes](materials/instructor/session-0.md) and the [decision record](docs/adr/0001-wsl-and-ssh-for-all-students.md).
+
 ## Session 1: Environment isolation, modern Git, and CI foundations
 
 **Duration:** 3 hours
@@ -178,6 +184,6 @@ Sessions 1–4 will initially allocate 45 minutes to explanation, 30 minutes to 
 
 ## Course materials and surveys
 
-The [materials index](materials/README.md) links the five editable PowerPoint decks and Markdown sources, four guided exercises, four homework briefs, five instructor notes, surveys, and final checklist. [Template instructions](docs/template.md) explain repository setup and permissions.
+The [materials index](materials/README.md) links the Session 0 guide and instructor notes, the five editable PowerPoint decks and Markdown sources, four guided exercises, four homework briefs, five instructor notes, surveys, and final checklist. [Template instructions](docs/template.md) explain repository setup and permissions.
 
 The [pre-course survey](materials/surveys/pre-course.md) covers prior experience, confidence, and setup readiness. The [post-course survey](materials/surveys/post-course.md) repeats relevant confidence and understanding questions and collects feedback. The surveys support course evaluation; they are not part of the pass/fail assessment.
