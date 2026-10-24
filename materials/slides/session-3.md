@@ -13,9 +13,27 @@
 
 ---
 
+## Device example, Stage 5: tests and CI
+
+- Stage 4's package gains tests. One test pins the expected limit date for each device on the fixed synthetic data.
+- CI runs the tests on every push and pull request.
+- The same "cleanup" as last session (drop zero-count days) now arrives as a pull request:
+
+```text
+FAILED test_limit_dates_are_pinned_for_the_fixed_synthetic_data
+3 failed, 3 passed   CI: red
+```
+
+- The check catches exactly the bug that slipped through before. `main` stays green.
+- Stage 5 also runs from any folder: the data path no longer depends on where you stand.
+- Files: [3R-device-example](https://github.com/drweihungpan-lab/3R-device-example).
+
+---
+
 ## Our 180-minute agenda
 
-- 0–45: explanation — contracts, validation, fixtures, comparisons.
+- 0–10: device example — Stage 5.
+- 10–45: explanation — contracts, validation, fixtures, comparisons.
 - 45–75: demonstration — requests, failure, correction, local and CI checks.
 - 75–90: break — 15 minutes.
 - 90–180: guided practice — trace 15, inspect 20, change 20, check 20, review 15.

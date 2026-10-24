@@ -13,6 +13,18 @@
 
 ---
 
+## The device example: seven stages, pain to fix
+
+- Stage 1 (Session 1): notebook copied as `v1`/`v2`/`v3`; which copy made the report? **Fix: Git.**
+- Stage 2 (Session 1): helper files; works with pandas 1.5, crashes with pandas 2.x. **Fix: isolated environment and declared dependencies.**
+- Stage 3 (Session 2): `requirements.txt`; rerunning a cell moves the date. **Fix: functions with inputs and outputs.**
+- Stage 4 (Session 2): package; fails from another folder, and a cleanup quietly moves the date. **Fix: tests.**
+- Stage 5 (Session 3): tests and CI; CI turns red on that cleanup, but only programmers get a prediction. **Fix: API and UI.**
+- Stage 6 (Sessions 3–4): FastAPI and Streamlit; works only on a correctly set-up machine. **Fix: Docker.**
+- Stage 7 (Session 4): Docker; local and Docker give the same limit date. Tell this story in your final presentation. ([Stage READMEs](https://github.com/drweihungpan-lab/3R-device-example))
+
+---
+
 ## Our 180-minute showcase
 
 - Opening brief: 10 minutes. Group slots: 150 minutes in total.

@@ -10,7 +10,7 @@ Keep the evidence for the final presentation in Session 5. Homework is preparati
 
 Have your group's GitHub repository, chosen dataset and question, Python 3.12 environment, Git, editor, and permission to push branches and review PRs ready. Reuse the editable package installation from the [guided exercise](../exercises/session-2.md) and [setup instructions](../../docs/setup.md). Keep the supplied [synthetic CSVs](../../data/synthetic/README.md) unchanged as a working reference. Have a small, shareable example of your own data available for checks; do not commit private data or credentials.
 
-All commands below run from your **group repository root**, containing `backend/`, `data/`, and `docs/`. Activate `.venv` with `source .venv/bin/activate` on macOS/Linux or `.venv\Scripts\Activate.ps1` on Windows PowerShell. If setup needs repair, follow the linked setup guide before changing code.
+All commands below run from your **group repository root**, containing `backend/`, `data/`, and `docs/`. Activate `.venv` with `source .venv/bin/activate` (on Windows, in the WSL Ubuntu terminal; see [Session 0](../../docs/session-0.md#step-2-windows-install-wsl-and-open-ubuntu)). If setup needs repair, follow the linked setup guide before changing code.
 
 | Time | Task | Evidence to keep |
 | --- | --- | --- |

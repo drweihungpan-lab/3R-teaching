@@ -11,12 +11,13 @@ Make a small, explainable change to a complete working example.
 ## Our three-hour route
 
 - 00–35: Opening — introductions, a bubble tea question, and why results must hold.
-- 35–65: Explanation — environments, configuration, Git, and CI.
+- 35–45: Device example — a messy notebook, Stages 1 to 2.
+- 45–65: Explanation — environments, configuration, Git, and CI.
 - 65–85: Demonstration — template to a checked draft PR.
 - 85–100: Break — 15 minutes.
 - 100–180: Guided practice — repeat the workflow; the conflict drill if time permits.
 
-These flexible timings total 35 minutes opening, 30 explanation, 20 demonstration, 15 break, and 80 practice. Unfinished practice continues at home, in addition to the homework.
+These flexible timings total 35 minutes opening, 10 device example, 20 explanation, 20 demonstration, 15 break, and 80 practice. Unfinished practice continues at home, in addition to the homework.
 
 ---
 
@@ -46,6 +47,42 @@ Now you want to open a shop in front of NTHU. You already have the best location
 These are the [course definitions](../../GLOSSARY.md). Later comparisons require exact records/counts and declared tolerances for calculated decimals.
 
 Keep your bubble tea answers in mind.
+
+---
+
+## Device example: one analysis, seven stages
+
+- The scenario: synthetic daily measurement counts for three medical devices. Each device can take 100,000 measurements in total.
+- The task: predict the date each device reaches its limit.
+- The same analysis will grow up over the course, in seven stages. Each stage shows one pain point; a later session's tool fixes it.
+- Your instructor demonstrates; the files are public if you are curious: [3R-device-example](https://github.com/drweihungpan-lab/3R-device-example).
+
+---
+
+## Stage 1: one notebook, copied three times
+
+```text
+analysis_v1.ipynb  DEV-C reaches the limit on 2026-01-30
+analysis_v2.ipynb  DEV-C reaches the limit on 2026-01-28
+analysis_v3.ipynb  DEV-C reaches the limit on 2026-01-26
+```
+
+- Three copies, three dates. Last month's report named one of them.
+- Which copy produced it? Nothing records that.
+- Today's tool for this pain: Git.
+
+---
+
+## Stage 2: helper files, no declared dependencies
+
+```text
+Python 3.11 + pandas 1.5: DEV-C reaches the limit on 2026-01-30
+Python 3.12 + pandas 2.x: AttributeError: 'DataFrame' object has no attribute 'append'
+```
+
+- The notebook now imports `loader.py` and `model.py`: reusable, but nothing says which packages and versions they need.
+- The same files work on one laptop and crash on another.
+- Today's tool for this pain: an isolated environment with declared dependencies.
 
 ---
 
@@ -121,7 +158,7 @@ The instructor first publishes the completed framework on the template's default
 - Replace `OWNER/GROUP` below with your group's actual owner and name.
 
 ```bash
-git clone https://github.com/OWNER/GROUP.git
+git clone git@github.com:OWNER/GROUP.git
 cd GROUP
 ```
 
@@ -143,7 +180,7 @@ test -e .env || cp .env.example .env
 python -m pytest backend/tests
 ```
 
-The working example has 175+ tests; the count may grow. Expect all tests to pass; read failures and warnings. For PowerShell equivalents, see [setup](../../docs/template.md#local-setup-and-startup).
+The working example has 175+ tests; the count may grow. Expect all tests to pass; read failures and warnings. On Windows, run in the WSL Ubuntu terminal: [Session 0](../../docs/session-0.md#step-2-windows-install-wsl-and-open-ubuntu).
 
 ---
 

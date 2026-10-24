@@ -10,7 +10,7 @@ versus Docker). Reproducibility is discussion only; no independent simulation is
 Have Git, Python 3.12, an activated environment with backend dependencies from
 [setup](../../docs/setup.md), Docker with a running engine and Compose v2, curl,
 a browser, and a POSIX shell (bash/zsh). Use the repository root for every command.
-On Windows use WSL for these shell commands. Complete installations and image downloads
+On Windows run these shell commands in the WSL Ubuntu terminal ([Session 0](../../docs/session-0.md#step-2-windows-install-wsl-and-open-ubuntu)), with Docker Desktop's WSL backend turned on (**Settings → Resources → WSL integration**, enable Ubuntu-24.04). Complete installations and image downloads
 before class; stop old local services using ports 8000/8501. No `.env` is required.
 Use the supplied [synthetic CSVs](../../data/synthetic/README.md), not patient data.
 Keep code and CSV bytes unchanged throughout captures; rebuild images after any edits.

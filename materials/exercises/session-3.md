@@ -4,7 +4,7 @@ Work for about 90 minutes in your group of three or four. Follow the complete sy
 
 ## 1. Prepare the group feature branch — 10 minutes
 
-Have Python 3.12, Git, an editor, a browser, and access to your group's repository from Sessions 1–2. Run all commands from the repository root containing `backend/`, `data/`, and `docs/`. Follow [docs/setup.md](../../docs/setup.md) if `.venv` does not exist; activate it with `source .venv/bin/activate` on macOS/Linux or `.venv\Scripts\Activate.ps1` in Windows PowerShell. Use that interpreter in both terminals below.
+Have Python 3.12, Git, an editor, a browser, and access to your group's repository from Sessions 1–2. Run all commands from the repository root containing `backend/`, `data/`, and `docs/`. Follow [docs/setup.md](../../docs/setup.md) if `.venv` does not exist; activate it with `source .venv/bin/activate` (on Windows, in the WSL Ubuntu terminal; see [Session 0](../../docs/session-0.md#step-2-windows-install-wsl-and-open-ubuntu)). Use that interpreter in both terminals below.
 
 ```bash
 git rev-parse --show-toplevel
@@ -38,7 +38,7 @@ curl --fail-with-body http://127.0.0.1:8000/process \
   -F laboratory=@data/synthetic/lb.csv
 ```
 
-In PowerShell use `curl.exe` and put the entire request on one line, removing the trailing backslashes. Alternatively open <http://127.0.0.1:8000/docs>, expand `POST /process`, choose **Try it out**, select the two files under `participants` and `laboratory`, and **Execute**. The request is multipart: two named file uploads, not a JSON object containing filenames.
+Run the command in the WSL Ubuntu terminal on Windows. Alternatively open <http://127.0.0.1:8000/docs>, expand `POST /process`, choose **Try it out**, select the two files under `participants` and `laboratory`, and **Execute**. The request is multipart: two named file uploads, not a JSON object containing filenames.
 
 Expect health HTTP 200 with `{"status":"ok"}` and processing HTTP 200 with `counts` equal to `{"participants":24,"records":96,"observed":95,"missing":1}`. Inspect `records`, `arm_summaries`, and `visit_summaries` too. Subject `001` retains its leading zeros. `EDU-LPA-007` at DAY 30 has null value/change/percent_change, baseline 269.0, and status `NOT DONE`. Null means unavailable, not zero.
 
