@@ -6,6 +6,7 @@ The emphasis is on understanding how the parts connect and practicing the workfl
 
 ## Start here
 
+- [Session 0](docs/session-0.md): required self-paced setup (GitHub account, terminal, SSH) before Session 1.
 - [Syllabus](SYLLABUS.md): audience, workload, learning outcomes, five sessions, homework, and assessment. This is the single source for course facts.
 - [Glossary](GLOSSARY.md): the course-specific meanings of the three Rs.
 - [Course materials](materials/README.md): slides, exercises, homework, instructor notes, surveys, and final checklist.
