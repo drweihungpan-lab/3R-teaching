@@ -22,7 +22,7 @@ One member opens the instructor's template URL on GitHub and selects **Use this 
 Each student clones the **new group repository**, replacing `OWNER/GROUP` and `GROUP` with its actual names:
 
 ```bash
-git clone https://github.com/OWNER/GROUP.git
+git clone git@github.com:OWNER/GROUP.git
 cd GROUP
 git remote -v
 git status --short
@@ -117,7 +117,7 @@ This is preparation, not a separate assessed submission. Assessment is pass/fail
 
 | Symptom | Explanation or next step |
 | --- | --- |
-| Template button, access, or push missing | Confirm completed default-branch template, accepted invitations, owner permissions, and HTTPS Git authentication; follow [template setup](../../docs/template.md). Keep local work if access is delayed; do not claim PR/CI evidence. |
+| Template button, access, or push missing | Confirm completed default-branch template, accepted invitations, owner permissions, and SSH access to GitHub (`ssh -T git@github.com` answers `Hi USERNAME!`; see the Session 0 [SSH step](../../docs/session-0.md#step-5-mac-create-an-ssh-key-and-add-it-to-github) and [troubleshooting](../../docs/session-0.md#troubleshooting)); follow [template setup](../../docs/template.md). Keep local work if access is delayed; do not claim PR/CI evidence. |
 | Wrong Python or missing import | Check `sys.executable`, activate `.venv` at the root, and repeat installs with that interpreter; see [setup](../../docs/setup.md). |
 | `.env` appears tracked | Stop before staging; `git ls-files` distinguishes tracking from ignore rules. Ask for help removing it from tracking and handling any exposed credentials. Do not overwrite local settings. |
 | Port occupied or frontend cannot connect | Stop an old service or choose a free backend port, update `BACKEND_URL`, and restart both services; see [frontend](../../docs/frontend.md). |

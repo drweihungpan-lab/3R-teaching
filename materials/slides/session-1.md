@@ -121,7 +121,7 @@ The instructor first publishes the completed framework on the template's default
 - Replace `OWNER/GROUP` below with your group's actual owner and name.
 
 ```bash
-git clone https://github.com/OWNER/GROUP.git
+git clone git@github.com:OWNER/GROUP.git
 cd GROUP
 ```
 

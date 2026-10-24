@@ -25,11 +25,11 @@ required. See the [syllabus](../SYLLABUS.md) and [collaboration guide](collabora
    below with its actual owner and name:
 
 ```bash
-git clone https://github.com/OWNER/GROUP.git
+git clone git@github.com:OWNER/GROUP.git
 cd GROUP
 ```
 
-The group owns this repository and opens its PRs there. Template creation copies
+Clone with the SSH address you set up in [Session 0](session-0.md#step-5-mac-create-an-ssh-key-and-add-it-to-github); if `git clone` says `Permission denied (publickey)` or cannot connect, see the Session 0 [troubleshooting](session-0.md#troubleshooting). The group owns this repository and opens its PRs there. Template creation copies
 files into a new history; later template changes do not synchronize automatically.
 See [GitHub's creation guide](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
 
