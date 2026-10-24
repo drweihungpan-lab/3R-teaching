@@ -6,7 +6,7 @@ Choose your dataset and question independently; no topic approval is required. M
 
 ## Preparation
 
-Have your group repository, Python 3.12 virtual environment with backend development dependencies, Git, editor, GitHub access, and a teammate available for review. Reuse [setup](../../docs/setup.md), [testing guidance](../../docs/testing.md), and [CI guidance](../../docs/ci.md). Start from the group's agreed current `main`, preserve unrelated work, and activate `.venv` (`source .venv/bin/activate` on macOS/Linux; `.venv\Scripts\Activate.ps1` in PowerShell). All commands run from the group repository root.
+Have your group repository, Python 3.12 virtual environment with backend development dependencies, Git, editor, GitHub access, and a teammate available for review. Reuse [setup](../../docs/setup.md), [testing guidance](../../docs/testing.md), and [CI guidance](../../docs/ci.md). Start from the group's agreed current `main`, preserve unrelated work, and activate `.venv` (`source .venv/bin/activate`; on Windows, in the WSL Ubuntu terminal, see [Session 0](../../docs/session-0.md#step-2-windows-install-wsl-and-open-ubuntu)). All commands run from the group repository root.
 
 Use a tiny shareable or synthetic fixture representing your own data; keep private data, `.env`, `.venv`, and generated outputs out of commits. Keep the supplied healthcare CSVs unchanged. Its public `process_csv` accepts CSV text with the [documented healthcare contract](../../docs/api.md), not arbitrary CSVs. For other datasets, test your group's existing public processing function; do not rename unrelated columns into healthcare fields. If adaptation is unfinished, test one small reusable preparation rule for your real data and record the remaining API/UI work.
 

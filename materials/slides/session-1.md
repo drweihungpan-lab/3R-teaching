@@ -143,7 +143,7 @@ test -e .env || cp .env.example .env
 python -m pytest backend/tests
 ```
 
-The working example has 175+ tests; the count may grow. Expect all tests to pass; read failures and warnings. For PowerShell equivalents, see [setup](../../docs/template.md#local-setup-and-startup).
+The working example has 175+ tests; the count may grow. Expect all tests to pass; read failures and warnings. On Windows, run in the WSL Ubuntu terminal: [Session 0](../../docs/session-0.md#step-2-windows-install-wsl-and-open-ubuntu).
 
 ---
 

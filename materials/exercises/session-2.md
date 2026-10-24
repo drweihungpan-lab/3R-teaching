@@ -39,7 +39,7 @@ On macOS/Linux, activate it:
 source .venv/bin/activate
 ```
 
-On Windows PowerShell, use `.venv\Scripts\Activate.ps1` instead. If Windows provides Python through its launcher, `py -3.12 -m venv .venv` is the equivalent creation command. If activation is blocked, use `.venv\Scripts\python.exe` (Windows) or `.venv/bin/python` (macOS/Linux) wherever the following commands say `python`, or ask the instructor for setup help.
+On Windows, run the same commands in the WSL Ubuntu terminal ([Session 0](../../docs/session-0.md#step-2-windows-install-wsl-and-open-ubuntu)). If activation fails, use `.venv/bin/python` wherever the following commands say `python`, or ask the instructor for setup help.
 
 ```bash
 python --version
@@ -79,7 +79,7 @@ Create your own branch, replacing `your-name` with a unique name:
 git switch -c session-2/your-name-log-context
 ```
 
-Run this command from the root. The multiline `python -c` form works in macOS/Linux shells and PowerShell. It saves local evidence in ignored `outputs/`; do not commit those files.
+Run this command from the root. The multiline `python -c` form works in macOS shells and the WSL Ubuntu terminal. It saves local evidence in ignored `outputs/`; do not commit those files.
 
 ```bash
 python -c '

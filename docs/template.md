@@ -50,8 +50,8 @@ python -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000
 
 Copy `.env.example` only if `.env` does not already exist. Keep `.env` and `.venv`
 out of commits. The local default is `BACKEND_URL=http://127.0.0.1:8000`; restart
-services after configuration changes. PowerShell uses `py -3.12 -m venv .venv`,
-`.venv\Scripts\Activate.ps1`, and `Copy-Item .env.example .env` instead.
+services after configuration changes. On Windows, run these same commands in the WSL
+Ubuntu terminal ([Session 0](session-0.md#step-2-windows-install-wsl-and-open-ubuntu)).
 
 Keep the API terminal running. In a second terminal at the repository root,
 activate the same environment and run:
