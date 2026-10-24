@@ -28,17 +28,18 @@ Find slides by their exact Markdown titles below. PowerPoint conversion can spli
 
 ## Run sheet: 180 minutes
 
-Elapsed times start at the beginning of class. Explanation is 0–45 (45 minutes), demonstration 45–75 (30), break 75–90 (15), and guided practice 90–180 (90). Practice follows the exercise's 15 + 20 + 15 + 20 + 20 minutes. Keep debrief and evidence review inside those blocks.
+Elapsed times start at the beginning of class. The first 45 minutes are a 10-minute device-example segment (0–10) and 35 minutes of explanation (10–45), demonstration 45–75 (30), break 75–90 (15), and guided practice 90–180 (90). Practice follows the exercise's 15 + 20 + 15 + 20 + 20 minutes. Keep debrief and evidence review inside those blocks.
 
 | Elapsed | Mode | Actual slide title(s) | Instructor action and observable checkpoint |
 | --- | --- | --- | --- |
-| 0–5 | Explanation | “Session 2: From scripts to reusable modules”; “Our 180-minute agenda” | State the small-change goal and the two logging activities. Ask what hidden notebook state could make reruns disagree. |
-| 5–12 | Explanation | “Give each processing step a home”; “Processing, API, and UI do different jobs” | Explain a module as a file with one job and a package as related importable modules. Ask which layer owns uploads and which owns calculations. UI flow is conceptual here. |
-| 12–20 | Explanation | “Find the actual backend modules”; “Follow one call through processing” | Trace public import → `process_csv` → validation/join/calculation/summaries → returned dictionary. Use exercise §2's file table; ask students to point at the boundary rather than copy code. |
-| 20–26 | Explanation | “Preserve the healthcare meaning” | State 24/96/95/1; explain the two-field join and missing-versus-zero distinction using the dictionary. Ask why the observed denominator is 95 rather than 96. |
-| 26–33 | Explanation | “Read a type hint as an interface description”; “Validation checks values while the program runs” | Read `str`, `dict[str, Any]`, and `float \| None` aloud. A hint describes; runtime checks reject incompatible data. Ask whether a hint alone prevents an invalid age. |
-| 33–40 | Explanation | “Packaging describes what gets installed”; “Declare dependencies instead of relying on your laptop” | Locate distribution/import names, Python requirement, runtime dependencies, and `dev` extra. Explain that allowed ranges do not freeze exact versions. |
-| 40–45 | Explanation | “Logging makes execution visible” | Distinguish diagnostic DEBUG from normal-progress INFO. The caller chooses visibility. Ask why row contents and identifiers should not enter routine logs. |
+| 0–10 | Device example | “Device example, Stage 3: dependencies declared”; “Device example, Stage 4: an installable package” | Demonstrate Stages 3 → 4 with the [device example steps](#device-example-stages-3--4-about-10-minutes) below. Name the tool that fixes each pain; do not teach it yet. |
+| 10–14 | Explanation | “Session 2: From scripts to reusable modules”; “Our 180-minute agenda” | State the small-change goal and the two logging activities. Ask what hidden notebook state could make reruns disagree. |
+| 14–19 | Explanation | “Give each processing step a home”; “Processing, API, and UI do different jobs” | Explain a module as a file with one job and a package as related importable modules. Ask which layer owns uploads and which owns calculations. UI flow is conceptual here. |
+| 19–25 | Explanation | “Find the actual backend modules”; “Follow one call through processing” | Trace public import → `process_csv` → validation/join/calculation/summaries → returned dictionary. Use exercise §2's file table; ask students to point at the boundary rather than copy code. |
+| 25–30 | Explanation | “Preserve the healthcare meaning” | State 24/96/95/1; explain the two-field join and missing-versus-zero distinction using the dictionary. Ask why the observed denominator is 95 rather than 96. |
+| 30–35 | Explanation | “Read a type hint as an interface description”; “Validation checks values while the program runs” | Read `str`, `dict[str, Any]`, and `float \| None` aloud. A hint describes; runtime checks reject incompatible data. Ask whether a hint alone prevents an invalid age. |
+| 35–41 | Explanation | “Packaging describes what gets installed”; “Declare dependencies instead of relying on your laptop” | Locate distribution/import names, Python requirement, runtime dependencies, and `dev` extra. Explain that allowed ranges do not freeze exact versions. |
+| 41–45 | Explanation | “Logging makes execution visible” | Distinguish diagnostic DEBUG from normal-progress INFO. The caller chooses visibility. Ask why row contents and identifiers should not enter routine logs. |
 | 45–50 | Demonstration | “Demo: install inside an isolated environment” | Show the prepared install and actual interpreter/import paths. Save time by using the already prepared environment if the network stalls. |
 | 50–55 | Demonstration | “Demo: run the package without a web server” | Run the slide command, show counts, and identify the four result keys. Contrast CSV text with a filename. See demo steps below. |
 | 55–61 | Demonstration | “Demo: trace the API wrapper”; “Demo: find who configures the logs” | Start Uvicorn, send the multipart request, point out the same result shape. Show `.env.example` and caller logging configuration. Stop Uvicorn with Ctrl-C when finished. |
@@ -50,6 +51,22 @@ Elapsed times start at the beginning of class. Explanation is 0–45 (45 minutes
 | 125–140 | Practice | “Demo: save the result before editing” (principle only) | Follow exercise [§3](../exercises/session-2.md#3-capture-the-unchanged-result--15-minutes). Create each author's uniquely named branch and `outputs/session-2-before.json`. Confirm counts and missing-row details before editing. |
 | 140–160 | Practice | “Practice: add one diagnostic message”; “Practice: run again and compare the complete result” (teacher example only) | Project exercise [§4](../exercises/session-2.md#4-add-context-to-the-log-message--20-minutes): change the INFO text, rerun §3 with `after`, compare full results. Require `Processing result unchanged: True` before proceeding. |
 | 160–180 | Practice | “Practice: open a PR and give meaningful review”; “Checkpoint: explain the framework in plain English” | Follow exercise [§5](../exercises/session-2.md#5-record-and-review-the-change--20-minutes). Inspect the one-line diff, commit/push to the group repo, and review. During the last five minutes ask another group member to explain the evidence; leave unresolved PRs open with a note. |
+
+## Device example: Stages 3 → 4 (about 10 minutes)
+
+The slides follow “Back at the bubble tea shop”. This is a demonstration; students do not run it. Prepare a clone of the [device example](https://github.com/drweihungpan-lab/3R-device-example) with a Python 3.12 environment before class:
+
+```bash
+python3.12 -m venv .venv312
+.venv312/bin/python -m pip install -r stage-3-requirements/requirements.txt notebook
+.venv312/bin/python -m pip install -e stage-4-package
+```
+
+**Stage 3 ([folder](https://github.com/drweihungpan-lab/3R-device-example/tree/main/stage-3-requirements), about 5 minutes).** Remind students that Stage 2 crashed on pandas 2.x; `requirements.txt` fixes it. Open `analysis.ipynb`, **Run All**: expected `DEV-A` 2026-06-30, `DEV-B` 2026-04-01, `DEV-C` 2026-01-16. Then rerun only the “arrived late” cell and the last cell: no error, but the dates become 2026-06-02, 2026-03-14 and 2026-01-04. Ask: “Which answer is right?” Both came from the same file. Name the fix: functions with inputs and outputs.
+
+**Stage 4 ([folder](https://github.com/drweihungpan-lab/3R-device-example/tree/main/stage-4-package), about 5 minutes).** From `stage-4-package/`, run `python -m device_limit`: the Stage 3 dates, every time. Then run `python -m device_limit` again from the repository root (a different folder): `FileNotFoundError: [Errno 2] No such file or directory: 'data/device_counts.csv'`. From the repository root run `git apply stage-4-package/cleanup-drop-zero-days.patch`, then rerun it from `stage-4-package/`: 2026-06-10, 2026-03-16, 2026-01-06, with no error. Ask: “What would have told us?” Undo with `git checkout stage-4-package/device_limit/data.py`. Name the fix: tests, next session.
+
+**If time runs short,** show the README's expected output (Stage 3 and Stage 4) instead of running everything.
 
 ## Demo cues and expected observations
 
