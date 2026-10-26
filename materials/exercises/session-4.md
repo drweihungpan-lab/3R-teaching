@@ -1,136 +1,72 @@
-# Session 4 guided practice: connected services and comparable outputs
+# Session 4 guided practice: run the API and both services
 
-Spend 90 minutes inspecting the supplied working example in your group. Follow the
-[course definitions](../../GLOSSARY.md): repeatability uses unchanged conditions;
-replicability uses the same process with slightly different conditions (local Python
-versus Docker). Reproducibility is discussion only; no independent simulation is required.
+Spend about 40 minutes in your group of three or four, in your **Backend repo**. You will add the supplied API files, run the API locally, start both services with Docker Compose, and diagnose a controlled connection fault. Docker Desktop (with the WSL backend on Windows) must be installed and running; check with `docker version`. The frontend page is supplied: you configure it, you do not edit it.
 
-## Before practice
+## Before you start
 
-Have Git, Python 3.12, an activated environment with backend dependencies from
-[setup](../../docs/setup.md), Docker with a running engine and Compose v2, curl,
-a browser, and a POSIX shell (bash/zsh). Use the repository root for every command.
-On Windows run these shell commands in the WSL Ubuntu terminal ([Session 0](../../docs/session-0.md#step-2-windows-install-wsl-and-open-ubuntu)), with Docker Desktop's WSL backend turned on (**Settings → Resources → WSL integration**, enable Ubuntu-24.04). Complete installations and image downloads
-before class; stop old local services using ports 8000/8501. No `.env` is required.
-Use the supplied [synthetic CSVs](../../data/synthetic/README.md), not patient data.
-Keep code and CSV bytes unchanged throughout captures; rebuild images after any edits.
-The command reference is [output comparisons](../../docs/comparisons.md).
-
-## 0–20 minutes: launch and inspect the working application
+Be on an updated `main` with the `.venv` active, then branch:
 
 ```bash
-docker compose version
-docker compose config --quiet
-docker compose up --build --wait --wait-timeout 120
-docker compose ps
-curl --fail-with-body http://127.0.0.1:8000/health
-curl --fail-with-body --retry 20 --retry-all-errors --retry-delay 2 http://127.0.0.1:8501/_stcore/health
+git switch main
+git pull --ff-only origin main
+git switch -c session-4/your-name-api
 ```
 
-Expect both services running, backend healthy, API `{"status":"ok"}`, and frontend
-health `ok`. The backend health check gates frontend startup; it cannot guarantee
-that a later request succeeds. Open <http://127.0.0.1:8501> and check the displayed
-`Backend: http://backend:8000`. Upload `data/synthetic/dm.csv` under **Participants
-CSV (DM)** and `data/synthetic/lb.csv` under **Laboratory CSV (LB)**; select **Process CSVs**.
-Expect **24 participants, 96 joined records, 95 observed, 1 missing**, tables, and
-the mean lipoprotein(a) chart by study day and arm, with separate study panels.
-Find the unavailable DAY 30 observation for `EDU-LPA-007`; it remains missing, not zero.
-The chart shows descriptive synthetic values, not evidence of clinical benefit.
+Get the starter files from the `session-4-starter` folder of the [Sandbox](https://github.com/drweihungpan-lab/3R-sandbox) and follow its README to copy `api.py`, `Dockerfile`, `compose.yaml` and `.dockerignore`. These are the defaults `device_limit` and `model`; adjust the import in `api.py` if your group chose other names.
 
-## 20–40 minutes: trace HTTP and recover a wrong address
+| Time | Activity | Checkpoint |
+| --- | --- | --- |
+| 0–10 min | Add the `api` extra, run the API, `curl` a CSV | JSON with three limit dates |
+| 10–20 min | `docker compose up --build`, upload in the page | The page's table matches `limits.csv` |
+| 20–35 min | The controlled connection fault | Found from the message and logs, fixed |
+| 35–40 min | Record | Notes in the README |
 
-Inspect [frontend/app.py](../../frontend/app.py), [API handling](../../backend/app/main.py),
-and [compose.yaml](../../compose.yaml). Explain the path: browser → Streamlit Python
-→ multipart `POST /process` → FastAPI → `stat_core` → returned tables/chart.
-The browser uses host port 8501; host curl uses port 8000. Compose DNS resolves
-`backend` inside the shared network. Inside frontend, `localhost` means frontend itself.
+## 1. Run the API locally — 10 minutes
+
+In `setup.cfg`, add under `[options.extras_require]`:
+
+```ini
+api = fastapi; uvicorn; python-multipart
+```
+
+and add `httpx` to the `test` line. Then:
 
 ```bash
-docker compose exec -T frontend python -c "import urllib.request; print(urllib.request.urlopen('http://backend:8000/health', timeout=5).read().decode())"
+pip install -e '.[api,test]'
+uvicorn device_limit.api:app --port 8000
 ```
 
-Expect `{"status":"ok"}`. Now change only a disposable override, leaving the real
-Compose file and local `.env` untouched. Keep this shell open until restoration:
+In a second terminal at the same folder:
 
 ```bash
-exercise_tmp=$(mktemp -d)
-python -c 'from pathlib import Path; import sys; Path(sys.argv[1]).write_text("services:\n  frontend:\n    environment:\n      BACKEND_URL: http://localhost:8000\n")' "$exercise_tmp/wrong.yaml"
-docker compose -f compose.yaml -f "$exercise_tmp/wrong.yaml" up -d --no-deps --force-recreate frontend
+curl http://127.0.0.1:8000/health
+curl -F file=@data/device_counts.csv http://127.0.0.1:8000/predict
 ```
 
-Reload the browser, reselect both files, and process. Expect the displayed wrong
-address and **Could not connect to the backend**, with no successful results.
-Check host API health and rerun the service-DNS command above: both should still work.
-Explain why a healthy API does not repair the frontend's wrong destination.
-Restore explicitly, even if the demonstration failed or was interrupted:
+Expect `{"status":"ok"}`, then three devices with limit dates. Send a CSV with the `daily_count` column removed and read the HTTP 422 message. Stop the server with `Ctrl+C` before the next step, because both use port 8000.
+
+## 2. Run both services — 10 minutes
 
 ```bash
-docker compose -f compose.yaml up -d --no-deps --force-recreate frontend
+docker compose up --build
 ```
 
-Reload and upload again: the address must be `http://backend:8000`, with the original
-counts and chart. If the shell was lost, this same restoration command still works.
-The override remains only in the disposable directory and is not loaded automatically.
+The first build downloads images and the Frontend repo and can take a few minutes. Open <http://localhost:8501>, upload `data/device_counts.csv`, and select **Send to backend**. Compare the table with your `limits.csv`. In another terminal, `docker compose ps` should show the backend as healthy. Stop with `Ctrl+C`, then `docker compose down`.
 
-## 40–60 minutes: capture twice locally and explain agreement
+## 3. A controlled connection fault — 15 minutes
 
-Use the activated Python 3.12 environment; these commands select this checkout even
-if another checkout shares your environment. They call processing directly, without HTTP.
+In `compose.yaml` change the frontend's `BACKEND_URL` from `http://backend:8000` to `http://backend:8001`, then run `docker compose up --build` again and upload. The page reports that it could not connect to the backend at that address.
 
-```bash
-PYTHONPATH=backend python -m stat_core.capture --participants data/synthetic/dm.csv --laboratory data/synthetic/lb.csv --output outputs/local-1.json
-PYTHONPATH=backend python -m stat_core.capture --participants data/synthetic/dm.csv --laboratory data/synthetic/lb.csv --output outputs/local-2.json
-PYTHONPATH=backend python -m stat_core.comparison outputs/local-1.json outputs/local-2.json
-```
+1. Which part of the message names the wrong address?
+2. Run `docker compose logs backend frontend`. Which service logged a problem, and which did not?
+3. Why does `localhost:8000` inside the frontend container not reach the backend?
 
-Expect `Outputs agree` and exit code 0: evidence of repeatability. Inspect `result`,
-`input_sha256`, `source_sha256`, and `environment` in each JSON. Hashes cover exact
-CSV bytes and backend Python sources; record Python, platform, and dependency versions.
-Keys, types, list lengths/order, identifiers, demographics, raw cleaned values, copied
-baselines, counts, and nulls must match exactly. Missing is never equivalent to zero.
-Only record `change`, record `percent_change`, and visit-summary `mean` use
-`abs(actual - expected) <= max(1e-9, 1e-9 * abs(expected))`, with the first file as reference.
-Absolute units are nmol/L for change/mean and percentage points for percent change;
-relative tolerance is dimensionless. Do not round, reorder, fill nulls, or widen tolerance.
+Restore the port, restart, and confirm the upload works.
 
-## 60–80 minutes: compare Docker and demonstrate a controlled failure
+## 4. Record — 5 minutes
 
-With the restored stack running, capture inside the real backend container:
+Add a short note to your README: how to start both services, and what the fault looked like. Commit and push the branch, open a PR, and request a teammate's review.
 
-```bash
-docker compose exec -T backend python -m stat_core.capture --participants data/synthetic/dm.csv --laboratory data/synthetic/lb.csv > outputs/docker.json
-PYTHONPATH=backend python -m stat_core.comparison outputs/local-1.json outputs/docker.json
-```
+## Checkpoint
 
-Expect `Outputs agree` and exit code 0: replicability under the course convention.
-Code/input hashes must match; environment descriptions may differ. Record those
-differences and the checkout SHA (`git rev-parse HEAD`) beside your evidence.
-For a controlled mismatch, edit only a generated copy, never the code or sample CSVs:
-
-```bash
-cp outputs/local-2.json outputs/changed.json
-python -c 'import json; from pathlib import Path; p=Path("outputs/changed.json"); d=json.loads(p.read_text()); d["result"]["counts"]["missing"]=0; p.write_text(json.dumps(d))'
-PYTHONPATH=backend python -m stat_core.comparison outputs/local-1.json outputs/changed.json
-echo $?
-cp outputs/local-2.json outputs/changed.json
-PYTHONPATH=backend python -m stat_core.comparison outputs/local-1.json outputs/changed.json
-```
-
-Expect a `counts.missing` mismatch and exit code **1**, then restored agreement and
-exit code **0**. This deliberately altered evidence demonstrates detection, not a
-new processing run. Keep the original captures and comparison messages in ignored `outputs/`.
-
-## 80–90 minutes: stopping point and recovery reference
-
-Stop when both services process the uploads, the wrong address has been restored,
-both comparisons agree, and the changed-count failure has been explained and recovered.
-Tell a partner which conditions stayed fixed and which changed. Preserve actual
-commands, results, environment metadata, and SHA; label skipped work as unverified.
-This checkpoint prepares for the final presentation; it is not a separate assessment.
-Finish with `docker compose down` to remove this project's containers/network.
-
-If startup fails, inspect `docker compose logs --tail=100 backend frontend` and
-`docker compose ps`; check engine, occupied ports, and backend health before retrying.
-For hash mismatches restore the same code/inputs and rebuild; for numerical mismatches
-inspect dependency/processing differences. See [Compose recovery](../../docs/compose.md),
-[frontend behavior](../../docs/frontend.md), and [comparison rules](../../docs/comparisons.md).
+Both services run together from your Backend repo. The local-versus-Docker comparison is part of the homework; keep your `limits.csv` and the API's JSON for it. Finish anything unfinished at home, in addition to the homework.

@@ -88,17 +88,17 @@ Response: ____________________________________________________________
 
 | Session | Pace |
 | --- | --- |
-| 1 — Environment, Git, and CI foundations | |
-| 2 — Modules and packaging | |
-| 3 — API, validation, tests, and CI | |
-| 4 — Containers, services, and output comparison | |
+| 1 — Environment and Git | |
+| 2 — A package others can install | |
+| 3 — Tests and CI | |
+| 4 — API, containers, and Compose | |
 | 5 — Final showcase and engineering review | |
 
 Which topics or activities needed more or less time? You can comment on the balance of explanation, demonstrations, guided practice, breaks, or showcase time.
 
 Response: ____________________________________________________________
 
-**FEED-03 — Useful activities:** Which activities or materials helped you learn most, and why? For example: the healthcare example, demonstrations, guided exercises, homework, pull requests and peer review, investigating failures, output comparisons, or the final showcase. “None” or “not sure” is also useful feedback.
+**FEED-03 — Useful activities:** Which activities or materials helped you learn most, and why? For example: the device example, demonstrations, guided exercises, homework, pull requests and peer review, investigating failures, output comparisons, or the final showcase. “None” or “not sure” is also useful feedback.
 
 Response: ____________________________________________________________
 

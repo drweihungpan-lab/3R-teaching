@@ -4,16 +4,23 @@
 
 This practical course introduces the engineering framework and collaborative workflow used to make statistical data processing repeatable and portable. Students learn how environments, reusable Python packages, tests, code review, automated checks, APIs, and containers fit together.
 
-The emphasis is on understanding and using the workflow. Building a sophisticated model or designing a polished interface is not the goal. A complete healthcare example will support demonstrations and guided exercises; groups will apply the framework to their own datasets and questions.
+The emphasis is on understanding and using the workflow. Building a sophisticated model or designing a polished interface is not the goal. One running example, the [device example](GLOSSARY.md), supports every session: synthetic daily measurement counts for medical devices, used to predict when each device reaches its usage limit. It grows through seven stages from a messy notebook to a containerized application. Groups apply the framework to their own datasets and questions in the final project.
 
-The working application template and [teaching materials](materials/README.md) are supplied in this repository. See [setup](docs/setup.md) to run the example and [verification](docs/verification.md) for completed checks and remaining limits. Classroom activities describe how students will use these materials.
+The course uses four repositories (see [GLOSSARY.md](GLOSSARY.md) for the terms):
+
+| Repository | Owner | Role |
+| --- | --- | --- |
+| This repository (3R-teaching) | Instructor | Materials only: syllabus, slides, exercises, instructor notes, glossary, decisions |
+| **Sandbox** (`3R-sandbox`) | Instructor, class-wide | Session 1 Git practice, with `main` protected and a branch per group; also holds the device example's seven stage folders. Nothing in it counts as final-project evidence |
+| **Backend repo** | Each group, public | Created in Session 2 from the course cookiecutter; holds the group's package, command-line tool, tests, API and container setup |
+| **Frontend repo** | Instructor | One generic CSV-upload page. Groups build it from a pinned release in their Compose file and do not fork it |
 
 ## Audience and workload
 
 - **Audience:** 20 statistics students familiar with Python functions, pandas, and basic regression.
-- **Classroom time:** 15 hours across five three-hour sessions.
-- **Mandatory homework:** approximately two hours after each of Sessions 1–4, eight hours in total. Guided practice not finished in class is completed at home, in addition to this time.
-- **Group size:** three or four students, with one GitHub repository per group.
+- **Classroom time:** 14 hours 10 minutes across five sessions of 170 minutes each (see [session shape](#session-shape)).
+- **Mandatory homework:** approximately two hours after each of Sessions 1–4, eight hours in total. Guided practice not finished in class is completed at home, in addition to this time. Homework content is to be defined.
+- **Group size:** three or four students, with one public Backend repo per group.
 - **Language:** English.
 
 ## The three Rs in this course
@@ -23,7 +30,7 @@ Terminology varies across disciplines. This course uses the definitions in [GLOS
 | Principle | Course meaning | Course activity |
 | --- | --- | --- |
 | Repeatability | Matching results under the same conditions | Run the same pipeline twice using the same input and local environment |
-| Replicability | Matching results under slightly different conditions | Run the same code and data locally in a virtual environment and in Docker, then compare outputs |
+| Replicability | Matching results under slightly different conditions | Install a teammate's Release into a fresh environment, and run the same code locally and in Docker, then compare outputs |
 | Reproducibility | Matching results under very different conditions, such as an independent simulation | Discuss conceptually; an independent simulation is not required |
 
 The practical focus is repeatability and replicability. Cleaned records and counts must match exactly. Calculated decimal values must agree within a stated numerical tolerance documented in the tests. Cross-group reproduction and new-data experiments are not required.
@@ -34,32 +41,47 @@ By the end of the course, students should be able to:
 
 1. Use an isolated Python environment and explain how configuration and dependencies affect execution.
 2. Collaborate through feature branches, descriptive commits, pull requests, and meaningful peer reviews.
-3. Explain how reusable processing code is packaged and connected to an API and user interface.
+3. Generate a package from a template, explain how its modules, metadata, and command-line entry point fit together, tag a Release, and install a Release from a git URL.
 4. Run tests for declared processing behavior and invalid inputs, and interpret local and CI failures.
-5. Launch a FastAPI and Streamlit application with Docker Compose and explain how the services communicate.
+5. Connect the processing package to a FastAPI service and launch it with the Frontend repo using Docker Compose, explaining how the services communicate.
 6. Demonstrate repeatability and replicability with explicit output comparisons.
+
+## Session shape
+
+Every session has the same shape, 170 minutes in all:
+
+| Block | Minutes | Content |
+| --- | --- | --- |
+| Instruction 1 | 60 | Explanation and demonstration, opened by the device-example segment |
+| Break | 10 | |
+| Instruction 2 | 60 | Explanation and demonstration |
+| Hands-on | 40 | Guided practice in groups |
+
+Guided practice not finished in the 40 minutes continues at home. Session 5 keeps the 170-minute length with a showcase schedule.
 
 ## Teaching approach and projects
 
-The supplied example uses [synthetic healthcare data](data/synthetic/README.md) from the [clinical-data-teaching repository](https://github.com/drweihungpan-lab/clinical-data-teaching). It illustrates joining participant and laboratory records, handling missing values, validating inputs, producing summaries, and displaying a simple chart. Model training is not required.
+The [device example](GLOSSARY.md) is the one dataset used in class. It is synthetic, generated with a fixed seed, and documented in the Sandbox. Its Stage 4 processing code is the basis of the package every group generates in Session 2, and the same data and predictions carry through the tests, the API, and the Docker comparison, so outputs can be compared across groups.
 
-Each group will independently select its own dataset and statistical question. Topic approval is not required; groups may discuss their selected topic with the instructor. Cleaning, processing, summaries, visualization, and modeling are possible project activities. Modeling is optional, and complexity earns no additional credit.
+Each group will independently select its own dataset and statistical question for the final project. Topic approval is not required; groups may discuss their selected topic with the instructor. Cleaning, processing, summaries, visualization, and modeling are possible project activities. Modeling is optional, and complexity earns no additional credit.
 
-The template contains a complete working example. Students will inspect it, make small changes, and verify those changes through the full workflow. FastAPI, Streamlit, and Docker Compose are required parts of every group's application.
+FastAPI, the Frontend repo's Streamlit page, and Docker Compose are required parts of every group's application. Students author backend code only; the Frontend repo is supplied.
 
-Each student must author at least one pull request and review at least one teammate's pull request. Reviews must address behavior, tests, or clarity rather than provide approval alone. The instructor will inspect this evidence in each group's repository.
+Each student must author at least one pull request in their group's Backend repo and review at least one teammate's pull request there. Reviews must address behavior, tests, or clarity rather than provide approval alone. The instructor will inspect this evidence in each group's repository. Practice in the Sandbox does not count.
+
+Group repositories are public. They must never contain real or sensitive data or secrets.
 
 ## Session 0: Required self-paced setup (pre-course)
 
-**Duration:** none in class. This is a pre-course requirement, separate from the five sessions and 15 classroom hours.
+**Duration:** none in class. This is a pre-course requirement, separate from the five sessions.
 
-Students complete the [Session 0 guide](docs/session-0.md) at home: a GitHub account, a terminal (Mac Terminal, or WSL with Ubuntu 24.04 LTS on Windows), Git, an SSH key connected to GitHub, Python 3.12 and VS Code. They then check in by commenting the output of three commands on a pinned issue in a public sandbox repository, by **3 days before Session 1**. Session 0 does not teach commit or push. See the [instructor notes](materials/instructor/session-0.md) and the [decision record](docs/adr/0001-wsl-and-ssh-for-all-students.md).
+Students complete the [Session 0 guide](docs/session-0.md) at home: a GitHub account, a terminal (Mac Terminal, or WSL with Ubuntu 24.04 LTS on Windows), Git, an SSH key connected to GitHub, Python 3.12 and VS Code. They then check in by commenting the output of three commands on a pinned issue in the Sandbox, by **3 days before Session 1**. Session 0 does not teach commit or push. See the [instructor notes](materials/instructor/session-0.md) and the [decision record](docs/adr/0001-wsl-and-ssh-for-all-students.md).
 
-## Session 1: Environment isolation, modern Git, and CI foundations
+## Session 1: Environment isolation and modern Git
 
-**Duration:** 3 hours
+**Duration:** 170 minutes
 
-**Core technologies:** Python 3.12, `venv`, Git, GitHub template repositories, `python-dotenv`, GitHub Actions.
+**Core technologies:** Python 3.12, `venv`, Git, GitHub pull requests, `python-dotenv`.
 
 ### Topics
 
@@ -67,106 +89,102 @@ Students complete the [Session 0 guide](docs/session-0.md) at home: a GitHub acc
 - Feature branches, descriptive commits, pull requests, and merge conflicts.
 - The collaboration path: feature branch → pull request → peer review → merge into `main`.
 - Configuration hygiene: `.gitignore`, local `.env` files, and shareable `.env.example` files.
-- Continuous integration: automated checks on changes and the role of required checks in protecting `main`.
+- Public repositories and why no real or sensitive data belongs in them. A preview of "required checks" protecting `main`, which Session 2 introduces.
 
 ### Guided practice
 
-Create a group repository from the supplied template, prepare a local environment, configure local environment variables, and make a small change on a feature branch. Open a draft pull request and inspect automated status checks.
+In the Sandbox, create a branch named `group-N/topic`, make a change in the practice folder, open a pull request, review a teammate's pull request with a specific comment, and resolve the deliberate merge conflict. There is no CI in Session 1.
 
 ### Mandatory homework: approximately 2 hours
 
-Practice the branch and pull-request workflow in the group repository. Inspect a teammate's change and document the group's chosen dataset and question. First finish any guided practice not completed in class; this is in addition to the two hours.
+To be defined.
 
-**Progress checkpoint:** a group repository with environment isolation, configuration hygiene, and a visible branch/PR workflow. This is preparation for the final presentation, not a separate submission.
+**Progress checkpoint:** every student has opened a pull request and given a review in the Sandbox, and the group has chosen its Backend repo name.
 
-## Session 2: From scripts to modules—Python packaging and maintainable code
+## Session 2: A package other people can install
 
-**Duration:** 3 hours
+**Duration:** 170 minutes
 
-**Core technologies:** `pyproject.toml`, editable installation, type hints, Python logging.
+**Core technologies:** cookiecutter, `setup.cfg` packaging, `click`, Python logging, git tags, `pip install git+`, GitHub Actions (first look).
 
 ### Topics
 
-- Moving exploratory processing steps into reusable functions and modules.
-- Separating processing logic from the interface and API.
-- Reading type hints and using logging to understand execution.
-- Package metadata, dependency declarations, and editable installation.
+- From scripts to modules: the device example's Stage 3 → Stage 4 story.
+- What a cookiecutter template is and what its prompts change.
+- Package metadata, dependencies, a command-line entry point with `--input` and `--output`, and the version string.
+- A Release: version bump, git tag, and installing a pinned version with `pip install git+https://…@v0.1.0` ([decision record](docs/adr/0002-distribute-by-git-tag-not-registry.md)). PyPI and TestPyPI are discussed as what a mature package would use.
+- A very quick look at CI: automatic lint and format checks on every push.
 
 ### Guided practice
 
-Trace the supplied healthcare processing code in `backend/stat_core/`. Inspect `backend/pyproject.toml`, install the package in editable mode, and make a small processing or logging change through a reviewed pull request.
+Generate the group's Backend repo with the course cookiecutter, run the command-line tool on the device CSV, push, change the version, tag a Release, and install a teammate's Release into a fresh virtual environment. Check the output against the instructor's reference checksum.
 
 ### Mandatory homework: approximately 2 hours
 
-Apply a small, documented change relevant to the group's chosen data-processing question. Explain where the processing logic belongs and record the change through the repository workflow.
+To be defined.
 
-**Progress checkpoint:** the package runs inside the virtual environment, and the group can explain how modules, dependencies, and the editable installation connect.
+**Progress checkpoint:** each group has a public Backend repo with a tagged Release that another group's member installed and ran, matching the reference checksum.
 
-## Session 3: Defensive engineering—FastAPI, pytest, and automated CI
+## Session 3: Defensive engineering with pytest and CI
 
-**Duration:** 3 hours
+**Duration:** 170 minutes
 
-**Core technologies:** FastAPI, Pydantic, pytest, fixtures, `pytest.approx`, GitHub Actions.
+**Core technologies:** pytest, fixtures, `pytest.approx`, GitHub Actions.
 
 ### Topics
 
-- Request and response schemas as a contract between the UI and backend.
-- Input validation, missing values, invalid types, and appropriate bounds.
-- Testing processing behavior separately from API responses.
+- Declared processing behavior and invalid-input handling as tests.
 - Shared test fixtures and explicit numerical tolerances.
-- Connecting local test execution to automated PR checks.
+- Switching on the commented-out test job in the CI workflow; reading CI results.
 
 ### Guided practice
 
-Follow a request from `backend/app/main.py` into `stat_core`. Exercise valid and invalid inputs, inspect the supplied tests, and make a small test or validation change. Observe a controlled failing test, correct the issue, and verify passing local and CI runs.
+Add tests to the group's Backend repo, switch on the pytest job, observe a controlled failing test turn CI red, fix it, and verify green.
 
 ### Mandatory homework: approximately 2 hours
 
-Demonstrate tests for the group's declared processing behavior and invalid-input handling. Review the CI result and complete peer review of the related change.
+To be defined.
 
-**Progress checkpoint:** a working FastAPI backend with passing local tests and passing PR checks, plus visible validation and review evidence.
+**Progress checkpoint:** passing local tests and passing CI in the Backend repo, plus visible review evidence.
 
-## Session 4: Containers, service orchestration, and output comparison
+## Session 4: FastAPI, containers, and service orchestration
 
-**Duration:** 3 hours
+**Duration:** 170 minutes
 
-**Core technologies:** Docker, `python:3.12-slim`, Streamlit, HTTP requests, Docker Compose.
+**Core technologies:** FastAPI, Pydantic, Docker, `python:3.12-slim`, Streamlit (supplied), Docker Compose.
 
 ### Topics
 
-- Reading the supplied Dockerfiles and understanding images and containers.
-- Following CSV uploads and HTTP requests from Streamlit to FastAPI.
-- Container networking and service names such as `http://backend:8000`.
-- Service readiness and startup behavior.
-- Comparing outputs across repeated local runs and local/container environments.
+- Hour one: adding an API to the Backend repo as an optional install extra; request and response schemas as a contract; one processing function behind two interfaces (command line and API).
+- Hour two: the Dockerfile, images and containers, container networking and service names such as `http://backend:8000`, readiness, and building the Frontend repo from a pinned release in Compose.
+- Comparing outputs across repeated local runs and local/container environments (homework).
 
 ### Guided practice
 
-Launch the supplied backend and frontend with `docker compose up --build`. Trace the service configuration and diagnose a controlled configuration or connection problem. Compare repeated local outputs, then compare local and Docker outputs under the declared criteria.
-
-Multi-stage image optimization is an optional extension rather than a core requirement.
+Run `docker compose up --build` with the supplied Frontend repo, trace a CSV upload from the page to the API and back, and diagnose one controlled configuration or connection fault.
 
 ### Mandatory homework: approximately 2 hours
 
-Prepare the group's full application and engineering evidence for the final presentation. Rehearse startup, CSV processing, tests, output comparisons, and navigation to PR and peer-review records.
+To be defined; includes preparing the local-versus-Docker output comparison for Session 5.
 
-**Progress checkpoint:** both services run together, and the group has evidence for repeatability and replicability.
+**Progress checkpoint:** both services run together from the Backend repo.
 
 ## Session 5: Final showcase and live engineering review
 
-**Duration:** 3 hours
+**Duration:** 170 minutes
 
 **Format:** group demonstrations and questions about the workflow.
 
-Each group will demonstrate its project and show the required evidence in its own repository. Every student must be able to explain their contribution and participation in pull requests and reviews. Presentation timings will be arranged to fit the number of groups.
+Each group will demonstrate its project and show the required evidence in its own Backend repo. Every student must be able to explain their contribution and participation in pull requests and reviews. Presentation timings will be arranged to fit the number of groups.
 
 ### Required demonstration and evidence
 
-- Launch the backend and frontend with `docker compose up --build`.
-- Upload the group's CSV data through Streamlit, process it through FastAPI and the reusable package, and display results or a chart.
-- Explain the connection between the interface, API, processing package, and container services.
-- Show feature branches, descriptive commits, pull requests, and meaningful peer code reviews.
+- Launch the backend and the Frontend repo's page with `docker compose up --build`.
+- Upload the group's CSV data through the page, process it through FastAPI and the package, and display results.
+- Explain the connection between the page, API, processing package, and container services.
+- Show feature branches, descriptive commits, pull requests, and meaningful peer code reviews in the Backend repo.
 - Show each student's required authored PR and review of a teammate's PR.
+- Show tagged Releases and a successful install of a Release from its git URL.
 - Show passing local tests and GitHub Actions checks.
 - Demonstrate input validation and explain the relevant tests.
 - Demonstrate matching repeated local runs and matching local/Docker outputs using the declared comparison criteria.
@@ -178,12 +196,8 @@ Assessment is **pass/fail**. All engineering requirements above must be met; the
 
 All assessment takes place at the final presentation. There is no separate submission, resubmission, or reassessment. The final presentation result is final. Homework and session checkpoints support preparation for that presentation.
 
-## Provisional classroom timing
-
-Sessions 1–4 will initially allocate 45 minutes to explanation (including a 10-minute [device example](GLOSSARY.md) segment in Sessions 2–4), 30 minutes to demonstration, 90 minutes to guided practice, and 15 minutes to a break. Session 1 instead opens with about 35 flexible minutes for introductions and a motivating example, followed by a 10-minute device-example segment, 20 minutes of explanation, 20 of demonstration, a 15-minute break, and 80 of guided practice. This allocation may change as the materials develop. Session 5 uses a separate showcase schedule.
-
 ## Course materials and surveys
 
-The [materials index](materials/README.md) links the Session 0 guide and instructor notes, the five editable PowerPoint decks and Markdown sources, four guided exercises, four homework briefs, five instructor notes, surveys, and final checklist. [Template instructions](docs/template.md) explain repository setup and permissions.
+The [materials index](materials/README.md) links the Session 0 guide and instructor notes, the five editable PowerPoint decks and Markdown sources, four guided exercises, five instructor notes, surveys, and final checklist.
 
 The [pre-course survey](materials/surveys/pre-course.md) covers prior experience, confidence, and setup readiness. The [post-course survey](materials/surveys/post-course.md) repeats relevant confidence and understanding questions and collects feedback. The surveys support course evaluation; they are not part of the pass/fail assessment.
