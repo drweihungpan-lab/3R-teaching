@@ -2,28 +2,24 @@
 
 A practical course for statistics students on the engineering framework behind repeatable data processing: isolated environments, collaborative Git workflows, reusable Python packages, tests, continuous integration (CI), APIs, and containers.
 
-The emphasis is on understanding how the parts connect and practicing the workflow. Model complexity and UI design are not the focus.
+The emphasis is on understanding how the parts connect and practicing the workflow. Model complexity and UI design are not the focus. One running example, the device example, supports every session.
+
+This repository holds course materials only. The course uses four repositories; the [syllabus](SYLLABUS.md#course-overview) lists their roles.
 
 ## Start here
 
 - [Session 0](docs/session-0.md): required self-paced setup (GitHub account, terminal, SSH) before Session 1.
 - [Syllabus](SYLLABUS.md): audience, workload, learning outcomes, five sessions, homework, and assessment. This is the single source for course facts.
-- [Glossary](GLOSSARY.md): the course-specific meanings of the three Rs.
+- [Glossary](GLOSSARY.md): the course-specific meanings of the three Rs, the device example, and the repository terms.
 - [Course materials](materials/README.md): slides, exercises, homework, instructor notes, surveys, and final checklist.
-- [Setup](docs/setup.md): Python 3.12 environment, dependencies, and local backend commands.
 - [Course design](docs/course-design.md): teaching decisions not covered by the syllabus.
-- [Verification](docs/verification.md): recorded local and hosted checks and remaining limits.
-- [Specification](https://github.com/drweihungpan-lab/3R-teaching/issues/1): the original planning document, kept as GitHub issue #1.
+- [Collaboration guide](docs/collaboration.md): branches, pull requests, and peer review.
+- [Decisions](docs/adr): WSL and SSH for all students; distributing packages by git tag.
 
 ## Repository guide
 
-| Area | Implementation and instructions |
+| Area | Where |
 | --- | --- |
-| Processing and API | [Python package](backend/stat_core/), [FastAPI entry point](backend/app/main.py), [API contract](docs/api.md) |
-| Frontend | [Streamlit app](frontend/app.py), [local startup and uploads](docs/frontend.md) |
-| Tests and CI | [Tests](backend/tests/), [test commands](docs/testing.md), [CI guide](docs/ci.md), [workflow](.github/workflows/backend-tests.yml) |
-| Containers | [Compose configuration](compose.yaml), [Compose startup](docs/compose.md), [backend image](docs/backend-container.md), [frontend image](docs/frontend-container.md) |
-| Output comparisons | [Capture and comparison commands](docs/comparisons.md) |
-| Data | [Synthetic inputs and provenance](data/synthetic/README.md), [data dictionary](data/synthetic/data-dictionary.md) |
-| Group workflow | [Template setup and permissions](docs/template.md), [collaboration and PR guidance](docs/collaboration.md) |
-| Teaching | [Materials index](materials/README.md), [syllabus](SYLLABUS.md) |
+| Teaching | [Materials index](materials/README.md), [syllabus](SYLLABUS.md), [slide maintenance](materials/slides/README.md) |
+| Session 2 rehearsal | [scripts/rehearse_session_2.sh](scripts/rehearse_session_2.sh): generate, tag, install, and compare the checksum on a clean machine |
+| Slide builder | [scripts/build_slides.py](scripts/build_slides.py) |

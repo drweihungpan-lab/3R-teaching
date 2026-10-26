@@ -165,7 +165,6 @@ compose.yaml
 - Backend health probe → itself: `http://127.0.0.1:8000/health`.
 - DNS means looking up an address by name. Compose resolves service name `backend` on its shared network.
 - `localhost` means the caller's own network environment. Inside frontend, it points to frontend; the host browser cannot resolve Compose service names.
-- See [address and troubleshooting guide](../../docs/compose.md).
 
 ---
 
