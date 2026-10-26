@@ -25,3 +25,21 @@ _Avoid_: Time-series example, device demo
 **Stage**:
 One snapshot of the device example, each showing one engineering pain point that the next stage fixes.
 _Avoid_: Version, step, level
+
+## Course repositories
+
+**Sandbox**:
+The one class-wide public repository where all students practise Git, with `main` protected and each group working under its own branch prefix. It also holds the device example. Nothing in it counts as final-project evidence.
+_Avoid_: Practice repo, demo repo
+
+**Backend repo**:
+A group's single repository, started in Session 1 and holding its processing package from Session 2 onward. Public, and containing only synthetic or non-sensitive data.
+_Avoid_: Group repo, project repo
+
+**Frontend repo**:
+The one instructor-owned repository holding the CSV upload page. Groups run it from a pinned release and do not fork or edit it.
+_Avoid_: UI repo
+
+**Release**:
+A version of a package fixed by a version tag, so anyone installing that tag gets identical code. Nothing is uploaded to a package registry.
+_Avoid_: Deploy, publish
