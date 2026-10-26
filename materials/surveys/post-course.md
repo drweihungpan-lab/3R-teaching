@@ -71,7 +71,7 @@ Response (A, B, C, or N): ______
 
 These questions ask about your experience of the course. Honest feedback, including difficulties and suggestions, helps improve teaching. You may answer even if you left the comparison code blank.
 
-**FEED-01 — Workload:** The course planned approximately two hours of mandatory homework after each of Sessions 1–4 (eight hours total), alongside 15 classroom hours. About how many hours did you spend outside class after each session? Include setup, homework, group work, and presentation preparation. Enter an estimate, 0 if none, or “not sure.”
+**FEED-01 — Workload:** The course planned approximately two hours of mandatory homework after each of Sessions 1–4 (eight hours total), alongside 14 hours 10 minutes of classroom time. About how many hours did you spend outside class after each session? Include setup, homework, group work, and presentation preparation. Enter an estimate, 0 if none, or “not sure.”
 
 | After session | Approximate hours outside class |
 | --- | --- |
