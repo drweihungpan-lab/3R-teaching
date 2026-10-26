@@ -1,9 +1,22 @@
-# Session 2: From scripts to reusable modules
+# Session 2: A package other people can install
 
-- Follow the supplied healthcare processing package.
-- Read its dependencies, type hints, and logs.
-- Make one small logging change through a reviewed PR.
-- Start with the working example; keep its results unchanged.
+Today's goal: data in, data out, from the command line, installable from GitHub.
+
+- Generate your group's Backend repo from a template.
+- Run it on the device data and check the answer.
+- Tag a Release and install a teammate's.
+
+---
+
+## Our 170-minute agenda
+
+- 00–10: Back at the bubble tea shop; device example Stages 3 to 4.
+- 10–60: Explanation — modules, packages, cookiecutter, the command-line tool.
+- 60–70: Break — 10 minutes.
+- 70–130: Explanation — versions, Releases, installing from git, a first look at CI.
+- 130–170: Hands-on — generate, run, push, tag, install.
+
+Unfinished practice continues at home, in addition to the homework.
 
 ---
 
@@ -39,18 +52,22 @@ DEV-C reaches the limit on 2026-01-04
 - Run from another folder, it fails: `FileNotFoundError: 'data/device_counts.csv'`. The data path is relative to where you stand.
 - A harmless-looking cleanup (drop days with zero measurements) moves `DEV-C` from 2026-01-16 to 2026-01-06, with no error or warning.
 - Nothing checks the answer. Next session's tool: tests.
-- Files: [3R-device-example](https://github.com/drweihungpan-lab/3R-device-example).
+- Files: the `device-example` folder of the [Sandbox](https://github.com/drweihungpan-lab/3R-sandbox).
 
 ---
 
-## Our 180-minute agenda
+## Data in, data out
 
-- 0–10: device example — Stages 3 to 4.
-- 10–45: explanation — modules, boundaries, packaging, types, logs.
-- 45–75: demonstration — install, trace, run, save a baseline.
-- 75–90: break — 15 minutes.
-- 90–180: guided practice — change, check, and review.
-- Practice: trace 15 + edit 20 + check 25 + explain 15 + review 15.
+Your package will read a CSV and write a CSV. Same input, same output, every time.
+
+```text
+device_counts.csv  →  device_limit  →  limits.csv
+(device_id, date,      predict the       (device_id,
+ daily_count)          limit date        limit_date)
+```
+
+- The Stage 4 code is already inside the package you generate.
+- Your job today is the packaging: build it, share it, install it.
 
 ---
 
@@ -60,363 +77,226 @@ DEV-C reaches the limit on 2026-01-04
 - A package groups modules that can be imported together.
 - Keep exploration in a notebook; give repeated work a function.
 - Pass inputs in and return results; avoid hidden notebook state.
-- Here, `stat_core.process_csv` is the reusable entry point.
+- Here, `predict_limit_dates` takes a table and returns dates; the command-line tool is a thin layer around it.
 
 ---
 
-## Processing, API, and UI do different jobs
+## A cookiecutter turns answers into a repository
+
+A cookiecutter is a template folder plus a few questions. You answer; it writes every file with your answers filled in.
 
 ```text
-UI: choose files and display results
-    -> API: accept uploads and report HTTP errors
-        -> processing: validate, join, calculate, summarize
-        <- result dictionary
-    <- JSON response
+template + answers  →  new repository
+(course_template)      (device_limit/, setup.cfg, tests/, CI ...)
 ```
 
-- API means a defined way for programs to communicate.
-- UI means the screen a person uses.
-- UI flow is conceptual here; the supplied frontend is explored in Session 4.
+- The same answers always produce the same files: repeatability for project setup.
+- You can change the template itself later and regenerate. That is a homework idea.
+- Install the tool with `python -m pip install cookiecutter` inside a virtual environment.
 
 ---
 
-## Find the actual backend modules
+## The five questions
+
+- `package_name`: the Python name and the command, for example `device_limit`.
+- `module_name`: the file holding the processing, for example `model`.
+- `repo_name`: must match your GitHub repository and the folder you cloned.
+- `author` and `author_email`: written into the package metadata.
+
+Press Enter to keep the default shown in brackets. Everything else comes from the template.
+
+---
+
+## What you get
 
 ```text
-backend/
-  pyproject.toml          package and dependency metadata
-  stat_core/__init__.py  public imports
-  stat_core/processing.py  process_csv
-  stat_core/validation.py  CSV and domain checks
-  stat_core/schemas.py   result and error shapes
-  stat_core/errors.py    InvalidInputError
-  app/main.py           create_app and HTTP endpoints
+your-repo/
+├── data/             device_counts.csv, expected_limits.sha256
+├── src/device_limit/
+│   ├── __init__.py   the version, 0.1.0
+│   ├── model.py      the processing functions
+│   └── scripts/      the command-line tool
+├── tests/            unit and integration tests (CI runs them in Session 3)
+├── setup.cfg         metadata, dependencies, entry point
+├── Makefile          lint and test shortcuts
+└── .github/workflows/github_actions.yml
 ```
-
-- Trace from [public imports](../../backend/stat_core/__init__.py).
 
 ---
 
-## Follow one call through processing
+## setup.cfg describes the package
+
+- `[metadata]`: name, author, and the version read from `__init__.py`.
+- `[options]`: Python version and `install_requires` (click, numpy, pandas).
+- `[options.extras_require]`: optional extras such as `test`, installed with `pip install '.[test]'`.
+- `[options.entry_points]`: a line that creates the `device_limit` command.
+
+An editable install, `pip install -e '.[test]'`, lets you change code and rerun without reinstalling.
+
+---
+
+## The command-line tool
+
+```bash
+device_limit --input data/device_counts.csv --output limits.csv
+```
+
+- `--input` must be an existing CSV with columns `device_id`, `date`, `daily_count`.
+- `--output` is the file to write: one `limit_date` per device.
+- A missing column stops the run with a clear message; it does not write a half answer.
+- `--version` prints the package version.
+
+The tool uses the `click` library; the processing itself does not know about the command line.
+
+---
+
+## Logs tell you what ran
+
+The package logs one line when it reads a file:
 
 ```text
-stat_core.process_csv(participants_csv, laboratory_csv)
-  read_csv + validate_participants
-  read_csv + validate_laboratory
-  join laboratory rows to participants
-  calculate baseline, change, percent_change
-  build counts, arm_summaries, visit_summaries
-  return ProcessResult.model_dump(mode="json")
+26/10/2026 09:31:17 (from load_counts) INFO: Read 1095 rows from data/device_counts.csv
 ```
 
-- These steps live in [processing.py](../../backend/stat_core/processing.py).
-- The caller supplies CSV contents, not filenames or uploads.
+- Set `LOGLEVEL=DEBUG` to see more, or `WARNING` to see less.
+- Logs go to the terminal; the result goes to the output file.
+- Prefer logging over `print` so you can change the detail without editing code.
 
 ---
 
-## Preserve the healthcare meaning
+## Check the answer: the reference checksum
 
-- DM: 24 participants; LB: 96 laboratory records.
-- Join on both `STUDYID` and `USUBJID`.
-- Keep subject identifiers as text, including leading zeros.
-- Preserve the unavailable result: 95 observed, 1 missing.
-- Missing is not zero; means use observed values only.
-- These are invented teaching data, not clinical evidence.
-- See the [data dictionary](../../data/synthetic/data-dictionary.md).
+A checksum is a short fingerprint of a file. If two files have the same SHA-256, they are byte-for-byte identical.
 
----
-
-## Read a type hint as an interface description
-
-From `backend/stat_core/processing.py`:
-
-```python
-def process_csv(
-    participants_csv: str,
-    laboratory_csv: str,
-) -> dict[str, Any]:
+```bash
+shasum -a 256 limits.csv
 ```
 
-- `str`: CSV text comes in; `dict`: a dictionary comes back.
-- `Any`, imported from `typing`, allows different value types.
-- A hint helps readers and tools; it does not check data itself.
+Compare the result with the value in `data/expected_limits.sha256`. Your classmates' output must match too: that is repeatability, checked by a machine.
 
 ---
 
-## Validation checks values while the program runs
+## A Release is a version someone else can pin
 
-From `backend/stat_core/schemas.py`:
+Three steps, always in this order:
 
-```python
-value: float | None
-records: list[Record]
-```
+- Change `__version__` in `src/<package>/__init__.py`, through a reviewed pull request.
+- After it is merged, tag the merge commit: `git tag v0.1.0`.
+- Push the tag: `git push origin v0.1.0` (or `git push --tags`).
 
-- `None` means unavailable; `list[Record]` means many records.
-- CSV checks reject invalid ages, units, keys, and dates.
-- Pydantic models check the declared result shape.
-- Python raises `InvalidInputError`; the API maps it to HTTP 422.
-- Read the [contract](../../docs/api.md) for exact rules and errors.
+The tag is now a fixed point. Anyone who installs `v0.1.0` gets exactly that code, even after `main` moves on.
 
 ---
 
-## Packaging describes what gets installed
-
-Actual entries from [pyproject.toml](../../backend/pyproject.toml):
-
-```toml
-[build-system]
-requires = ["setuptools>=69", "wheel"]
-build-backend = "setuptools.build_meta"
-[project]
-name = "three-r-backend"
-version = "0.1.0"
-requires-python = ">=3.12"
-```
-
-- Metadata means the package's name, version, and requirements.
-- Distribution name: `three-r-backend`; import name: `stat_core`.
-- Package discovery includes both `stat_core*` and `app*`.
-
----
-
-## Declare dependencies instead of relying on your laptop
-
-- A dependency is another package our code needs.
-- Runtime: FastAPI, Pydantic, python-dotenv, python-multipart, Uvicorn.
-- The `dev` extra is an optional group: pytest and httpx for checks.
-- Example range: `pydantic>=2.9,<3` allows 2.x versions from 2.9.
-- A range is not a lockfile; record resolved versions for comparisons.
-- This small CSV example uses the standard library, not pandas.
-
----
-
-## Logging makes execution visible
-
-Existing module setup in `backend/stat_core/processing.py`:
-
-```python
-import logging
-logger = logging.getLogger(__name__)
-```
-
-- The logger's name is `stat_core.processing`.
-- DEBUG: diagnostic detail; INFO: normal progress.
-- WARNING: concern; ERROR: failure; CRITICAL: severe failure.
-- The caller configures visibility; processing emits messages.
-- Log counts and locations, never uploaded rows or identifiers.
-
----
-
-## Demo: install inside an isolated environment
-
-Run from the repository root with Python 3.12 and Git available:
+## Install a Release from its git URL
 
 ```bash
 python3.12 -m venv .venv
 source .venv/bin/activate
-python -m pip install -e './backend[dev]'
-python -c 'import stat_core; print(stat_core.__file__)'
+pip install "git+https://github.com/ORG/REPO.git@v0.1.0"
+device_limit --input data.csv --output limits.csv
 ```
 
-- The printed path should end in `backend/stat_core/__init__.py`.
-- Editable means imports use this checkout's source files.
-- Start a new process after edits; reinstall after metadata changes.
-- Windows: run in the WSL Ubuntu terminal ([Session 0](../../docs/session-0.md#step-2-windows-install-wsl-and-open-ubuntu)); setup help: [setup.md](../../docs/setup.md).
+- `@v0.1.0` pins the tag; without it you get whatever `main` is today.
+- Use a fresh virtual environment so leftovers cannot hide a problem.
+- This works because your repository is public: no account or token is needed.
+
+See [why we install from git](../../docs/adr/0002-distribute-by-git-tag-not-registry.md).
 
 ---
 
-## Demo: run the package without a web server
+## What about PyPI?
 
-Use the activated environment, from the repository root:
+PyPI is the public index behind a plain `pip install pandas`. Mature packages are published there.
+
+- Uploads are permanent: a name and version can never be reused or removed cleanly.
+- Immature student packages and name clashes would stay public.
+- TestPyPI is a safe practice index, but it needs accounts, two-factor setup and publisher configuration.
+
+In this course a tagged Release on GitHub gives the same lesson without the permanence. You would move to PyPI when a package is stable and has a good name.
+
+---
+
+## CI: a first look
+
+Continuous integration (CI) runs automated checks on every push.
+
+- Your repo ships `.github/workflows/github_actions.yml`.
+- It installs the package and runs the formatting and lint checks, then the command on the sample data.
+- A green check reports success for one commit; it does not prove every requirement.
+- The test job is commented out with `#`. In Session 3 you remove the `#` and it starts running your tests.
+- Later, a repository rule can require the check before merging.
+
+---
+
+## Demo: generate the repository
+
+Create an empty public repository on GitHub, then:
 
 ```bash
-python - <<'PY'
-from pathlib import Path
-from stat_core import process_csv
-
-result = process_csv(
-    Path("data/synthetic/dm.csv").read_text(encoding="utf-8"),
-    Path("data/synthetic/lb.csv").read_text(encoding="utf-8"),
-)
-print(result["counts"])
-PY
+git clone git@github.com:ORG/REPO.git
+cd REPO
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install cookiecutter
+cookiecutter -f git@github.com:drweihungpan-lab/devops-python-package-template.git --directory course_template -o ..
 ```
 
-- Expected counts: participants 24, records 96, observed 95, missing 1.
+Answer the five questions. Use the same `REPO` for `repo_name`. The `-o ..` writes the files into your clone, one folder up from where you stand.
 
 ---
 
-## Demo: trace the API wrapper
+## Demo: install it and run it
 
-In `backend/app/main.py`, `create_app()` registers `/process`.
-It reads uploads, calls `process_csv`, and returns `ProcessResult`.
+The generated files are now in your clone. Install it with its test tools:
 
 ```bash
-python -m uvicorn app.main:app --app-dir backend \
-  --host 127.0.0.1 --port 8000
+pip install -e '.[test]'
+device_limit --input data/device_counts.csv --output limits.csv
+cat limits.csv
+shasum -a 256 limits.csv
 ```
 
-In another terminal at the repository root:
+Expect three rows, DEV-A to DEV-C, and a SHA-256 that equals `data/expected_limits.sha256`.
+
+---
+
+## Demo: pull request, merge, tag
 
 ```bash
-curl --fail-with-body http://127.0.0.1:8000/process \
-  -F participants=@data/synthetic/dm.csv \
-  -F laboratory=@data/synthetic/lb.csv
+git switch -c feature/generate-package
+git add .
+git commit -m "Generate package from course template"
+git push -u origin feature/generate-package
 ```
 
-- Result keys: `counts`, `records`, `arm_summaries`, `visit_summaries`.
-- HTTP handles transport; the processing package owns calculations.
-
----
-
-## Demo: find who configures the logs
-
-- `create_app()` reads root `.env`; environment variables win.
-- Actual settings: `LOG_LEVEL` and `MAX_UPLOAD_BYTES`.
-- Defaults work; see [.env.example](../../.env.example).
-- Restart the service after changing its settings.
-- Direct Python callers configure logging themselves.
-- With INFO enabled, the existing processing message is:
-
-```text
-INFO stat_core.processing: Processed participants=24
-  records=96 observed=95 missing=1
-```
-
-- Wrapped here for readability; the real message is one line.
-
----
-
-## Demo: save the result before editing
-
-The existing `.venv/` directory is ignored by Git.
-Save a sorted JSON snapshot there; logs use standard error.
+Open the pull request, watch the check run, ask a teammate for a review, then merge on GitHub.
 
 ```bash
-python - <<'PY' > .venv/session-2-before.json
-import json
-from pathlib import Path
-from stat_core import process_csv
-
-dm = Path("data/synthetic/dm.csv").read_text(encoding="utf-8")
-lb = Path("data/synthetic/lb.csv").read_text(encoding="utf-8")
-print(json.dumps(process_csv(dm, lb), sort_keys=True))
-PY
+git switch main
+git pull --ff-only origin main
+git tag v0.1.0
+git push origin v0.1.0
 ```
 
-- Keep this baseline; do not overwrite it after the change.
+---
+
+## Hands-on: 40 minutes
+
+- 10 minutes: create the repository, generate it, install it, and check the checksum.
+- 10 minutes: open the pull request, get a review, merge.
+- 5 minutes: tag `v0.1.0` and push the tag.
+- 15 minutes: install a teammate's Release into a fresh environment and confirm their output matches the reference checksum.
+
+Use [the exercise](../exercises/session-2.md) when stuck. Your Backend repo is where your pull request and review count as final evidence.
 
 ---
 
-## Break: 15 minutes
+## Checkpoint and next step
 
-- Leave the baseline and virtual environment in place.
-- Return ready to explain where processing ends and HTTP begins.
+Today's checkpoint: each group has a public Backend repo with a tagged Release that someone else installed and ran, matching the reference checksum.
 
----
+- Mandatory homework is approximately two hours; details will be posted separately.
+- Next session: tests with pytest, and switching on the test job in CI.
 
-## Practice: trace first, then start a branch
-
-First 15 minutes: work in your group repository.
-
-```bash
-git status --short
-git switch -c feature/session-2-summary-log
-```
-
-- Start from the group's current default branch and clean worktree.
-- Find `process_csv` and its existing final `logger.info` call.
-- Explain its input, four result keys, and callers to a teammate.
-- Target: one DEBUG message giving the number of visit summaries.
-
----
-
-## Practice: add one diagnostic message
-
-Next 20 minutes: in `backend/stat_core/processing.py`,
-insert this after the existing INFO call, before the return.
-Indent it four spaces inside `process_csv`:
-
-```python
-logger.debug(
-    "Built visit summaries=%d",
-    len(result.visit_summaries),
-)
-```
-
-- `%d` is an integer placeholder; logging formats the value.
-- Reuse the module logger and the already computed result.
-- Do not put logging configuration inside the processing function.
-
----
-
-## Practice: run again and compare the complete result
-
-Next 25 minutes: enable DEBUG in this new Python process:
-
-```bash
-python - <<'PY' > .venv/session-2-after.json
-import json
-import logging
-from pathlib import Path
-from stat_core import process_csv
-
-logging.basicConfig(level=logging.DEBUG)
-dm = Path("data/synthetic/dm.csv").read_text(encoding="utf-8")
-lb = Path("data/synthetic/lb.csv").read_text(encoding="utf-8")
-print(json.dumps(process_csv(dm, lb), sort_keys=True))
-PY
-cmp .venv/session-2-before.json .venv/session-2-after.json
-```
-
-- Expect `DEBUG:stat_core.processing:Built visit summaries=8`.
-- `cmp`: no output and exit code 0 means identical saved results.
-
----
-
-## Practice: explain the evidence
-
-Next 15 minutes: discuss with a teammate.
-
-- Run the previous Python block again: same input, same environment.
-- The saved result must still match; the DEBUG message stays separate.
-- At INFO level, the new DEBUG message should disappear.
-- No message? Check log level, insertion point, and imported file path.
-- Import fails? Check environment, editable install, and working folder.
-- A changed result needs investigation before review.
-- This logging change uses exact JSON equality, with no tolerance.
-
----
-
-## Practice: open a PR and give meaningful review
-
-Final 15 minutes: inspect and publish only the small source change.
-
-```bash
-git diff --check
-git diff -- backend/stat_core/processing.py
-git add backend/stat_core/processing.py
-git commit -m "Log visit summary count at debug level"
-git push -u origin feature/session-2-summary-log
-```
-
-- Open a pull request to the group repository's `main` on GitHub.
-- Describe the message, DEBUG output, and identical JSON evidence.
-- A teammate checks placement, clarity, and absence of row data.
-- Inspect available PR checks; address review before merging.
-- Keep an authored PR and a meaningful teammate review per student.
-
----
-
-## Checkpoint: explain the framework in plain English
-
-- Module: one file's job; package: reusable imports plus metadata.
-- Processing owns calculations; API owns HTTP; UI owns interaction.
-- Editable install connects the environment to your source checkout.
-- Type hints describe values; validation checks them; logs explain runs.
-- Repeatability: agreement under the same conditions.
-- Replicability: same process under slightly different conditions.
-- Reproducibility: very different conditions, such as independent simulation.
-- Local/Docker comparison comes later; decimals need declared tolerances.
-- Course meanings and next session: [glossary](../../GLOSSARY.md), [syllabus](../../SYLLABUS.md).
+See the [syllabus](../../SYLLABUS.md) for the full course plan.
