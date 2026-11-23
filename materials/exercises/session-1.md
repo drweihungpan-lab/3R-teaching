@@ -1,75 +1,191 @@
-# Session 1 guided practice: branches, pull requests, and a merge conflict
+# Session 1 guided practice: Create and push your Backend repo
 
-Spend about 40 minutes in your group of three or four, in the class [Sandbox](https://github.com/drweihungpan-lab/3R-sandbox). You will make a change on a branch, open a pull request (PR), review a teammate's PR, and resolve a merge conflict on purpose. Nothing in the Sandbox is graded and none of it counts as final-project evidence. Your group's own Backend repo, created in Session 2, is where authored PRs and reviews are counted.
+Spend about 70 minutes in your group of three or four. You will create a GitHub repository, clone the cookiecutter template, generate your package structure, commit it, and push to your repository. This is your Backend repo for the rest of the course.
+
+---
 
 ## Before you start
 
-You need Session 0 finished: Git, an SSH key connected to GitHub, Python 3.12, and a terminal (Mac Terminal, or the Ubuntu terminal in WSL on Windows). Know your group number `N`. Everything here is public: never paste a key, password, token, or personal data.
+You need Session 0 finished: Git, an SSH key connected to GitHub, Python 3.12, and a terminal (Mac Terminal, or the Ubuntu terminal in WSL on Windows).
 
-| Time | Activity | Checkpoint |
-| --- | --- | --- |
-| 0–10 min | Clone, branch, edit, push, open a PR | A PR from `group-N/...` is open |
-| 10–20 min | Review a teammate's PR | A review with one specific comment |
-| 20–35 min | The conflict drill | The conflict is resolved and merged |
-| 35–40 min | Record what you did | A note of where you stopped |
+Your group needs:
+- A chosen Backend repo name (for example, `3R-group-3-backend` or `3R-eco-data`).
+- One person to create the GitHub repo (the others will push to it after).
+- Everyone's GitHub username added to the repo as collaborators (or leave it public for now; you'll set permissions in Session 2).
 
-## 1. Clone, branch, edit, push, open a PR — 10 minutes
+Everything here is public: never paste a key, password, token, or personal data in any file.
 
-```bash
-git clone git@github.com:drweihungpan-lab/3R-sandbox.git
-cd 3R-sandbox
-git switch -c group-N/add-notes
-```
+---
 
-Replace `N` with your group number. In an editor open `practice/shared-notes.md` and add one line under your group's heading. Then:
+## Setup — 10 minutes
 
-```bash
-git status
-git add practice/shared-notes.md
-git commit -m "Add group N note"
-git push -u origin group-N/add-notes
-```
+### 1. One person: Create a GitHub repo
 
-The push prints a link. Open it and create the pull request. You cannot push to `main`; if Git refuses, you are on `main`: switch to your branch.
+Go to GitHub and create a new, **empty** repository:
+- **Name:** your chosen Backend repo name (for example, `3R-group-3-backend`).
+- **Visibility:** Public.
+- **Initialize:** Leave it empty. Do NOT add a README, .gitignore, or license yet.
 
-## 2. Review a teammate's PR — 10 minutes
+Copy the SSH clone URL.
 
-Open a teammate's PR and read **Files changed**. Submit a review with at least one specific comment about behavior or clarity, for example "Which line is yours, and did you keep the other group's line?". "Looks good" alone is not a review. The author replies. When satisfied, the reviewer approves and the author merges on GitHub.
+### 2. Everyone: Check SSH key
+
+Verify your SSH key is working:
 
 ```bash
-git switch main
-git pull --ff-only origin main
-git branch -d group-N/add-notes
+ssh -T git@github.com
 ```
 
-## 3. The conflict drill — 15 minutes
+You should see: `Hi <your-username>! You've successfully authenticated...`
 
-`practice/shared-notes.md` has a line under **Favourite tool this week**, currently `(undecided)`. Pair up with another group.
+If it fails, see the [Session 0 setup](../../docs/session-0.md) or ask the instructor.
 
-1. Each group creates a new branch from the latest `main` (`group-N/favourite-tool`) and changes that one line to a different tool.
-2. Both groups push and open PRs. Merge the first PR.
-3. The second PR now shows a conflict. Update your branch:
+---
+
+## Clone the template — 5 minutes
 
 ```bash
-git fetch origin
-git merge origin/main
-git status
+# Clone the template to a temporary folder
+git clone https://github.com/drweihungpan-lab/3R-cookiecutter.git temp-template
+cd temp-template
 ```
 
-Open `practice/shared-notes.md`. `<<<<<<< HEAD` starts your line, `=======` separates the incoming one, `>>>>>>> origin/main` ends the block. Agree on one line, delete all three markers, then:
+You now have the cookiecutter template on your laptop.
+
+---
+
+## Generate your package — 20 minutes
+
+Run cookiecutter to generate your Backend repo:
 
 ```bash
-git add practice/shared-notes.md
-git commit -m "Resolve favourite tool line"
-git push
+# Stay in the temp-template folder
+python -m cookiecutter . --no-input \
+  project_name="my_backend" \
+  author="Group N"
 ```
 
-The PR is now mergeable. If you get stuck before committing, `git merge --abort` returns you to the state before the merge.
+Or run it interactively (you'll be prompted):
 
-## 4. Record what you did — 5 minutes
+```bash
+python -m cookiecutter .
+```
 
-Write down the links to your PR and your review, and where you stopped. Decide your Backend repo name and who creates it before Session 2.
+You'll be asked:
+- **project_name:** Name for your package (use `my_backend` or similar; keep it lowercase and no spaces).
+- **author:** Your group name (for example, `Group 3`).
+
+This generates a new folder with your package structure. For example, if you answered `my_backend`, you'll see:
+
+```
+my_backend/
+├── src/
+│   └── my_backend/
+│       ├── __init__.py
+│       ├── cli.py
+│       └── process.py
+├── tests/
+│   └── test_process.py
+├── setup.cfg
+├── pyproject.toml
+├── README.md
+└── requirements.txt
+```
+
+Explore the files. Read `setup.cfg` and notice the `[metadata]` section and `[options.entry_points]`.
+
+---
+
+## Commit and push — 25 minutes
+
+Navigate into your generated package folder:
+
+```bash
+cd my_backend
+```
+
+Initialize Git and commit:
+
+```bash
+git init
+git add .
+git commit -m "Initial commit: cookiecutter-generated package"
+```
+
+Add your GitHub repo as the remote (use the SSH URL you copied earlier):
+
+```bash
+git remote add origin git@github.com:your-github-username/3R-group-N-backend.git
+```
+
+Rename the branch to `main` (some systems create `master` by default):
+
+```bash
+git branch -M main
+```
+
+Push:
+
+```bash
+git push -u origin main
+```
+
+The `-u` flag sets this branch to track the remote, so future `git push` commands work without arguments.
+
+---
+
+## Verify — 10 minutes
+
+1. **Check GitHub:** Open your repository on GitHub. You should see:
+   - `src/my_backend/` with the Python code.
+   - `tests/` with test files.
+   - `setup.cfg` with your package metadata.
+   - Other template files (`README.md`, `pyproject.toml`, etc.).
+
+2. **Check the commit:** Click on the commit hash and verify the files are there.
+
+3. **Verify public:** Click the repo Settings → scroll to "Danger Zone" if you need to change visibility to Public.
+
+---
+
+## Next steps
+
+In Session 2, you will:
+
+- Create a new branch for a feature.
+- Make a change on that branch.
+- Open a pull request.
+- Have a teammate review it.
+- Merge.
+- Tag a Release and install it.
+
+For now, congratulations: you have a Backend repo that's ready for the rest of the course.
+
+---
+
+## If you get stuck
+
+**SSH key fails:** See Session 0 notes or ask the instructor to help you add it to GitHub.
+
+**Cookiecutter not found:** Install it:
+```bash
+pip install cookiecutter
+```
+
+**Wrong folder pushed:** Check `git log --oneline` and `git remote -v` to see where you are and where it's pushing.
+
+**Files not on GitHub:** Pull the latest on GitHub (refresh the page), or run `git push --all` to push all branches.
+
+---
 
 ## Checkpoint
 
-You have opened a PR, reviewed a teammate's PR with a specific comment, and resolved a merge conflict. Finish anything unfinished at home, in addition to the homework. See the [glossary](../../GLOSSARY.md) for repository terms.
+You have:
+- Created a GitHub repository with your chosen name.
+- Cloned the cookiecutter template.
+- Generated your package structure.
+- Committed and pushed to your Backend repo.
+- Verified the files are public on GitHub.
+
+Finish any unfinished steps at home, in addition to the homework. See the [glossary](../../GLOSSARY.md) for repository terms.
+

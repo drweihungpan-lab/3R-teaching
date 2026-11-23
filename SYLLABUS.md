@@ -52,12 +52,12 @@ Every session has the same shape, 170 minutes in all:
 
 | Block | Minutes | Content |
 | --- | --- | --- |
-| Instruction 1 | 60 | Explanation and demonstration, opened by the device-example segment |
+| Instruction 1 | 50 | Explanation and demonstration, opened by the device-example segment |
 | Break | 10 | |
-| Instruction 2 | 60 | Explanation and demonstration |
-| Hands-on | 40 | Guided practice in groups |
+| Instruction 2 | 50 | Explanation and demonstration |
+| Hands-on | 60 | Guided practice in groups |
 
-Guided practice not finished in the 40 minutes continues at home. Session 5 keeps the 170-minute length with a showcase schedule.
+Guided practice not finished in the 60 minutes continues at home. Session 5 keeps the 170-minute length with a showcase schedule.
 
 ## Teaching approach and projects
 
@@ -77,53 +77,55 @@ Group repositories are public. They must never contain real or sensitive data or
 
 Students complete the [Session 0 guide](docs/session-0.md) at home: a GitHub account, a terminal (Mac Terminal, or WSL with Ubuntu 24.04 LTS on Windows), Git, an SSH key connected to GitHub, Python 3.12 and VS Code. They then check in by commenting the output of three commands on a pinned issue in the Sandbox, by **3 days before Session 1**. Session 0 does not teach commit or push. See the [instructor notes](materials/instructor/session-0.md) and the [decision record](docs/adr/0001-wsl-and-ssh-for-all-students.md).
 
-## Session 1: Environment isolation and modern Git
+## Session 1: Environments and packages
 
 **Duration:** 170 minutes
 
-**Core technologies:** Python 3.12, `venv`, Git, GitHub pull requests, `python-dotenv`.
+**Core technologies:** Python 3.12, `venv`, `requirements.txt`, cookiecutter, Git clone and push.
 
 ### Topics
 
 - Isolated virtual environments versus global package installations.
-- Feature branches, descriptive commits, pull requests, and merge conflicts.
-- The collaboration path: feature branch → pull request → peer review → merge into `main`.
-- Configuration hygiene: `.gitignore`, local `.env` files, and shareable `.env.example` files.
-- Public repositories and why no real or sensitive data belongs in them. A preview of "required checks" protecting `main`, which Session 2 introduces.
+- Declared dependencies: why notebooks fail when dependencies are not recorded.
+- Package structure: modules, metadata, entry points, and the standard Python layout.
+- Cookiecutter templates: generating a package structure from a template.
+- Git clone and push: putting your first package on GitHub as a public repository.
+- Public repositories and why no real or sensitive data belongs in them.
 
 ### Guided practice
 
-In the Sandbox, create a branch named `group-N/topic`, make a change in the practice folder, open a pull request, review a teammate's pull request with a specific comment, and resolve the deliberate merge conflict. There is no CI in Session 1.
+Create a new GitHub repository. Clone the course cookiecutter template, run cookiecutter to generate your Backend repo with your group's information, commit the generated package structure, and push to your repository. Verify the push succeeded and the repo is public. No branches, pull requests, or reviews yet; these come in Session 2.
 
 ### Mandatory homework: approximately 2 hours
 
 To be defined.
 
-**Progress checkpoint:** every student has opened a pull request and given a review in the Sandbox, and the group has chosen its Backend repo name.
+**Progress checkpoint:** each group has created a public Backend repo containing the generated cookiecutter package template, and the initial push succeeded.
 
-## Session 2: A package other people can install
+## Session 2: Collaboration and Release
 
 **Duration:** 170 minutes
 
-**Core technologies:** cookiecutter, `setup.cfg` packaging, `click`, Python logging, git tags, `pip install git+`, GitHub Actions (first look).
+**Core technologies:** Git branches, pull requests, code review, `setup.cfg` versioning, git tags, `pip install git+`, GitHub Actions (first look).
 
 ### Topics
 
-- From scripts to modules: the device example's Stage 3 → Stage 4 story.
-- What a cookiecutter template is and what its prompts change.
-- Package metadata, dependencies, a command-line entry point with `--input` and `--output`, and the version string.
+- Feature branches, descriptive commits, and the branch naming convention.
+- Pull requests as a collaboration tool: the purpose, how to open one, and what a meaningful review looks like.
+- Merge conflicts: when they arise, how to resolve them, and why they are useful signals.
 - A Release: version bump, git tag, and installing a pinned version with `pip install git+https://…@v0.1.0` ([decision record](docs/adr/0002-distribute-by-git-tag-not-registry.md)). PyPI and TestPyPI are discussed as what a mature package would use.
 - A very quick look at CI: automatic lint and format checks on every push.
+- The collaboration path: feature branch → commit → pull request → peer review → merge into `main`.
 
 ### Guided practice
 
-Generate the group's Backend repo with the course cookiecutter, run the command-line tool on the device CSV, push, change the version, tag a Release, and install a teammate's Release into a fresh virtual environment. Check the output against the instructor's reference checksum.
+In your Backend repo, create a feature branch, make a change to the package, open a pull request, have a teammate review it with a specific comment, and merge. Then bump the version in `setup.cfg`, tag a Release, and install a teammate's Release into a fresh virtual environment. Check the output against the instructor's reference.
 
 ### Mandatory homework: approximately 2 hours
 
 To be defined.
 
-**Progress checkpoint:** each group has a public Backend repo with a tagged Release that another group's member installed and ran, matching the reference checksum.
+**Progress checkpoint:** each group has merged at least one reviewed pull request in the Backend repo, tagged a Release, and another group's member has installed and run that Release successfully.
 
 ## Session 3: Defensive engineering with pytest and CI
 

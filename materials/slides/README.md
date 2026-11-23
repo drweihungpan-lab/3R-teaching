@@ -9,6 +9,10 @@ A slide face carries one idea in at most 29 words. The narration belongs in the
 slide's speaker notes, written as a fence tagged `notes` in the source, so present
 from Presenter View or the notes pane.
 
+The design is modern and premium: a dark navy background with electric cyan and purple
+accents, contemporary typography, generous whitespace, and a clean visual hierarchy
+inspired by leading technology companies.
+
 ## Regenerate from the repository root
 
 Use Python 3.12 in an authoring environment (the backend is not required).
@@ -53,12 +57,14 @@ python scripts/build_slides.py \
 - Markdown markers become text styling or native bullets. Link labels remain
   visible, with clickable targets. Local links are checked and rebased relative
   to the output file; distribute the repository with the deck to keep them usable.
-- Slides use 16:9 dimensions, Arial 40 pt titles, Arial 22 pt body text, and
-  Courier New 17 pt code. Install those fonts for consistent presentation.
-- Page furniture is fixed: a near-white ground, a short teal rule under the title, an
-  en-dash bullet marker, a teal left edge on code blocks, a progress track along the
-  bottom edge, and the slide number. The body block is centred vertically in the
-  space under the title, so a sparse slide reads as composed rather than unfinished.
+- Slides use 16:9 dimensions, Segoe UI 54 pt titles (bold), Segoe UI 20 pt body text,
+  and Courier New 15 pt code. These fonts are available on most systems; consider
+  substituting Inter, Geist, or IBM Plex Sans if designing for a specific brand.
+- Page furniture: dark navy background (0F172A), electric cyan (00D9FF) and purple (7C3AED)
+  accents, near-white text (F5F5F5) with muted secondary text (A0A8B8). The title is bold
+  with an accent line and decorative dot. Code blocks have a dark slate background (1E293B)
+  with cyan text and a left edge. A progress bar runs across the bottom. The body block is
+  centred vertically, so a sparse slide reads as composed rather than unfinished.
 - Text wraps explicitly using conservative character-width estimates. Long tokens
   and code lines split across display lines; no characters, spaces, indentation,
   or source lines are discarded. Visual wraps use PowerPoint soft line breaks.
