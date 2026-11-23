@@ -20,19 +20,24 @@ from pptx.util import Inches, Pt
 
 
 WIDTH, HEIGHT = 13.333333, 7.5
-LEFT = 0.92
+LEFT = 1.0
 BODY_WIDTH = WIDTH - 2 * LEFT
-TITLE_SIZE, BODY_SIZE, CODE_SIZE = 40, 22, 17
-TITLE_TOP, TITLE_LINE = 0.82, 50
-RULE_WIDTH, RULE_HEIGHT, RULE_GAP = 1.1, 0.05, 0.3
-BODY_GAP, BODY_BOTTOM, SPACE_AFTER = 0.42, 6.62, 0.14
+TITLE_SIZE, BODY_SIZE, CODE_SIZE = 54, 20, 15
+TITLE_TOP, TITLE_LINE = 0.65, 60
+RULE_WIDTH, RULE_HEIGHT, RULE_GAP = 0.08, 0.06, 0.25
+BODY_GAP, BODY_BOTTOM, SPACE_AFTER = 0.35, 6.9, 0.12
 # The shallowest body region, used as the validator's bound: a one-line title.
 BODY_TOP = TITLE_TOP + TITLE_LINE / 72 + RULE_GAP + RULE_HEIGHT + BODY_GAP
-FOOTER_TOP, TRACK_TOP, TRACK_HEIGHT = 6.92, 7.33, 0.055
+FOOTER_TOP = 7.1
 PROSE_LIMIT = 30
-PAPER, INK, MUTED, ACCENT = "FBFBF9", "1B2733", "6E7F8D", "007F82"
-CODE_FILL, TRACK = "EDF3F6", "E2E7EA"
-CODE_EDGE = 0.045
+# Modern dark theme: deep charcoal background, electric blue and cyan accents
+BG = "0F172A"  # Deep navy/charcoal
+TEXT = "F5F5F5"  # Near-white text for contrast
+TEXT_DIM = "A0A8B8"  # Muted secondary text
+ACCENT_PRIMARY = "00D9FF"  # Electric cyan
+ACCENT_SECONDARY = "7C3AED"  # Purple
+CODE_FILL, CODE_TEXT = "1E293B", "00D9FF"  # Dark slate with cyan code
+CODE_EDGE = 0.055
 INLINE = re.compile(r"`([^`]+)`|\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*|\*([^*]+)\*")
 
 
@@ -221,23 +226,25 @@ def body_top(title_lines):
     return TITLE_TOP + title_lines * TITLE_LINE / 72 + RULE_GAP + RULE_HEIGHT + BODY_GAP
 
 
-def textbox(slide, name, x, y, width, height, size, fill=None):
+def textbox(slide, name, x, y, width, height, size, fill=None, text_color=TEXT):
     shape = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(width), Inches(height))
     shape.name = name
     if fill:
         shape.fill.solid()
         shape.fill.fore_color.rgb = color(fill)
+    else:
+        shape.fill.background()
     frame = shape.text_frame
     frame.clear()
     frame.auto_size = MSO_AUTO_SIZE.NONE
     frame.word_wrap = False  # All wrapping is explicit and included in the height budget.
     frame.vertical_anchor = MSO_ANCHOR.TOP
-    frame.margin_left = frame.margin_right = Pt(7)
-    frame.margin_top = frame.margin_bottom = Pt(3)
+    frame.margin_left = frame.margin_right = Pt(8)
+    frame.margin_top = frame.margin_bottom = Pt(4)
     paragraph = frame.paragraphs[0]
-    paragraph.font.name = "Arial"
+    paragraph.font.name = "Segoe UI"  # Modern sans-serif available on most systems
     paragraph.font.size = Pt(size)
-    paragraph.font.color.rgb = color(INK)
+    paragraph.font.color.rgb = color(text_color)
     paragraph.line_spacing = Pt(size * 1.32)
     paragraph.space_before = paragraph.space_after = Pt(0)
     return shape, paragraph
@@ -264,33 +271,61 @@ def add_runs(paragraph, element, ranges, size, source, output):
             if right > left:
                 run = paragraph.add_run()
                 run.text = span.text[left - offset:right - offset]
-                run.font.name = "Courier New" if element.code or span.code else "Arial"
+                run.font.name = "Courier New" if element.code or span.code else "Segoe UI"
                 run.font.size = Pt(size)
                 run.font.bold = span.bold
                 run.font.italic = span.italic
-                run.font.color.rgb = color(ACCENT if span.link else INK)
+                # Use cyan for links, cyan for code, white for normal text
                 if span.link:
+                    run.font.color.rgb = color(ACCENT_PRIMARY)
                     run.hyperlink.address = link_address(span.link, source, output)
+                elif element.code or span.code:
+                    run.font.color.rgb = color(ACCENT_PRIMARY)
+                else:
+                    run.font.color.rgb = color(TEXT)
             offset += len(span.text)
 
 
 def add_page(prs, section, index, total, part, source, output):
-    """One page of a source slide: title, accent rule, progress track, page number."""
+    """One page of a source slide: dark background, title with accent, modern furniture."""
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     slide.background.fill.solid()
-    slide.background.fill.fore_color.rgb = color(PAPER)
+    slide.background.fill.fore_color.rgb = color(BG)
+
     lines = title_ranges(section)
     _, paragraph = textbox(slide, f"title:{section.title.key}", LEFT, TITLE_TOP,
-                           BODY_WIDTH, len(lines) * TITLE_LINE / 72 + 0.12, TITLE_SIZE)
+                           BODY_WIDTH, len(lines) * TITLE_LINE / 72 + 0.15, TITLE_SIZE,
+                           text_color=TEXT)
     paragraph.line_spacing = Pt(TITLE_LINE)
+    paragraph.font.bold = True
     add_runs(paragraph, section.title, lines, TITLE_SIZE, source, output)
-    block(slide, "rule", LEFT, TITLE_TOP + len(lines) * TITLE_LINE / 72 + RULE_GAP,
-          RULE_WIDTH, RULE_HEIGHT, ACCENT)
-    block(slide, "track", 0, TRACK_TOP, WIDTH, TRACK_HEIGHT, TRACK)
-    block(slide, "progress", 0, TRACK_TOP, WIDTH * index / total, TRACK_HEIGHT, ACCENT)
-    _, footer = textbox(slide, "footer", LEFT, FOOTER_TOP, BODY_WIDTH, 0.26, 10)
+
+    # Accent line under title: cyan with subtle gradient effect via two shapes
+    accent_y = TITLE_TOP + len(lines) * TITLE_LINE / 72 + RULE_GAP
+    block(slide, "rule", LEFT, accent_y, RULE_WIDTH, RULE_HEIGHT, ACCENT_PRIMARY)
+
+    # Subtle accent dot on the right
+    dot_shape = slide.shapes.add_shape(MSO_SHAPE.OVAL,
+                                       Inches(WIDTH - LEFT - 0.15), Inches(accent_y + 0.015),
+                                       Inches(0.04), Inches(0.04))
+    dot_shape.name = "accent-dot"
+    dot_shape.fill.solid()
+    dot_shape.fill.fore_color.rgb = color(ACCENT_SECONDARY)
+    dot_shape.line.fill.background()
+
+    # Progress indicator at bottom
+    progress_width = WIDTH * index / total
+    progress_shape = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, Inches(FOOTER_TOP),
+                                           Inches(progress_width), Inches(0.03))
+    progress_shape.name = "progress"
+    progress_shape.fill.solid()
+    progress_shape.fill.fore_color.rgb = color(ACCENT_PRIMARY)
+    progress_shape.line.fill.background()
+
+    # Slide number
+    _, footer = textbox(slide, "footer", LEFT, FOOTER_TOP + 0.08, BODY_WIDTH, 0.25, 11,
+                       text_color=TEXT_DIM)
     footer.text = ("CONTINUED   ·   " if part > 1 else "") + str(len(prs.slides))
-    footer.font.color.rgb = color(MUTED)
     return slide
 
 
@@ -347,10 +382,11 @@ def build(sections, source, output):
             for element, chunk, height in page:
                 _, paragraph = textbox(slide, f"content:{element.key}:{chunk[0][0]}", LEFT, y,
                                        BODY_WIDTH, height, element.size,
-                                       CODE_FILL if element.code else None)
+                                       CODE_FILL if element.code else None,
+                                       text_color=CODE_TEXT if element.code else TEXT)
                 if element.code:
                     # Drawn after the box so the edge sits on top of the code fill.
-                    block(slide, f"edge:{element.key}", LEFT, y, CODE_EDGE, height, ACCENT)
+                    block(slide, f"edge:{element.key}", LEFT, y, CODE_EDGE, height, ACCENT_PRIMARY)
                 if element.bullet:
                     properties = paragraph._p.get_or_add_pPr()
                     properties.set("marL", str(Pt(26)))
