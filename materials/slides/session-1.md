@@ -318,9 +318,13 @@ One project = one isolated Python. Prevents version conflicts across projects. L
 **Alternative:** poetry (all-in-one tool).
 
 ```notes
+**Enables Repeatability + Reproducibility:** One isolated environment ensures the same code runs
+the same way every time (repeatability on your machine) and can be recreated identically elsewhere (reproducibility).
+
 Why venv over conda? Conda is heavier, adds complexity for beginners. Why not poetry?
 Poetry manages dependencies AND environments together — more powerful, but introduces another tool
-to learn alongside pip. For this course, venv + pip is sufficient and more transparent.
+to learn alongside pip. Why not uv? uv is a faster pip replacement, but still requires understanding
+venv first; for beginners, standard pip + venv is clearer. For this course, venv + pip is sufficient and more transparent.
 ```
 
 ---
@@ -332,9 +336,13 @@ requirements.txt locks exact package versions. Guarantees reproducibility across
 **Alternative:** Pipfile or lock files.
 
 ```notes
+**Enables Reproducibility:** requirements.txt with exact versions ensures that code run on any machine
+with the same requirements.txt produces identical results.
+
 Why requirements.txt over Pipfile? Pipfile is pip-tools alternative; more complex parsing.
 Why not lock files (uv, pip-tools)? Lock files are more comprehensive but students
-need to understand pip freeze first. requirements.txt is the simplest path to reproducibility.
+need to understand pip freeze first. uv generates lock files but adds another tool layer.
+requirements.txt is the simplest path to reproducibility.
 ```
 
 ---
@@ -347,6 +355,9 @@ Consistency across class.
 **Alternative:** manual setup or copier.
 
 ```notes
+**Enables Replicability:** Consistent package structure means your code works the same way
+whether someone clones it, downloads it, or installs it—small execution differences don't break structure.
+
 Why cookiecutter? Automated templates save time and ensure consistency. Why src/ layout?
 Industry standard; keeps installed code separate from development code. Why not manual?
 Students would waste time, miss folders, make structural mistakes. The template is a guardrail.
@@ -354,37 +365,7 @@ Students would waste time, miss folders, make structural mistakes. The template 
 
 ---
 
-## Decision 4: Docker Base Image
-
-python:3.10-slim ensures consistent runtime across machines. Slim reduces image size.
-Python 3.10 is stable, widely supported.
-
-**Alternative:** alpine or python:3.11.
-
-```notes
-Why 3.10 not 3.11/3.12? Stability; 3.10 is LTS-adjacent with wide industry use.
-Why slim not full? Reduces image size 60%, cuts security surface. Why not alpine?
-Alpine uses musl libc, incompatible with many binary Python packages; slim is pragmatic.
-```
-
----
-
-## Decision 5: Docker Layer Caching
-
-Install requirements.txt before source code. Docker caches layers; requirements rarely change,
-code often does. Faster rebuilds.
-
-**Alternative:** multi-stage builds.
-
-```notes
-How caching works: Docker caches each layer. If requirements don't change, it reuses
-that layer. If code changes but requirements don't, skip re-installing. Multi-stage builds
-optimize final image size; for this course, simple caching is sufficient.
-```
-
----
-
-## Decision 6: Makefile Automation
+## Decision 4: Makefile Automation
 
 Makefile centralizes dev commands: test, lint, format, docker. One make test-all runs all checks.
 Local safety before CI/CD.
@@ -392,7 +373,10 @@ Local safety before CI/CD.
 **Alternative:** GitHub Actions only.
 
 ```notes
-Why Makefile? Local reproducibility. If tests pass locally, they pass in CI. Why not
+**Enables Repeatability:** Makefile ensures the same commands run the same way locally and in CI.
+Developers catch issues before push; CI runs the same checks reliably.
+
+Why Makefile? Local reproducibility of test/lint/format steps. If tests pass locally, they pass in CI. Why not
 just CI? CI is slow feedback. Developers should catch issues before push. Makefile
 makes running checks easy; pre-commit hooks are complementary, Makefile is simpler here.
 ```
