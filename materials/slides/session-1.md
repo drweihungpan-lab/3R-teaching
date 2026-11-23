@@ -56,7 +56,7 @@ Keep your bubble tea answers in mind.
 - The scenario: synthetic daily measurement counts for three medical devices. Each device can take 100,000 measurements in total.
 - The task: predict the date each device reaches its limit.
 - The same analysis will grow up over the course, in seven stages. Each stage shows one pain point; a later session's tool fixes it.
-- Your instructor demonstrates; the files are public if you are curious: [3R-device-example](https://github.com/drweihungpan-lab/3R-device-example).
+- Your instructor demonstrates; the files are public if you are curious: the `device-example` folder of the [Sandbox](https://github.com/drweihungpan-lab/3R-sandbox).
 
 ---
 
