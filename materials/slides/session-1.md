@@ -313,60 +313,88 @@ and can make their own choices later. Five minutes here establishes context.
 
 ## Decision 1: Virtual Environments
 
-[SLIDE CONTENT - 30 WORDS MAX]
+One project = one isolated Python. Prevents version conflicts across projects. Lightweight, built-in.
+
+**Alternative:** poetry (all-in-one tool).
 
 ```notes
-[SPEAKER NOTES]
+Why venv over conda? Conda is heavier, adds complexity for beginners. Why not poetry?
+Poetry manages dependencies AND environments together — more powerful, but introduces another tool
+to learn alongside pip. For this course, venv + pip is sufficient and more transparent.
 ```
 
 ---
 
 ## Decision 2: Declared Dependencies
 
-[SLIDE CONTENT - 30 WORDS MAX]
+requirements.txt locks exact package versions. Guarantees reproducibility across machines. Text-based, version-control friendly.
+
+**Alternative:** Pipfile or lock files.
 
 ```notes
-[SPEAKER NOTES]
+Why requirements.txt over Pipfile? Pipfile is pip-tools alternative; more complex parsing.
+Why not lock files (uv, pip-tools)? Lock files are more comprehensive but students
+need to understand pip freeze first. requirements.txt is the simplest path to reproducibility.
 ```
 
 ---
 
 ## Decision 3: Package Structure
 
-[SLIDE CONTENT - 30 WORDS MAX]
+Template enforces src/ layout, entry points, test folder. Saves 30 min setup.
+Consistency across class.
+
+**Alternative:** manual setup or copier.
 
 ```notes
-[SPEAKER NOTES]
+Why cookiecutter? Automated templates save time and ensure consistency. Why src/ layout?
+Industry standard; keeps installed code separate from development code. Why not manual?
+Students would waste time, miss folders, make structural mistakes. The template is a guardrail.
 ```
 
 ---
 
 ## Decision 4: Docker Base Image
 
-[SLIDE CONTENT - 30 WORDS MAX]
+python:3.10-slim ensures consistent runtime across machines. Slim reduces image size.
+Python 3.10 is stable, widely supported.
+
+**Alternative:** alpine or python:3.11.
 
 ```notes
-[SPEAKER NOTES]
+Why 3.10 not 3.11/3.12? Stability; 3.10 is LTS-adjacent with wide industry use.
+Why slim not full? Reduces image size 60%, cuts security surface. Why not alpine?
+Alpine uses musl libc, incompatible with many binary Python packages; slim is pragmatic.
 ```
 
 ---
 
 ## Decision 5: Docker Layer Caching
 
-[SLIDE CONTENT - 30 WORDS MAX]
+Install requirements.txt before source code. Docker caches layers; requirements rarely change,
+code often does. Faster rebuilds.
+
+**Alternative:** multi-stage builds.
 
 ```notes
-[SPEAKER NOTES]
+How caching works: Docker caches each layer. If requirements don't change, it reuses
+that layer. If code changes but requirements don't, skip re-installing. Multi-stage builds
+optimize final image size; for this course, simple caching is sufficient.
 ```
 
 ---
 
 ## Decision 6: Makefile Automation
 
-[SLIDE CONTENT - 30 WORDS MAX]
+Makefile centralizes dev commands: test, lint, format, docker. One make test-all runs all checks.
+Local safety before CI/CD.
+
+**Alternative:** GitHub Actions only.
 
 ```notes
-[SPEAKER NOTES]
+Why Makefile? Local reproducibility. If tests pass locally, they pass in CI. Why not
+just CI? CI is slow feedback. Developers should catch issues before push. Makefile
+makes running checks easy; pre-commit hooks are complementary, Makefile is simpler here.
 ```
 
 ---
