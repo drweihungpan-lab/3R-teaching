@@ -5,6 +5,10 @@ contain editable native PowerPoint text and shapes, including monospace workflow
 diagrams and code. Make content changes in Markdown, then regenerate the deck.
 Changes made only in PowerPoint are overwritten on regeneration.
 
+A slide face carries one idea in at most 29 words. The narration belongs in the
+slide's speaker notes, written as a fence tagged `notes` in the source, so present
+from Presenter View or the notes pane.
+
 ## Regenerate from the repository root
 
 Use Python 3.12 in an authoring environment (the backend is not required).
@@ -36,30 +40,45 @@ python scripts/build_slides.py \
 - Use plain paragraphs, `-`/`*`/`+` bullets, fenced triple-backtick code blocks,
   inline backticks, bold/italic text, and `[label](target)` links. Each prose line
   is one paragraph; put blank lines inside code fences where they matter.
+- A fence tagged `notes` becomes that slide's PowerPoint speaker notes instead of a
+  code box: one per slide, anywhere in the slide, any length, blank lines retained.
+  Notes are plain text, so write bare URLs rather than `[label](target)` in them.
+- Every slide face is limited to 29 words. Paragraphs, bullets and link labels count;
+  the title, code fences and speaker notes do not. The build fails and names the
+  slide and its count, so move narration into a notes fence rather than trimming
+  words to squeeze under the limit.
 - Tables, block quotes, nested lists, checkboxes, images, HTML, and advanced
   Markdown are outside this small converter's dialect. Use editable text for
   simple diagrams. Do not add unsupported syntax expecting a rendered image.
 - Markdown markers become text styling or native bullets. Link labels remain
   visible, with clickable targets. Local links are checked and rebased relative
   to the output file; distribute the repository with the deck to keep them usable.
-- Slides use 16:9 dimensions, Arial 32 pt titles, Arial 21 pt body text, and
-  Courier New 18 pt code. Install those fonts for consistent presentation.
+- Slides use 16:9 dimensions, Arial 40 pt titles, Arial 22 pt body text, and
+  Courier New 17 pt code. Install those fonts for consistent presentation.
+- Page furniture is fixed: a near-white ground, a short teal rule under the title, an
+  en-dash bullet marker, a teal left edge on code blocks, a progress track along the
+  bottom edge, and the slide number. The body block is centred vertically in the
+  space under the title, so a sparse slide reads as composed rather than unfinished.
 - Text wraps explicitly using conservative character-width estimates. Long tokens
   and code lines split across display lines; no characters, spaces, indentation,
   or source lines are discarded. Visual wraps use PowerPoint soft line breaks.
   Copy runnable commands from Markdown, since joining wrapped lines may be needed
   when copying from PowerPoint.
-- Overflow creates continuation slides with the same title and a source-slide /
-  continuation marker. Body order is unchanged. Code may continue on the next
-  slide; retain the full block in Markdown. Titles longer than two lines fail
-  instead of shrinking to unreadable text.
+- Overflow creates continuation slides with the same title, marked `CONTINUED` beside
+  the slide number. The 29-word limit makes this unlikely for prose, but a long code
+  block can still continue onto the next slide; retain the full block in Markdown.
+  Body order is unchanged. Titles longer than two lines fail instead of shrinking to
+  unreadable text.
 
 ## Checks and presentation review
 
 Every build, and `--check-only`, reopens the PPTX and checks:
 
+- The 29-word limit on every slide face.
 - Every parsed source title and body element, in order, with exact text after
   removing only inserted soft breaks. Code whitespace is retained.
+- Speaker notes text, per slide, against the source's `notes` fences, and that no
+  slide carries notes the source does not declare.
 - Clickable link targets and local source-link existence.
 - Nonempty slides with one title and a body; expected slide XML parts; well-formed
   XML/relationships and ZIP integrity; absence of raster pictures.

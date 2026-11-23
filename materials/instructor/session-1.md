@@ -12,18 +12,20 @@ Delivery and rehearsal notes for 20 statistics students in groups of three or fo
 
 ## 170-minute run sheet
 
-Slide titles are the actual Markdown headings.
+Slide titles are the actual Markdown headings. Each slide face carries at most
+29 words; the narration for it sits in that slide's speaker notes in the deck, so
+present from the notes pane or Presenter View.
 
 | Clock | Mode | Slides | Delivery |
 | --- | --- | --- | --- |
-| 0–10 | Opening | Our 170-minute route; Your bubble tea shop | Introduce yourself, then ask students one at a time, at random, what they would take care of. Do not steer answers toward the three Rs. |
-| 10–20 | Opening | Can we trust published biomedical research?; What are we trying to preserve? | Present the two cited figures; say aloud that a 2016 *Nature* survey ([Baker 2016](https://doi.org/10.1038/533452a)) found over half of 1,576 researchers failed to reproduce their own experiments. Read the course definitions. |
-| 20–30 | Device example | Device example: one analysis, seven stages; Stage 1; Stage 2 | Demonstrate Stages 1 → 2 using the stage READMEs in the Sandbox's `device-example` folder. Name the tool that fixes each pain; do not teach it yet. |
-| 30–60 | Explanation | Four repositories, one job each; A Python environment belongs to one project; Local configuration and shareable examples; Your repositories are public | Explain the four repository roles with the glossary, isolation versus pinned versions, `.env` versus `.env.example`, and the public-repo rule. |
+| 0–10 | Opening | Session 1: Environments and Git; Our 170-minute route; Your bubble tea shop | Introduce yourself, then ask students one at a time, at random, what they would take care of. Do not steer answers toward the three Rs. |
+| 10–20 | Opening | Can we trust published research?; What are we trying to preserve? | Present the two cited figures; say aloud that a 2016 *Nature* survey ([Baker 2016](https://doi.org/10.1038/533452a)) found over half of 1,576 researchers failed to reproduce their own experiments. Read the course definitions. |
+| 20–30 | Device example | Device example: seven stages; Stage 1: one notebook, copied three times; Stage 2: no declared dependencies | Demonstrate Stages 1 → 2 using the stage READMEs in the Sandbox's `device-example` folder. Name the tool that fixes each pain; do not teach it yet. |
+| 30–60 | Explanation | Four repositories, one job each; One environment per project; Isolation is not version locking; Local settings stay local; Your repositories are public | Explain the four repository roles with the glossary, isolation versus pinned versions, `.env` versus `.env.example`, and the public-repo rule. |
 | 60–70 | Break | | 10 minutes. |
-| 70–100 | Explanation | Git records changes; GitHub hosts collaboration; Branch rules protect main; A meaningful review helps the next reader | Branch, staging, commit, push, PR, review, merge. Preview that a repository rule can require automated checks; do not teach CI yet. |
+| 70–100 | Explanation | Git records, GitHub hosts; From branch to merged main; Branch rules protect main; What a real review looks like; The review loop closes | Branch, staging, commit, push, PR, review, merge. Preview that a repository rule can require automated checks; do not teach CI yet. |
 | 100–130 | Demonstration | Demo: clone the Sandbox and branch; Demo: edit, commit, push; Demo: review, merge, update main | Perform the whole path live with your own group number. Show the push message link and the refused push to `main`. |
-| 130–170 | Hands-on | Hands-on: 40 minutes; Controlled conflict slides; Your group owns the question; Prepare for the final presentation | [Exercise](../exercises/session-1.md) §§1–4. Show the two conflict slides at 150. Close by 168 with the next-session preview. |
+| 130–170 | Hands-on | Hands-on: 40 minutes; Controlled conflict: the shared line; Resolve the conflict; Agree, then finish the merge; Your group, your question; Everyone authors and reviews; Prepare for the final presentation | [Exercise](../exercises/session-1.md) §§1–4. Show the three conflict slides at 150. Close by 168 with the next-session preview. |
 
 ## Cues and expected observations
 
