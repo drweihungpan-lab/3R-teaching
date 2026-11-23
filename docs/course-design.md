@@ -16,7 +16,7 @@ The [syllabus](../SYLLABUS.md) is the single source for audience, workload, sess
 
 - All slides, exercises, surveys, and repository instructions use plain English, with technical terms explained when introduced.
 - Slides are editable PowerPoint files generated from Markdown sources kept in the repository.
-- Every session has the same shape: 60 minutes, a 10-minute break, 60 minutes, then 40 minutes of hands-on practice.
+- Every session has the same shape: 50 minutes, a 10-minute break, 50 minutes, then 60 minutes of hands-on practice.
 - Pre-course and post-course surveys use matching questions to assess progress, plus readiness and feedback questions respectively.
 - Groups use feature branches, pull requests, peer review, and merges into `main`; there is no separate `develop` branch.
 - Final-presentation-only assessment supersedes earlier discussion of resubmission.

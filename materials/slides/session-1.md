@@ -1,38 +1,57 @@
-# Session 1: Environments and Git
+# Session 1: From Jupyter to a shareable package
 
-Practise where mistakes are free.
+Learn to isolate Python, declare dependencies, generate a package template, and push your code.
 
-- Isolate Python; keep local settings private.
-- Branch, pull request, teammate's review.
-- Resolve a merge conflict on purpose.
+- Understand why notebooks alone don't work for reproducible work.
+- Create an isolated environment with requirements.
+- Use cookiecutter to generate a package structure.
+- Clone, generate, and push your first Backend repo.
 
 ```notes
-Today runs in the class Sandbox, where nothing is graded and mistakes cost
-nothing. Introduce yourself first, then set the three outcomes above.
+This is a hands-on course, not a lecture. Introduce yourself first, then set
+the three outcomes above. Emphasize: "This is not 'listen and I'll tell you
+everything'; this is 'you will build'."
 ```
 
 ---
 
 ## Our 170-minute route
 
-- 00-20: Opening, and why results must hold.
-- 20-60: Environments and configuration.
-- 60-70: Break.
-- 70-130: Git, reviews, live demo.
-- 130-170: Hands-on in the Sandbox.
+- 00–10: Opening — introductions and class rules.
+- 10–15: Bubble tea shop — a question for the five sessions.
+- 15–25: Course overview — how the five sessions build on each other.
+- 25–35: Device example — why Jupyter is not enough.
+- 35–50: Environments and packages — `venv`, `requirements.txt`, cookiecutter.
+- 50–60: Break — 10 minutes.
+- 60–80: Template walkthrough — `setup.cfg`, entry point, `src/`, `tests/`.
+- 80–100: Generated structure — a visual and git concepts.
+- 100–170: Hands-on — 70 minutes to create and push your Backend repo.
+
+Unfinished practice continues at home, in addition to the homework.
+
+---
+
+## Welcome to 3R: Repeatability, Reproducibility, Replicability
+
+Hi. I'm [your name], and this is a **hands-on course**, not a lecture you listen to. Bring your laptop and expect 60 minutes of practice every session. You'll learn a workflow used in real statistical engineering: environments, packages, tests, reviews, automation, and containers. By the end you'll have a working application and the confidence to build one again.
+
+Before we dive in, the **class rules**:
+
+1. **This is hands-on.** Listening alone will not get you through. Work along, ask questions, and use the break if you're stuck.
+2. **Session 0 setup is a prerequisite.** Git, SSH key, Python 3.12, a terminal. If it isn't working, tell me now.
+3. **Homework is mandatory** after Sessions 1–4, about two hours each. **At the start of the next session I will ask someone to show their work** — anyone, so be ready.
+4. **Unfinished in-class practice continues at home**, on top of the homework.
+5. **Your repositories are public.** Never commit real data, personal information, passwords, or tokens.
+6. **Pass/fail, decided at the final presentation** in Session 5. Work alone or in a group of up to three. No resubmission, no retry. Everyone presents.
+7. **Use AI assistants freely to learn**, but you must be able to explain every line you present. Code you cannot explain counts as not yours.
+
+Questions?
 
 ```notes
-Finer breakdown, which matches the run sheet in the instructor notes:
-  00-10  Opening: a bubble tea question and why results must hold
-  10-20  Device example: a messy notebook, Stages 1 to 2
-  20-60  Explanation: the four repositories, environments, configuration
-  60-70  Break, 10 minutes
-  70-100 Explanation: Git, pull requests, reviews, conflicts
-  100-130 Demonstration: one change from branch to merged pull request
-  130-170 Hands-on: 40 minutes in the Sandbox
-
-Say out loud that unfinished practice continues at home, in addition to
-the homework.
+Take about 10 minutes here. If a student's setup is broken, offer to help
+after the opening. Emphasize "everyone presents" and "you must explain the
+code" — they will use AI, and you want them to treat it as a learning tool,
+not a shortcut to avoid understanding.
 ```
 
 ---
@@ -41,544 +60,401 @@ the homework.
 
 Your bubble tea got great reviews at the demo day.
 
-Now you open a shop near NTHU.
+Now you open a shop in front of NTHU. You already have the best location and the decor.
 
 **How does every customer get the tea they loved?**
 
 ```notes
-You already have the best location and the decor; the question is only about
-keeping the result the same every time.
+Ask 4 students, one at a time, at random. Do not steer answers toward the
+three Rs. Keep it to 5 minutes total. Write a few answers on the board; you
+will return to them in two slides.
 
-Ask students one at a time, at random. Do not steer answers toward the three
-Rs, and do not map their answers for them. Keep a few answers on the board;
-you will return to them two slides from now.
+The question is about keeping the result the same every time, and that is
+exactly what this course teaches.
 ```
 
 ---
 
-## Can we trust published research?
+## How the five sessions build on each other
 
-- **>50%** of preclinical biomedical research is irreproducible, about **US$28 billion** a year. ([Freedman 2015](https://doi.org/10.1371/journal.pbio.1002165))
-- Cancer biology: only **46%** of replications succeeded. ([Errington 2021](https://doi.org/10.7554/eLife.71601))
+```
+Session 1: Environments + Packages
+  ├─ Isolated Python (venv)
+  ├─ Declared dependencies (requirements.txt)
+  └─ Package template (cookiecutter)
+         ↓
+Session 2: Collaboration + Release
+  ├─ Branches, pull requests, reviews
+  ├─ Version tags (Release)
+  └─ Install from git URL
+         ↓
+Session 3: Validation + CI
+  ├─ Tests (pytest)
+  ├─ Automated checks (GitHub Actions)
+  └─ Required checks before merge
+         ↓
+Session 4: API + Containers
+  ├─ API layer (FastAPI)
+  ├─ Container images (Docker)
+  └─ Service orchestration (Compose)
+         ↓
+Session 5: Final showcase
+  └─ Demonstrate all five layers on your own data
+```
+
+Your **device example** (synthetic data for medical device predictions) will follow this same path through all five sessions, growing one stage per session. By Session 5 you will see it containerized and running.
 
 ```notes
-The Freedman figure is for the United States.
+This is a visual stack. Each session adds a layer. By Session 5 students see
+the complete stack applied to both the device example and their own data.
 
-In the cancer biology project, 74% of the planned experiments could not be
-done at all, partly because the methods were not described in enough detail.
-That is the detail worth dwelling on: not fraud, just under-described work.
-
-Say aloud that a 2016 Nature survey (Baker 2016, doi 10.1038/533452a) found
-over half of 1,576 researchers had failed to reproduce their own experiments.
+Point out: Session 1 is foundations (Python isolation), Session 2 adds
+collaboration (branches, reviews), Session 3 adds safety (tests, checks),
+Session 4 adds deployment (API, containers), Session 5 showcases all of it.
 ```
 
 ---
 
-## What are we trying to preserve?
+## Why is Jupyter not enough?
 
-- Repeatability: the same conditions.
-- Replicability: slightly different conditions.
-- Reproducibility: very different conditions.
+**Think for a moment:** You send your colleague your notebook. They run it on their laptop. Same data, same Python file. Do they get the same numbers?
 
-These are the [course definitions](../../GLOSSARY.md).
+[Pause 20 seconds. Then invite answers.]
+
+**What could go wrong?**
+
+- Different versions of pandas, numpy, scikit-learn...
+- Different Python version.
+- Packages they don't have installed.
+- They edited a cell you didn't see.
+- They ran cells out of order.
+- The notebook doesn't record which version produced which result.
+
+A notebook is **discovery and exploration**. For work that others must reproduce — and work you must reproduce yourself in three months — you need:
+
+1. **Isolated environment**: One project, one Python installation, declared versions.
+2. **Package structure**: Reusable code, entry points, metadata.
+3. **Version control**: History of exactly what code produced each result.
+
+Today you'll build that stack.
 
 ```notes
-Read the definitions from the glossary, with an example for each:
-  Repeatability  - you, same machine, same data, next week
-  Replicability  - a teammate, local Python versus Docker
-  Reproducibility - an independent simulation; conceptual in this course
+This is a think-aloud with students, not a lecture at them. Listen to their
+answers for 1–2 minutes, then synthesize into the three needs above.
 
-Later comparisons in this course require exact records and counts, plus a
-declared tolerance for calculated decimals.
-
-Point back at the bubble tea answers on the board and let students see that
-they already named most of these without the vocabulary.
+The device example will show why each layer matters by showing what breaks
+when you skip it.
 ```
 
 ---
 
-## Device example: seven stages
+## Device example: Stages 1 to 2
 
-- Synthetic daily measurement counts, three devices.
-- Each device stops at 100,000 measurements.
-- Predict when each reaches its limit.
-- Seven stages, one pain point each.
+### Stage 1: One notebook, copied three times
+
+```
+analysis_v1.ipynb  →  DEV-C reaches limit on 2026-01-30
+analysis_v2.ipynb  →  DEV-C reaches limit on 2026-01-28
+analysis_v3.ipynb  →  DEV-C reaches limit on 2026-01-26
+```
+
+Three notebooks. Three dates. Last month's report named one of them. **Which one?** Nothing records it.
+
+### Stage 2: Helper files, no declared dependencies
+
+```
+Python 3.11 + pandas 1.5  →  DEV-C reaches limit on 2026-01-30
+Python 3.12 + pandas 2.x  →  AttributeError: 'DataFrame' object has no attribute 'append'
+```
+
+The notebook now imports `loader.py` and `model.py`. Reusable, but nothing says which packages and versions they need. Same files, different machines, different answers.
 
 ```notes
-This is the course's running example. The same analysis grows up over the
-five sessions; each stage shows exactly one pain point, and a later session's
-tool fixes it.
+Show the stage READMEs from the device-example folder of the Sandbox.
+Demonstrate or talk through Stages 1 and 2.
 
-You demonstrate; students watch. The files are public if they are curious:
-the device-example folder of the Sandbox at
-https://github.com/drweihungpan-lab/3R-sandbox
+Name the tool that fixes each pain, but do not teach it yet:
+  Stage 1 pain: "which copy?" → Tool: Git (records history)
+  Stage 2 pain: "version crash" → Tool: venv + requirements (isolation +
+    declared versions)
 
-Demonstrate Stages 1 and 2 now using the stage READMEs. Name the tool that
-fixes each pain, but do not teach it yet.
+This builds to the three needs you just asked students to name.
 ```
 
 ---
 
-## Stage 1: one notebook, copied three times
+## A Python environment belongs to one project
 
-```text
-analysis_v1.ipynb  DEV-C reaches the limit on 2026-01-30
-analysis_v2.ipynb  DEV-C reaches the limit on 2026-01-28
-analysis_v3.ipynb  DEV-C reaches the limit on 2026-01-26
+A virtual environment is a separate Python installation area, just for this project.
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate    # Mac/Linux
+# or:
+.venv\Scripts\activate        # Windows
 ```
 
-- Three copies, three dates.
-- Last month's report named one. Which?
-- Today's tool for this pain: Git.
-
-```notes
-Nothing in the folder records which copy produced the published number. The
-file names look like a history but carry no information about what changed
-or why.
-
-Ask the room which copy they would trust. There is no way to tell.
-```
-
----
-
-## Stage 2: no declared dependencies
-
-```text
-Python 3.11 + pandas 1.5: DEV-C reaches the limit on 2026-01-30
-Python 3.12 + pandas 2.x: AttributeError: 'DataFrame' object has no attribute 'append'
-```
-
-- Reusable helpers, but nothing declares their packages.
-- Works on one laptop, crashes on another.
-- Today's tool: an isolated environment.
-
-```notes
-The notebook now imports loader.py and model.py. That is real progress for
-reuse, but nothing in the project says which packages and which versions
-those files need.
-
-DataFrame.append was removed in pandas 2.0. The code did not change; the
-environment did.
-```
-
----
-
-## Four repositories, one job each
-
-- **3R-teaching**: slides, exercises, notes.
-- **Sandbox**: today's practice space; nothing graded.
-- **Backend repo**: your group's evidence, from Session 2.
-- **Frontend repo**: provided; you run it, not edit it.
-
-```text
-Session 1: Sandbox  ->  Session 2: Backend repo  ->  Session 4: + Frontend repo
-```
-
-```notes
-The Sandbox is shared by all 20 of you, and its main branch is protected.
-
-The Backend repo is your group's own public repository, created next session.
-Your pull requests and reviews there are the evidence you show at the end.
-
-The Frontend repo is one page the instructor provides. You run it; you do
-not edit it.
-
-All four words are defined in the glossary at GLOSSARY.md.
-```
-
----
-
-## One environment per project
-
-A virtual environment is a separate Python area for this project's packages.
-
-- Create `.venv` with Python 3.12.
-- Activate it in every new terminal.
+- Create `.venv` fresh for each project; activate it in every new terminal.
+- Install declared dependencies into it, rather than copying someone else's `.venv`.
+- Activation chooses which Python runs; it does not install packages.
+- Never commit `.venv`; use `.gitignore`.
 
 ```notes
 "Separate area" is the whole idea: this project's packages do not mix with
 your global packages or with another project's.
 
 Activation is per terminal. A new terminal, or a new VS Code panel, starts
-deactivated, and that is the single most common confusion in this session.
+deactivated, and that is the single most common confusion students face.
+
+Activation does NOT install things; it only decides which Python and pip you
+are talking to. This is the second-most common misconception.
 ```
 
 ---
 
-## Isolation is not version locking
+## Declared dependencies in requirements.txt
 
-- Activation chooses which Python runs; it installs nothing.
-- Install from declared dependencies, never a copied `.venv`.
-- Record versions with `python -m pip freeze` before comparing.
+A `requirements.txt` file lists the exact packages and versions your code needs.
 
-```notes
-These three are the traps.
-
-Students expect activation to install things. It does not; it only decides
-which python and pip you are talking to.
-
-Copying a teammate's .venv folder appears to work and then breaks, because
-the paths inside it point at their machine.
-
-A virtual environment on its own does not pin versions. Isolation and
-version locking are two different jobs, and only pip freeze does the second.
+```txt
+pandas==2.0.3
+numpy==1.24.0
+scikit-learn==1.3.0
+click==8.1.7
 ```
 
----
-
-## Local settings stay local
-
-- `.env` holds your settings; Git ignores it.
-- `.env.example` is tracked; keep secrets out.
-- `python-dotenv` reads `.env`; exported variables win.
-
-Example: `LOG_LEVEL=INFO` locally, `LOG_LEVEL=DEBUG` when investigating.
-
-```notes
-Configuration means settings that are read at startup, rather than
-processing code.
-
-Git also ignores .venv/, for the same reason: it belongs to one machine.
-
-.env.example is the shareable shape of the file: the same keys, with safe
-placeholder values and no real secrets.
-
-Precedence matters when debugging: a variable already exported in the shell
-takes priority over the .env file.
-```
-
----
-
-## Your repositories are public
-
-- Never commit real data, passwords or tokens.
-- Use synthetic or openly licensed data only.
-- `.gitignore` does not untrack a committed secret.
-- Committed a secret? Tell the instructor.
-
-```notes
-Your group's Backend repo will be public, so anyone can install your package
-from its git URL without an account or token. That is deliberate, and it is
-also the reason for these rules.
-
-Be blunt about the last point. Deleting a file in a later commit does not
-remove it from history; the secret is still fetchable. Tell the instructor
-immediately so the credential can be rotated.
-```
-
----
-
-## Git records, GitHub hosts
-
-- A repository holds files and their history.
-- A branch names one line of work.
-- A commit records a snapshot with a message.
-
-```notes
-Git is the tool that records changes. GitHub is the website that hosts the
-repository and the collaboration around it. Keep the two words separate all
-session.
-
-Staging is the step students forget: git add selects which changes go into
-the next commit, so a commit is a chosen snapshot, not everything you
-touched.
-```
-
----
-
-## From branch to merged main
-
-- A push sends your commits to GitHub.
-- A pull request asks teammates to review first.
-
-```text
-feature branch  ->  commit  ->  draft PR  ->  review + checks  ->  main
-```
-
-```notes
-A pull request, PR for short, is a request to merge a branch. It is where
-the review conversation happens.
-
-Trace the diagram left to right with a finger. Every change in this course
-takes this path, with no exceptions, including the instructor's.
-```
-
----
-
-## Branch rules protect main
-
-You cannot push to `main` in the Sandbox.
-
-Every change arrives as a reviewed pull request.
-
-- Branch names: `group-N/short-topic`.
-- A review needs one specific comment.
-
-```notes
-Example branch name: group-3/add-notes.
-
-A review comment should be about behavior or clarity, something the author
-can act on.
-
-Preview, do not teach: Session 2 adds automated checks, called continuous
-integration. A repository rule can then require those checks to pass before
-merging. Today we only name the idea.
-```
-
----
-
-## What a real review looks like
-
-Read **Files changed** and the purpose. Comment on behavior or clarity.
-
-- Approval alone, or "looks good", is not a review.
-- Explain what you checked.
-
-```notes
-A worked example of a specific comment: "Which line of shared-notes.md is
-yours, and did you keep the other group's line?"
-
-That comment is useful because it names a file, a line and a risk. "Looks
-good" names nothing and helps nobody.
-
-This same habit is the evidence in your Backend repo from Session 2 onward,
-so practise it today while it is free.
-```
-
----
-
-## The review loop closes
-
-- The author replies and pushes follow-up commits.
-- The reviewer checks the update, then approves.
-- Merge on GitHub, then `git pull --ff-only` on `main`.
-
-```notes
-A review is a loop, not a verdict. The author answers each concern, pushes
-more commits to the same branch, and the pull request updates itself.
-
-The last step is the one people skip: after a merge, switch to main and pull
-before starting new work, or your next branch starts from a stale main.
-```
-
----
-
-## Demo: clone the Sandbox and branch
-
-You need your SSH key and your group number.
+Others can then reproduce your environment:
 
 ```bash
-git clone git@github.com:drweihungpan-lab/3R-sandbox.git
-cd 3R-sandbox
-git switch -c group-3/add-notes
+pip install -r requirements.txt
 ```
 
-Open `practice/shared-notes.md`.
+Same packages, same versions, same results. This is **repeatability**.
 
 ```notes
-The SSH key is from Session 0. Use the SSH URL, not HTTPS; see ADR 0001.
+Never copy a .venv folder. It appears to work and then breaks, because the
+paths inside point to their machine.
 
-Use your own group number live, not the 3 on the slide.
-
-Type the commands rather than pasting them, and say what each one does.
+pip freeze records the exact versions you have; use it before comparing
+environments across machines.
 ```
 
 ---
 
-## Demo: edit, commit, push
+## Cookiecutter: a template for packages
 
-Add one line under your group's heading.
+Cookiecutter is a tool that generates a project structure from a template. Instead of creating files by hand, you answer prompts and it fills in the template.
 
 ```bash
-git status
-git add practice/shared-notes.md
-git commit -m "Add group 3 note"
-git push -u origin group-3/add-notes
+cookiecutter https://github.com/drweihungpan-lab/3R-cookiecutter
 ```
 
-The push prints a link. Open it to create the pull request.
+You'll be prompted:
+
+```
+project_name [My Project]:
+author [Your Name]:
+```
+
+Then it generates a folder with the Python package structure, tests, documentation, and CI configuration — everything you need to push a real package.
 
 ```notes
-Read git status out loud before and after git add, so the staging step is
-visible rather than magic.
+The template is at https://github.com/drweihungpan-lab/3R-cookiecutter. You
+will clone the template in the hands-on and run cookiecutter to generate your
+Backend repo.
 
-Also show the refused push: try pushing this change directly to main and let
-the room see branch protection reject it.
+This saves about 30 minutes of manual folder creation and boilerplate, and it
+ensures consistency across the class.
 ```
 
 ---
 
-## Demo: review, merge, update main
+## Inside the package template
 
-Ask for a review with one specific comment. Merge after approval.
+Once cookiecutter generates your folder, here's what matters:
+
+### `setup.cfg` — Package metadata and dependencies
+
+```ini
+[metadata]
+name = my-backend
+version = 0.1.0
+author = Your Name
+
+[options]
+install_requires =
+    pandas>=2.0
+    click>=8.1
+
+[options.entry_points]
+console_scripts =
+    my-backend=my_backend.cli:main
+```
+
+This says: "When you `pip install my-backend`, install pandas and click, and create a command called `my-backend` that runs the `main` function."
+
+### `src/my_backend/` — Your modules
+
+```
+src/
+  my_backend/
+    __init__.py      # Marks this as a package
+    cli.py           # Command-line interface
+    process.py       # Processing logic
+```
+
+When someone installs your package, they can `import my_backend` from anywhere.
+
+### `tests/` — Validation
+
+```
+tests/
+  test_process.py    # Tests for processing logic
+  test_cli.py        # Tests for the command line
+```
+
+You'll write these in Session 3. For now, know they go here.
+
+```notes
+Take 10–15 minutes here. Walk through each section:
+
+setup.cfg: explain install_requires (the packages others need when they pip
+  install you) and entry_points (the command-line tool they get).
+
+src/my_backend/: explain that when you `pip install .`, this becomes an
+  installed package, so `import my_backend` works from anywhere.
+
+tests/: explain that tests document the behavior you promise, and you
+  validate it with pytest in Session 3.
+
+The structure is standard across Python projects. Any Python developer will
+recognize it immediately. That familiarity is part of the goal.
+```
+
+---
+
+## Generated package structure
+
+Here's what cookiecutter creates:
+
+```
+my-backend-repo/              ← your new repo folder
+├── .git/                      ← Git history
+├── .gitignore                 ← Git ignore rules
+├── src/
+│   └── my_backend/            ← your package name
+│       ├── __init__.py
+│       ├── cli.py
+│       └── process.py
+├── tests/
+│   ├── __init__.py
+│   └── test_process.py
+├── setup.cfg                  ← install dependencies, entry point, metadata
+├── pyproject.toml             ← build backend
+├── README.md                  ← documentation
+└── requirements.txt           ← dev dependencies
+```
+
+This is the standard structure. Any Python developer will recognize it immediately.
+
+```notes
+Show this as a visual. It is a lot of folders for one first package, but the
+structure is exactly what GitHub, PyPI, and mature projects use. Session 2
+will explain the Release and install path; Session 3 will fill in the tests.
+For now, students just need to see the shape.
+```
+
+---
+
+## Git: clone, modify, push
+
+Today you'll practice the simplest Git path:
 
 ```bash
-git switch main
-git pull --ff-only origin main
-git branch -d group-3/add-notes
+git clone https://github.com/drweihungpan-lab/3R-cookiecutter.git temp
+cd temp
+# (run cookiecutter inside this folder to generate your package)
+# (move the generated folder to become your Backend repo)
+cd my-backend-repo
+git init
+git add .
+git commit -m "Initial commit from cookiecutter"
+git remote add origin git@github.com:your-github/3R-group-N-backend.git
+git branch -M main
+git push -u origin main
 ```
 
-Then `git log --oneline` shows your merged change.
+No branches, no pull requests, no reviews — just you, your code, and your repo. Session 2 adds the collaboration layer (branches, PRs, reviews).
 
 ```notes
-Have a real teammate or a second account leave the review live, so students
-see the approval arrive and the merge button unlock.
+Walk through this slowly. The key steps:
+  1. Clone the template (a temporary folder)
+  2. Run cookiecutter inside it to generate your Backend repo
+  3. Initialize Git in the generated folder
+  4. Commit and push to your new GitHub repo
 
-Deleting the merged branch is housekeeping: the work is in main now.
+You have already created a blank GitHub repo (in the hands-on setup); this is
+the step where you push code to it.
 
-Finish on git log --oneline so the merge appears in the recorded history.
+Point out: no branches, no PR, no review. Just clone → generate → commit →
+push. Session 2 will add the collaboration discipline.
 ```
 
 ---
 
-## Hands-on: 40 minutes
+## Hands-on: 70 minutes
 
-- 10 min: branch, note, push, PR.
-- 10 min: review a teammate's PR.
-- 15 min: conflict drill.
-- 5 min: note where you stopped.
+You will:
 
-[The exercise](../exercises/session-1.md) helps when stuck.
+1. Create a new GitHub repository called `3R-group-N-backend` (or your chosen name). Make it empty and public.
+2. Clone the cookiecutter template to your laptop.
+3. Run cookiecutter to generate your package folder (answer the prompts with your group info).
+4. Initialize Git in the generated folder, commit the template, and push to your new repo.
+5. Verify the push succeeded and the repo is public on GitHub.
+
+You'll have this Backend repo for the rest of the course. Session 2 will teach you how to collaborate on it with branches and pull requests.
+
+**Setup time (10 min):** SSH key check, create the GitHub repo, clone the template.
+
+**Generation and push (30 min):** Run cookiecutter, explore the generated files, commit, push.
+
+**Verification and buffer (30 min):** Check that the repo is public and the files are there. Ask questions if stuck.
+
+Use [the exercise](../exercises/session-1.md) if you need step-by-step guidance.
 
 ```notes
-Nothing in the Sandbox is graded. The checkpoint for today is that every
-student has opened one pull request and given one review.
+70 minutes of hands-on is a big block. Circulate constantly. Common
+difficulties:
 
-The exercise covers sections 1 to 4. Show the two conflict slides at the
-150-minute mark, not before.
+  - SSH key not added: `git@github.com` will refuse them. Check in Session 0
+    notes if needed.
+  - Cookiecutter not installed: `pip install cookiecutter` or use the template
+    URL directly in `python -m cookiecutter`.
+  - Pushing to wrong repo: they create a local folder, commit, but then push
+    to the template repo instead of their own. Check the git remote.
+  - Generated folder in wrong place: they unzip or generate inside the temp
+    folder and can't find it. Have them `find . -name 'src' -type d` to locate
+    it.
 
-Circulate rather than watching the clock. Common failures: pushing from main
-by mistake, cloning over HTTPS, an SSH key not added to the account, and a
-wrong group number in a branch name, which is harmless.
+The exercise walkthrough covers all of these in steps.
 ```
 
 ---
 
-## Controlled conflict: the shared line
+## Prepare for Session 2
 
-Every group edits one line: **Favourite tool this week**.
+Mandatory homework after Session 1 is approximately two hours, plus any unfinished practice. Details will be posted separately.
 
-- Two groups change it on different branches.
-- The first pull request merges cleanly.
-- The second one conflicts.
+- Today's checkpoint: your Backend repo is created, public, and pushed with the generated template.
+- Next session: you'll learn branches, pull requests, meaningful reviews, and how to tag a Release.
+- You can then install a teammate's Release from git and verify it works.
 
-```notes
-The line lives in practice/shared-notes.md and currently reads "(undecided)".
-
-Instructions for the room: pick one line, edit it, push your branch, and do
-not merge until your partner group has pushed theirs.
-
-A conflict is not an error. It is Git refusing to guess how two overlapping
-edits combine, which is exactly the behavior you want.
-```
-
----
-
-## Resolve the conflict
-
-Update your branch from `main`:
-
-```bash
-git fetch origin
-git merge origin/main
-git status
-```
-
-`<<<<<<< HEAD` is yours; `>>>>>>> origin/main` is theirs.
+The [syllabus](../../SYLLABUS.md) has the full course requirements. Next: collaborate and release.
 
 ```notes
-Open practice/shared-notes.md in the editor and read the markers aloud:
-  <<<<<<< HEAD        starts your version
-  =======             separates the two versions
-  >>>>>>> origin/main ends the incoming version
-
-git status names the conflicted file. Read it before touching anything.
+Close by minute 168. Preview Session 2: now that you have a package structure,
+you will learn how teammates collaborate on it safely (branches, reviews), how
+to mark a version (Release), and how to install a teammate's Release to verify
+it works.
 ```
 
----
-
-## Agree, then finish the merge
-
-Keep one line. Remove all three markers.
-
-```bash
-git add practice/shared-notes.md
-git commit -m "Resolve favourite tool line"
-git push
-```
-
-Unsure before committing? `git merge --abort` restores the pre-merge state.
-
-```notes
-Resolving is a decision between people, not a Git command. The two groups
-agree on one line first; the commands only record that decision.
-
-Leaving a marker behind is the classic mistake. Search the file for < and >
-before committing.
-
-merge --abort is the safety net: it returns the branch to exactly its
-pre-merge state, so nobody needs to panic.
-```
-
----
-
-## Your group, your question
-
-- Three or four students, one public Backend repo.
-- Choose your own dataset and question; no approval needed.
-- Modeling is optional; complexity earns no extra credit.
-
-```notes
-The Backend repo is created next session, one per group.
-
-Topic approval is not required, and discussion with the instructor is
-available if a group wants it.
-
-Still required regardless of topic: FastAPI, the provided Frontend page, and
-Docker Compose. Say this clearly, because "modeling is optional" is
-sometimes heard as "the engineering is optional".
-```
-
----
-
-## Everyone authors and reviews
-
-Each student authors one pull request and meaningfully reviews a teammate's, from their own account.
-
-Decide your Backend repo name before Session 2.
-
-```notes
-"From their own account" is literal. One student pushing on behalf of the
-group is the failure mode this requirement exists to prevent.
-
-Meaningfully reviews means the specific-comment standard from earlier, not
-a rubber stamp.
-
-Ask each group to agree on a repository name before they leave.
-```
-
----
-
-## Prepare for the final presentation
-
-- Pass or fail, decided entirely at the final presentation.
-- All engineering requirements must be met.
-- No resubmission; the final result is final.
-
-Full requirements: the [syllabus](../../SYLLABUS.md).
-
-```notes
-Mandatory homework after this session is about two hours, plus any unfinished
-practice. Details are posted separately.
-
-Engineering requirements include tests, CI, validation and the later output
-comparisons.
-
-Statistical analysis correctness is not graded. Tests still have to verify
-the processing behavior you declare.
-
-There is no separate submission, resubmission or reassessment.
-
-Close by minute 168 with the preview: next session you generate your Backend
-repo and share an installable package.
-```
