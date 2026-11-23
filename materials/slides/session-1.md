@@ -299,6 +299,78 @@ your Backend repo. It ensures consistency across the class and saves time.
 
 ---
 
+## Tech Decisions: Why We Built It This Way
+
+We chose each tool for a reason. Here's the why behind venv, requirements.txt, cookiecutter, and beyond.
+
+```notes
+In Sessions 2–5, students will encounter our template's Dockerfile and Makefile.
+This section explains the decisions behind each one, so they understand trade-offs
+and can make their own choices later. Five minutes here establishes context.
+```
+
+---
+
+## Decision 1: Virtual Environments
+
+[SLIDE CONTENT - 30 WORDS MAX]
+
+```notes
+[SPEAKER NOTES]
+```
+
+---
+
+## Decision 2: Declared Dependencies
+
+[SLIDE CONTENT - 30 WORDS MAX]
+
+```notes
+[SPEAKER NOTES]
+```
+
+---
+
+## Decision 3: Package Structure
+
+[SLIDE CONTENT - 30 WORDS MAX]
+
+```notes
+[SPEAKER NOTES]
+```
+
+---
+
+## Decision 4: Docker Base Image
+
+[SLIDE CONTENT - 30 WORDS MAX]
+
+```notes
+[SPEAKER NOTES]
+```
+
+---
+
+## Decision 5: Docker Layer Caching
+
+[SLIDE CONTENT - 30 WORDS MAX]
+
+```notes
+[SPEAKER NOTES]
+```
+
+---
+
+## Decision 6: Makefile Automation
+
+[SLIDE CONTENT - 30 WORDS MAX]
+
+```notes
+[SPEAKER NOTES]
+```
+
+---
+
 ## Inside the Package: `setup.cfg`
 
 ```ini
