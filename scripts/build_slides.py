@@ -2,7 +2,7 @@
 """Build and check editable course slides. See materials/slides/README.md."""
 
 import argparse
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import os
 from pathlib import Path
 import re
@@ -20,10 +20,19 @@ from pptx.util import Inches, Pt
 
 
 WIDTH, HEIGHT = 13.333333, 7.5
-LEFT, BODY_TOP, BODY_BOTTOM = 0.65, 1.9, 6.93
+LEFT = 0.92
 BODY_WIDTH = WIDTH - 2 * LEFT
-TITLE_SIZE, BODY_SIZE, CODE_SIZE = 32, 21, 18
-INK, MUTED, ACCENT = "20344A", "53677A", "007F82"
+TITLE_SIZE, BODY_SIZE, CODE_SIZE = 40, 22, 17
+TITLE_TOP, TITLE_LINE = 0.82, 50
+RULE_WIDTH, RULE_HEIGHT, RULE_GAP = 1.1, 0.05, 0.3
+BODY_GAP, BODY_BOTTOM, SPACE_AFTER = 0.42, 6.62, 0.14
+# The shallowest body region, used as the validator's bound: a one-line title.
+BODY_TOP = TITLE_TOP + TITLE_LINE / 72 + RULE_GAP + RULE_HEIGHT + BODY_GAP
+FOOTER_TOP, TRACK_TOP, TRACK_HEIGHT = 6.92, 7.33, 0.055
+PROSE_LIMIT = 30
+PAPER, INK, MUTED, ACCENT = "FBFBF9", "1B2733", "6E7F8D", "007F82"
+CODE_FILL, TRACK = "EDF3F6", "E2E7EA"
+CODE_EDGE = 0.045
 INLINE = re.compile(r"`([^`]+)`|\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*|\*([^*]+)\*")
 
 
@@ -47,11 +56,27 @@ class Element:
     def text(self):
         return "".join(span.text for span in self.spans)
 
+    @property
+    def size(self):
+        return CODE_SIZE if self.code else BODY_SIZE
+
+    @property
+    def leading(self):
+        """Body text is airy; code stays tight so a block reads as one unit."""
+        return self.size * (1.32 if self.code else 1.5)
+
 
 @dataclass
 class Section:
     title: Element
     elements: list[Element]
+    notes: list[str] = field(default_factory=list)
+
+    @property
+    def prose_words(self):
+        """Words on the slide face. Titles, code and speaker notes are exempt."""
+        return sum(len(element.text.split()) for element in self.elements
+                   if not element.code)
 
 
 def inline(text):
@@ -71,20 +96,24 @@ def inline(text):
 
 def parse_source(source):
     """Read the course slide dialect; do not treat --- inside a fence as a slide."""
-    sections, current, fence = [], None, None
+    sections, current, fence, notes = [], None, None, False
     expect_title = True
     for number, line in enumerate(source.read_text(encoding="utf-8").splitlines(), 1):
         key = f"line-{number}"
         if fence is not None:
             if line.strip() == fence:
-                fence = None
+                fence, notes = None, False
+            elif notes:
+                current.notes.append(line)
             else:
                 current.elements.append(Element(key, [Span(line, code=True)], code=True))
             continue
         if line.startswith("```"):
             if current is None or expect_title:
                 raise ValueError(f"Line {number}: code before a slide title")
-            fence = "```"
+            fence, notes = "```", line[3:].strip() == "notes"
+            if notes and current.notes:
+                raise ValueError(f"Line {number}: a second notes block on one slide")
             continue
         if line.strip() == "---":
             if current is None or expect_title:
@@ -115,7 +144,18 @@ def parse_source(source):
     if any(not section.elements or not any(e.text.strip() for e in section.elements)
            for section in sections):
         raise ValueError("Every source slide needs a title and nonempty body")
+    check_prose(sections)
     return sections
+
+
+def check_prose(sections):
+    """A slide face carries one idea; the narration belongs in a notes block."""
+    for index, section in enumerate(sections, 1):
+        words = section.prose_words
+        if words >= PROSE_LIMIT:
+            raise ValueError(
+                f"Slide {index} ({section.title.text!r}) has {words} prose words; "
+                f"the limit is {PROSE_LIMIT - 1}. Move narration into a ```notes block")
 
 
 def link_address(target, source, output):
@@ -170,6 +210,17 @@ def color(value):
     return RGBColor.from_string(value)
 
 
+def title_ranges(section):
+    lines = wrapped_ranges(section.title, TITLE_SIZE, (BODY_WIDTH * 72 - 14) * 0.94)
+    if len(lines) > 2:
+        raise ValueError(f"Title needs more than two lines: {section.title.text}")
+    return lines
+
+
+def body_top(title_lines):
+    return TITLE_TOP + title_lines * TITLE_LINE / 72 + RULE_GAP + RULE_HEIGHT + BODY_GAP
+
+
 def textbox(slide, name, x, y, width, height, size, fill=None):
     shape = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(width), Inches(height))
     shape.name = name
@@ -190,6 +241,17 @@ def textbox(slide, name, x, y, width, height, size, fill=None):
     paragraph.line_spacing = Pt(size * 1.32)
     paragraph.space_before = paragraph.space_after = Pt(0)
     return shape, paragraph
+
+
+def block(slide, name, x, y, width, height, fill):
+    shape = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(x), Inches(y),
+                                   Inches(width), Inches(height))
+    shape.name = name
+    shape.fill.solid()
+    shape.fill.fore_color.rgb = color(fill)
+    shape.line.fill.background()
+    shape.shadow.inherit = False
+    return shape
 
 
 def add_runs(paragraph, element, ranges, size, source, output):
@@ -213,28 +275,58 @@ def add_runs(paragraph, element, ranges, size, source, output):
 
 
 def add_page(prs, section, index, total, part, source, output):
+    """One page of a source slide: title, accent rule, progress track, page number."""
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     slide.background.fill.solid()
-    slide.background.fill.fore_color.rgb = color("FAFCFD")
-    bar = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, prs.slide_width, Inches(0.07))
-    bar.name = "accent"
-    bar.fill.solid()
-    bar.fill.fore_color.rgb = color(ACCENT)
-    bar.line.fill.background()
-    _, label = textbox(slide, "section", LEFT, 0.22, BODY_WIDTH, 0.28, 11)
-    label.text = f"SOURCE {index} / {total}" + (f"  ·  CONTINUED {part}" if part > 1 else "")
-    label.font.color.rgb = color(MUTED)
-    title_lines = wrapped_ranges(section.title, TITLE_SIZE, (BODY_WIDTH * 72 - 14) * 0.94)
-    if len(title_lines) > 2:
-        raise ValueError(f"Title needs more than two lines: {section.title.text}")
-    _, paragraph = textbox(slide, f"title:{section.title.key}", LEFT, 0.58,
-                           BODY_WIDTH, 1.27, TITLE_SIZE)
-    paragraph.line_spacing = Pt(40)
-    add_runs(paragraph, section.title, title_lines, TITLE_SIZE, source, output)
-    _, footer = textbox(slide, "footer", LEFT, 7.12, BODY_WIDTH, 0.24, 10)
-    footer.text = f"{source.name}   ·   {len(prs.slides)}"
+    slide.background.fill.fore_color.rgb = color(PAPER)
+    lines = title_ranges(section)
+    _, paragraph = textbox(slide, f"title:{section.title.key}", LEFT, TITLE_TOP,
+                           BODY_WIDTH, len(lines) * TITLE_LINE / 72 + 0.12, TITLE_SIZE)
+    paragraph.line_spacing = Pt(TITLE_LINE)
+    add_runs(paragraph, section.title, lines, TITLE_SIZE, source, output)
+    block(slide, "rule", LEFT, TITLE_TOP + len(lines) * TITLE_LINE / 72 + RULE_GAP,
+          RULE_WIDTH, RULE_HEIGHT, ACCENT)
+    block(slide, "track", 0, TRACK_TOP, WIDTH, TRACK_HEIGHT, TRACK)
+    block(slide, "progress", 0, TRACK_TOP, WIDTH * index / total, TRACK_HEIGHT, ACCENT)
+    _, footer = textbox(slide, "footer", LEFT, FOOTER_TOP, BODY_WIDTH, 0.26, 10)
+    footer.text = ("CONTINUED   ·   " if part > 1 else "") + str(len(prs.slides))
     footer.font.color.rgb = color(MUTED)
     return slide
+
+
+def paginate(section):
+    """Split a source slide's body into pages that fit under the title."""
+    top = body_top(len(title_ranges(section)))
+    pages, page, y = [], [], top
+    for element in section.elements:
+        inset = 26 if element.bullet else 0
+        rows = wrapped_ranges(element, element.size,
+                              (BODY_WIDTH * 72 - 14 - inset) * 0.94)
+        cursor = 0
+        while cursor < len(rows):
+            capacity = int(((BODY_BOTTOM - y) * 72 - 6) // element.leading)
+            if capacity < 1:
+                if not page:
+                    raise ValueError(f"No room for body text under {section.title.text!r}")
+                pages.append(page)
+                page, y = [], top
+                continue
+            chunk = rows[cursor:cursor + capacity]
+            height = (len(chunk) * element.leading + 6) / 72
+            page.append((element, chunk, height))
+            y += height + (0 if element.code else SPACE_AFTER)
+            cursor += len(chunk)
+    pages.append(page)
+    return top, pages
+
+
+def page_height(page):
+    total = 0
+    for position, (element, _, height) in enumerate(page):
+        total += height
+        if position < len(page) - 1 and not element.code:
+            total += SPACE_AFTER
+    return total
 
 
 def build(sections, source, output):
@@ -245,38 +337,30 @@ def build(sections, source, output):
     prs.core_properties.author = "Three-R course"
     prs.core_properties.keywords = "editable, Markdown, course"
     for index, section in enumerate(sections, 1):
-        part, y = 1, BODY_TOP
-        slide = add_page(prs, section, index, len(sections), part, source, output)
-        for element in section.elements:
-            size = CODE_SIZE if element.code else BODY_SIZE
-            line_height = size * 1.32
-            # Inset bullets inside their text box, rather than using negative geometry.
-            inset = 22 if element.bullet else 0
-            rows = wrapped_ranges(element, size, (BODY_WIDTH * 72 - 14 - inset) * 0.94)
-            cursor = 0
-            while cursor < len(rows):
-                available = (BODY_BOTTOM - y) * 72
-                capacity = int((available - 6) // line_height)
-                if capacity < 1:
-                    part += 1
-                    slide = add_page(prs, section, index, len(sections), part, source, output)
-                    y = BODY_TOP
-                    continue
-                chunk = rows[cursor:cursor + capacity]
-                height = (len(chunk) * line_height + 6) / 72
-                shape, paragraph = textbox(slide, f"content:{element.key}:{cursor}", LEFT, y,
-                                            BODY_WIDTH, height, size,
-                                            "EDF3F6" if element.code else None)
+        top, pages = paginate(section)
+        for part, page in enumerate(pages, 1):
+            slide = add_page(prs, section, index, len(sections), part, source, output)
+            if part == 1 and section.notes:
+                slide.notes_slide.notes_text_frame.text = "\n".join(section.notes)
+            # Centre the block vertically so a sparse slide reads as composed.
+            y = top + max(0.0, (BODY_BOTTOM - top - page_height(page)) / 2)
+            for element, chunk, height in page:
+                _, paragraph = textbox(slide, f"content:{element.key}:{chunk[0][0]}", LEFT, y,
+                                       BODY_WIDTH, height, element.size,
+                                       CODE_FILL if element.code else None)
+                if element.code:
+                    # Drawn after the box so the edge sits on top of the code fill.
+                    block(slide, f"edge:{element.key}", LEFT, y, CODE_EDGE, height, ACCENT)
                 if element.bullet:
                     properties = paragraph._p.get_or_add_pPr()
-                    properties.set("marL", str(Pt(22)))
-                    properties.set("indent", str(Pt(-17)))
+                    properties.set("marL", str(Pt(26)))
+                    properties.set("indent", str(Pt(-20)))
                     bullet = OxmlElement("a:buChar")
-                    bullet.set("char", "•" if cursor == 0 else " ")
+                    bullet.set("char", "–" if chunk[0][0] == 0 else " ")
                     properties.append(bullet)
-                add_runs(paragraph, element, chunk, size, source, output)
-                y += height + (0 if element.code else 0.07)
-                cursor += len(chunk)
+                paragraph.line_spacing = Pt(element.leading)
+                add_runs(paragraph, element, chunk, element.size, source, output)
+                y += height + (0 if element.code else SPACE_AFTER)
     output.parent.mkdir(parents=True, exist_ok=True)
     prs.save(output)
 
@@ -286,12 +370,17 @@ def validate(sections, source, output):
     prs = Presentation(output)
     if abs(prs.slide_width / prs.slide_height - 16 / 9) > 0.0001:
         raise ValueError("Expected 16:9 slide dimensions")
+    check_prose(sections)
     expected = [element for section in sections for element in section.elements]
+    by_key = {element.key: element for element in expected}
     expected_titles = [section.title for section in sections]
-    actual, order, titles, links = {}, [], [], set()
+    expected_notes = {section.title.key: "\n".join(section.notes)
+                      for section in sections if section.notes}
+    actual, order, titles, links, notes = {}, [], [], set(), {}
     body_shapes = 0
     for number, slide in enumerate(prs.slides, 1):
-        has_body, title_count, previous_bottom = False, 0, Inches(BODY_TOP)
+        has_body, title_count, title_key = False, 0, None
+        previous_bottom = Inches(BODY_TOP)
         for shape in slide.shapes:
             if (shape.left < 0 or shape.top < 0 or shape.width <= 0 or shape.height <= 0
                     or shape.left + shape.width > prs.slide_width + 2
@@ -303,9 +392,9 @@ def validate(sections, source, output):
                 continue
             text = shape.text.replace("\v", "")
             if shape.name.startswith("title:"):
-                key = shape.name.split(":")[1]
-                if not titles or titles[-1][0] != key:
-                    titles.append((key, text))
+                title_key = shape.name.split(":")[1]
+                if not titles or titles[-1][0] != title_key:
+                    titles.append((title_key, text))
                 elif titles[-1][1] != text:
                     raise ValueError(f"Slide {number}: changed continuation title")
                 title_count += 1
@@ -325,9 +414,8 @@ def validate(sections, source, output):
                 for paragraph in shape.text_frame.paragraphs:
                     if paragraph.font.size is None:
                         raise ValueError(f"Slide {number}: missing explicit body font size")
-                    size = paragraph.font.size.pt
                     rows = paragraph.text.split("\v")
-                    if len(rows) * size * 1.32 + 6 > shape.height / 12700 + 0.01:
+                    if len(rows) * by_key[key].leading + 6 > shape.height / 12700 + 0.01:
                         raise ValueError(f"Slide {number}: text height exceeds its box")
             for paragraph in shape.text_frame.paragraphs:
                 for run in paragraph.runs:
@@ -335,6 +423,9 @@ def validate(sections, source, output):
                         links.add(run.hyperlink.address)
         if not has_body or title_count != 1:
             raise ValueError(f"Slide {number}: empty/missing body or title")
+        if title_key not in notes:
+            notes[title_key] = (slide.notes_slide.notes_text_frame.text
+                                if slide.has_notes_slide else None)
     if titles != [(element.key, element.text) for element in expected_titles]:
         raise ValueError("Source titles are missing, changed, or out of sequence")
     if order != [element.key for element in expected]:
@@ -342,6 +433,11 @@ def validate(sections, source, output):
     for element in expected:
         if actual.get(element.key) != element.text:
             raise ValueError(f"Source text mismatch at {element.key}")
+    for key, text in expected_notes.items():
+        if notes.get(key) != text:
+            raise ValueError(f"Speaker notes missing or changed for title {key}")
+    if {key for key, text in notes.items() if text} - set(expected_notes):
+        raise ValueError("A deck slide carries speaker notes the source does not declare")
     expected_links = {link_address(span.link, source, output)
                       for section in sections for element in [section.title, *section.elements]
                       for span in element.spans if span.link}
@@ -357,10 +453,15 @@ def validate(sections, source, output):
                        if re.fullmatch(r"ppt/slides/slide\d+\.xml", name)]
         if len(slide_parts) != len(prs.slides):
             raise ValueError("Missing or orphaned slide XML")
+    widest = max(sections, key=lambda section: section.prose_words)
     return (f"PASS: {len(sections)} source slides -> {len(prs.slides)} editable slides; "
-            f"{len(expected)} source elements, {body_shapes} text boxes, {len(links)} links; "
-            "exact text/order, shape bounds, body overlap/height budgets, XML/ZIP checked. "
-            "No rendered inspection; font substitution and visual clipping need PowerPoint review.")
+            f"{len(expected)} source elements, {body_shapes} text boxes, "
+            f"{len(expected_notes)} notes pages, {len(links)} links; "
+            f"wordiest face {widest.prose_words}/{PROSE_LIMIT - 1} words "
+            f"({widest.title.text!r}). "
+            "Exact text/order, notes text, shape bounds, body overlap/height budgets, "
+            "XML/ZIP checked. No rendered inspection; font substitution and visual "
+            "clipping need PowerPoint review.")
 
 
 def main():
