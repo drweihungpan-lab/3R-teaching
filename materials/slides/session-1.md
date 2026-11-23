@@ -318,13 +318,13 @@ One project = one isolated Python. Prevents version conflicts across projects. L
 **Alternative:** poetry (all-in-one tool).
 
 ```notes
-**Enables Repeatability + Reproducibility:** One isolated environment ensures the same code runs
-the same way every time (repeatability on your machine) and can be recreated identically elsewhere (reproducibility).
+**Lean + Enables Repeatability + Reproducibility:** venv is the leanest isolated environment—built-in, 
+no bloat, no extra package manager. One isolated environment ensures the same code runs the same way 
+every time (repeatability on your machine) and can be recreated identically elsewhere (reproducibility).
 
-Why venv over conda? Conda is heavier, adds complexity for beginners. Why not poetry?
-Poetry manages dependencies AND environments together — more powerful, but introduces another tool
-to learn alongside pip. Why not uv? uv is a faster pip replacement, but still requires understanding
-venv first; for beginners, standard pip + venv is clearer. For this course, venv + pip is sufficient and more transparent.
+Why venv? It's lean: no conda overhead, no poetry complexity. Conda brings 500MB+ of packages you don't need.
+Poetry adds Pyproject.toml, lock files, dependency groups—too many concepts at once. uv is faster but 
+still requires understanding venv first. For beginners, venv + pip is the leanest path to isolation.
 ```
 
 ---
@@ -336,13 +336,13 @@ requirements.txt locks exact package versions. Guarantees reproducibility across
 **Alternative:** Pipfile or lock files.
 
 ```notes
-**Enables Reproducibility:** requirements.txt with exact versions ensures that code run on any machine
-with the same requirements.txt produces identical results.
+**Lean + Enables Reproducibility:** requirements.txt is the leanest dependency declaration—plain text, 
+human-readable, version-controlled directly. Exact versions ensure code run on any machine with the same 
+requirements.txt produces identical results.
 
-Why requirements.txt over Pipfile? Pipfile is pip-tools alternative; more complex parsing.
-Why not lock files (uv, pip-tools)? Lock files are more comprehensive but students
-need to understand pip freeze first. uv generates lock files but adds another tool layer.
-requirements.txt is the simplest path to reproducibility.
+Why requirements.txt? It's lean: one file, one format, universally understood. Pipfile adds complexity 
+and lock files are machine-generated and harder to read. uv generates lock files but adds another tool layer. 
+requirements.txt is the leanest path to reproducibility.
 ```
 
 ---
@@ -355,12 +355,13 @@ Consistency across class.
 **Alternative:** manual setup or copier.
 
 ```notes
-**Enables Replicability:** Consistent package structure means your code works the same way
-whether someone clones it, downloads it, or installs it—small execution differences don't break structure.
+**Lean + Enables Replicability:** Cookiecutter enforces lean structure—src/ layout is industry-standard, 
+entry points work consistently, tests live in one place. Consistent structure means your code works the 
+same way whether someone clones it, downloads it, or installs it—small execution differences don't break structure.
 
-Why cookiecutter? Automated templates save time and ensure consistency. Why src/ layout?
-Industry standard; keeps installed code separate from development code. Why not manual?
-Students would waste time, miss folders, make structural mistakes. The template is a guardrail.
+Why cookiecutter? It's lean: automates 30 min of boilerplate, ensures consistency across the class. 
+Why src/ layout? Keeps installed code separate from dev code. Manual setup wastes time and introduces 
+mistakes. The template is a guardrail that removes decisions.
 ```
 
 ---
@@ -373,12 +374,13 @@ Local safety before CI/CD.
 **Alternative:** GitHub Actions only.
 
 ```notes
-**Enables Repeatability:** Makefile ensures the same commands run the same way locally and in CI.
-Developers catch issues before push; CI runs the same checks reliably.
+**Lean + Enables Repeatability:** Makefile is lean automation—one file, plain Make syntax, runs locally 
+before CI. Same commands run the same way locally and in CI. Developers catch issues before push; 
+CI runs the same checks reliably.
 
-Why Makefile? Local reproducibility of test/lint/format steps. If tests pass locally, they pass in CI. Why not
-just CI? CI is slow feedback. Developers should catch issues before push. Makefile
-makes running checks easy; pre-commit hooks are complementary, Makefile is simpler here.
+Why Makefile? It's lean: no extra tool, works everywhere, faster feedback than CI alone. GitHub Actions 
+is powerful but overkill for local checks—slow feedback, hidden unless you push. Makefile makes developers 
+run checks early. Pre-commit hooks are complementary; Makefile is leaner here.
 ```
 
 ---
