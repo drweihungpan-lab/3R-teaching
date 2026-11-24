@@ -6,7 +6,7 @@ In this exercise, you'll create a GitHub repository for your group and use a **c
 
 **Why cookiecutter?** It scaffolds a consistent, production-ready structure (source, tests, metadata, entry points) so your team starts from the same foundation. No copy-pasting boilerplate; just fill in your project name and author, and you're ready to code.
 
-**Time estimate:** 70 minutes total (10 + 5 + 20 + 25 + 10).
+**Time estimate:** 60 minutes total (10 + 5 + 20 + 15 + 10).
 
 ---
 
@@ -36,7 +36,7 @@ One person in your group does this; the others can prepare while they wait.
 1. Go to [github.com](https://github.com) and log in.
 2. Click the **+** icon in the top-right corner → **New repository**.
 3. Fill in:
-   - **Repository name:** Your chosen Backend repo name (e.g., `3R-group-3-backend`).
+   - **Repository name:** Your chosen Backend repo name (e.g., `3R-group-3-backend`). **Important:** Use the exact name you'll give to cookiecutter as `project_name` (lowercase, no spaces).
    - **Description (optional):** Something like "Backend for Session 1 exercise" or leave blank.
    - **Visibility:** **Public** (you'll set permissions in Session 2 if needed).
    - **Initialize this repository with:** Leave all unchecked — do **NOT** add README, .gitignore, or license. We're starting empty.
@@ -47,7 +47,7 @@ One person in your group does this; the others can prepare while they wait.
 After creation, you'll see the repository page. Find the green **Code** button:
 1. Click **Code** → select **SSH**.
 2. Copy the SSH URL (it looks like `git@github.com:your-username/your-repo-name.git`).
-3. **Share this URL** with your group — everyone will need it later.
+3. **Share this URL** with your group — everyone will need it for the next step.
 
 ---
 
@@ -72,72 +72,113 @@ Hi <your-github-username>! You've successfully authenticated with the SSH key na
 
 ---
 
-## Step 3: Clone the cookiecutter template — 5 minutes
+## Step 3: Clone your GitHub repo — 5 minutes
 
-Everyone does this in their own terminal.
-
-The **3R-cookiecutter** template is a blueprint for the package structure. We'll use it to generate your Backend repo.
+Everyone does this. Use the SSH URL you copied earlier:
 
 ```bash
-# Clone the template to a temporary folder
-git clone https://github.com/drweihungpan-lab/3R-cookiecutter.git temp-template
+# Clone your GitHub repo (the empty one you created)
+git clone git@github.com:your-github-username/your-repo-name.git
 
 # Move into that folder
-cd temp-template
+cd your-repo-name
 ```
 
-You now have the cookiecutter template on your laptop. Let's explore it:
+You now have an empty repository on your laptop with Git already initialized (the `.git` folder is inside). You can verify:
 
 ```bash
 ls -la
+git remote -v
 ```
 
-You'll see files like `cookiecutter.json` (configuration), `{{cookiecutter.project_name}}/` (the template structure), and a `README.md` explaining what the template does.
+You should see:
+- A hidden `.git/` folder.
+- When you run `git remote -v`, it shows `origin` pointing to your GitHub repo.
 
 ---
 
-## Step 4: Generate your Backend package — 20 minutes
+## Step 4: Generate your Backend package using cookiecutter — 20 minutes
 
-You're still in `temp-template`. Run cookiecutter to generate your package:
+You're inside your cloned GitHub repo folder. Now clone the cookiecutter template as a temporary helper:
+
+```bash
+# Clone the template as a temporary folder
+git clone https://github.com/drweihungpan-lab/3R-cookiecutter.git temp-template
+```
+
+Now run cookiecutter to generate your package **directly into your repo folder**:
 
 ### Option A: Interactive (recommended if you're new)
 
 ```bash
-python -m cookiecutter .
+python -m cookiecutter temp-template -o .
 ```
 
 You'll be prompted for:
-- **project_name:** Name for your Python package (use lowercase, no spaces, e.g., `my_backend` or `eco_data`). This becomes the actual folder and module name.
+- **project_name:** Use the **same name as your GitHub repo** (e.g., if your repo is `3R-group-3-backend`, use `3R-group-3-backend` here). Keep it lowercase, no spaces.
 - **author:** Your group name (e.g., `Group 3`).
 
 ### Option B: Non-interactive (faster if you know what you want)
 
 ```bash
-python -m cookiecutter . --no-input \
-  project_name="my_backend" \
-  author="Group 3"
+python -m cookiecutter temp-template --no-input \
+  project_name="3R-group-3-backend" \
+  author="Group 3" \
+  -o .
 ```
 
-Replace `my_backend` and `Group 3` with your choices.
+Replace `3R-group-3-backend` and `Group 3` with your choices. **Important:** `project_name` should match your GitHub repo name.
 
 ### What you'll get
 
-After running cookiecutter, you'll see a **new folder** with your package name. For example, if you chose `my_backend`:
+After running cookiecutter with `-o .`, it generates a **subfolder** named after your `project_name`. For example, if you chose `3R-group-3-backend`:
 
 ```
-my_backend/
+3R-group-3-backend/  (your repo folder)
+├── .git/
+├── 3R-group-3-backend/  (generated by cookiecutter)
+│   ├── src/
+│   │   └── 3R-group-3-backend/
+│   │       ├── __init__.py
+│   │       ├── cli.py
+│   │       └── process.py
+│   ├── tests/
+│   │   └── test_process.py
+│   ├── setup.cfg
+│   ├── pyproject.toml
+│   ├── README.md
+│   ├── requirements.txt
+│   └── .gitignore
+└── temp-template/  (can delete later)
+```
+
+### Move files to the repo root
+
+The generated files are in a subfolder. Move them up to the repo root so your structure looks like this:
+
+```bash
+# Move all files from the generated subfolder to the current directory
+mv 3R-group-3-backend/* .
+
+# Remove the now-empty subfolder
+rmdir 3R-group-3-backend
+
+# Clean up the temporary template
+rm -rf temp-template
+```
+
+Now your repo folder should look like:
+
+```
+3R-group-3-backend/  (your repo folder)
+├── .git/
 ├── src/
-│   └── my_backend/
-│       ├── __init__.py        # Package initialization
-│       ├── cli.py             # Command-line interface (empty for now)
-│       └── process.py         # Processing logic (empty for now)
 ├── tests/
-│   └── test_process.py        # Unit test (empty for now)
-├── setup.cfg                  # Package metadata and configuration
-├── pyproject.toml             # Python project config (modern standard)
-├── README.md                  # Documentation template
-├── requirements.txt           # Dependencies (empty for now)
-└── .gitignore                 # Git ignore rules (pre-filled)
+├── setup.cfg
+├── pyproject.toml
+├── README.md
+├── requirements.txt
+└── .gitignore
 ```
 
 ### Explore the structure
@@ -146,7 +187,7 @@ Look at two important files to understand the package:
 
 1. **`setup.cfg`** — scroll to the `[metadata]` section. You'll see:
    ```
-   name = my_backend
+   name = 3R-group-3-backend
    author = Group 3
    version = 0.0.1
    ```
@@ -158,25 +199,9 @@ Don't worry if these files look unfamiliar; you'll use them more in later sessio
 
 ---
 
-## Step 5: Commit and push to GitHub — 25 minutes
+## Step 5: Commit and push to GitHub — 15 minutes
 
-Now you've got the generated package. Time to push it to your GitHub repo.
-
-### Move into your generated package folder
-
-```bash
-cd my_backend
-```
-
-(Replace `my_backend` with your actual package name.)
-
-### Initialize Git
-
-```bash
-git init
-```
-
-This turns your folder into a Git repository (creates a hidden `.git` folder).
+You're still in your repo folder (where `.git/` lives). Now stage the generated package files and push them.
 
 ### Stage and commit
 
@@ -186,7 +211,7 @@ git commit -m "Initial commit: cookiecutter-generated package"
 ```
 
 **What this does:**
-- `git add .` stages all files in the folder.
+- `git add .` stages all the generated package files.
 - `git commit -m "..."` creates a commit with the message in quotes.
 
 **Check your work:**
@@ -196,19 +221,10 @@ git log --oneline
 
 You should see one commit with your message.
 
-### Add your GitHub repo as the remote
+### Verify the remote
 
-This tells Git where to push (to your GitHub repo). Use the SSH URL you copied earlier:
+Since you cloned your repo earlier, Git already knows where to push:
 
-```bash
-git remote add origin git@github.com:your-github-username/your-repo-name.git
-```
-
-Replace:
-- `your-github-username` with your actual GitHub username.
-- `your-repo-name` with the GitHub repo name you created (e.g., `3R-group-3-backend`).
-
-**Verify:**
 ```bash
 git remote -v
 ```
@@ -219,28 +235,21 @@ origin  git@github.com:your-github-username/your-repo-name.git (fetch)
 origin  git@github.com:your-github-username/your-repo-name.git (push)
 ```
 
-### Rename the branch to `main`
+### Check your current branch
 
-Some systems default to `master`; we use `main`:
-
-```bash
-git branch -M main
-```
-
-**Check:**
 ```bash
 git branch
 ```
 
-You should see `* main` (the `*` means you're on that branch).
+You should see `* main` (the `*` means you're on that branch). GitHub defaults to `main`, so no renaming needed.
 
 ### Push to GitHub
 
 ```bash
-git push -u origin main
+git push
 ```
 
-The `-u` flag sets this branch to track the remote, so future `git push` commands work without arguments.
+Since you cloned the repo, Git already knows to push to `origin main`. No `-u` flag needed.
 
 **Expected output:**
 ```
@@ -249,8 +258,7 @@ Counting objects: 100% (X/X), done.
 Writing objects: 100% (X/X), done.
 ...
 To git@github.com:your-username/your-repo-name.git
- * [new branch]      main -> main
-Branch 'main' set up to track remote branch 'main' from 'origin'.
+   <empty>..abc1234  main -> main
 ```
 
 ---
@@ -283,30 +291,53 @@ If you need to confirm the repo is public:
 ### SSH key fails
 **Error:** `Permission denied (publickey)` or similar.
 - See [Session 0 setup notes](../../docs/session-0.md) to add your SSH key.
-- Verify with `ssh -T git@github.com` before pushing.
+- Verify with `ssh -T git@github.com` before cloning or pushing.
 - Ask the instructor if stuck.
 
 ### `cookiecutter` command not found
 **Error:** `command not found: python -m cookiecutter`
 - Install it: `pip install cookiecutter`
-- Run again.
+- Run the cookiecutter command again.
 
-### Wrong folder pushed
-**Error:** You pushed from the wrong directory, or you pushed an empty repo.
-- Check where you are: `pwd`
-- Check the remote: `git remote -v`
-- Check the commit: `git log --oneline`
-- If the repo on GitHub is empty or wrong, ask the instructor to help you delete it and try again.
+### "Project directory already exists"
+**Error:** When running cookiecutter, it says a folder or file already exists.
+- You likely ran cookiecutter twice in the same repo.
+- **Solution:** Delete the generated subfolder and temp-template, then try again:
+  ```bash
+  rm -rf your-project-name temp-template
+  git clone https://github.com/drweihungpan-lab/3R-cookiecutter.git temp-template
+  python -m cookiecutter temp-template -o .
+  ```
+
+### Files aren't in the repo root after moving
+**Error:** After running `mv 3R-group-3-backend/* .`, files are still in a subfolder.
+- Verify the move worked: `ls -la` should show `src/`, `tests/`, `setup.cfg`, etc.
+- If still in a subfolder, the move didn't work. Try:
+  ```bash
+  ls 3R-group-3-backend/
+  ```
+  If files are there, manually move them:
+  ```bash
+  mv 3R-group-3-backend/src .
+  mv 3R-group-3-backend/tests .
+  mv 3R-group-3-backend/setup.cfg .
+  mv 3R-group-3-backend/pyproject.toml .
+  mv 3R-group-3-backend/README.md .
+  mv 3R-group-3-backend/requirements.txt .
+  mv 3R-group-3-backend/.gitignore .
+  rmdir 3R-group-3-backend
+  ```
 
 ### Nothing shows up on GitHub after push
 - Refresh the GitHub page (browser cache can be slow).
 - Check that push succeeded: `git log origin/main --oneline` should show your commit.
-- If not, run `git push --all` and refresh again.
+- If not, run `git push` again and refresh.
 
-### "Cookiecutter already exists"
-**Error:** When running cookiecutter, it says a file exists.
-- You likely ran cookiecutter twice in the same `temp-template` folder.
-- **Solution:** Use a fresh terminal, go back to your home folder, and start over with a new clone of `temp-template`.
+### "fatal: not a git repository"
+**Error:** When running git commands, you get this error.
+- You're in the wrong folder. Make sure you're in the cloned repo folder, not `temp-template`.
+- Run: `pwd` to see where you are, then `cd your-repo-name` to get back to the repo.
+- Verify: `git remote -v` should show your GitHub repo.
 
 ---
 
@@ -314,12 +345,13 @@ If you need to confirm the repo is public:
 
 After this exercise, you have:
 - ✅ Created a GitHub repository with your group's chosen name.
-- ✅ Cloned the cookiecutter template to your laptop.
-- ✅ Generated a professional Python package structure.
-- ✅ Initialized Git, committed your code, and pushed to GitHub.
+- ✅ Cloned your empty repo to your laptop (Git already initialized).
+- ✅ Used cookiecutter to generate a professional Python package structure.
+- ✅ Moved the generated files into the repo root.
+- ✅ Committed your code and pushed to GitHub.
 - ✅ Verified the files are visible and public on GitHub.
 
-Your Backend repo is now ready for the rest of the course. All group members have access and can clone it to work on features together (more in Session 2).
+Your Backend repo is now ready for the rest of the course. All group members can clone it to work on features together (more in Session 2).
 
 ---
 
