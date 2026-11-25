@@ -102,42 +102,46 @@ To be defined.
 
 **Progress checkpoint:** each group has created a public Backend repo containing the generated cookiecutter package template, and the initial push succeeded.
 
-## Session 2: Collaboration and Release
+## Session 2: Environments and collaboration
 
 **Duration:** 170 minutes
 
-**Core technologies:** Git branches, pull requests, code review, `setup.cfg` versioning, git tags, `pip install git+`, GitHub Actions (first look).
+**Core technologies:** Virtual environments (`venv`), Git (`clone`, `commit`, `push`, `pull`), branches, pull requests, code review, GitHub Actions (first look).
 
 ### Topics
 
-- Feature branches, descriptive commits, and the branch naming convention.
+- Show-and-tell: what students did in the Session 1 exercise and what was difficult.
+- Why a cookiecutter template: readability, shareability, and maintenance; the hyphen pitfall in `package_name`.
+- One repo, one virtual environment: creating, activating, and checking which Python is in use.
+- Data in, data out: the Reference Backend repo reads a CSV and writes a CSV from the command line.
+- Git in three places (working folder, local repo, GitHub): `clone`, `commit`, `push`, and `pull`.
+- Why branches: a working `main`, isolated work in progress, parallel work, and pull requests.
 - Pull requests as a collaboration tool: the purpose, how to open one, and what a meaningful review looks like.
-- Merge conflicts: when they arise, how to resolve them, and why they are useful signals.
-- A Release: version bump, git tag, and installing a pinned version with `pip install git+https://…@v0.1.0` ([decision record](docs/adr/0002-distribute-by-git-tag-not-registry.md)). PyPI and TestPyPI are discussed as what a mature package would use.
-- A very quick look at CI: automatic lint and format checks on every push.
-- The collaboration path: feature branch → commit → pull request → peer review → merge into `main`.
+- A very quick look at CI: the check that runs on every push and pull request.
+- Optional: a merge conflict, and how to resolve it.
 
 ### Guided practice
 
-In your Backend repo, create a feature branch, make a change to the package, open a pull request, have a teammate review it with a specific comment, and merge. Then bump the version in `setup.cfg`, tag a Release, and install a teammate's Release into a fresh virtual environment. Check the output against the instructor's reference.
+In your Backend repo, create one virtual environment, install the package, and run its command. Then create a feature branch, make a small change, commit, push, open a pull request, have a teammate review it with a specific comment, merge, and pull `main`.
 
 ### Mandatory homework: approximately 2 hours
 
 To be defined.
 
-**Progress checkpoint:** each group has merged at least one reviewed pull request in the Backend repo, tagged a Release, and another group's member has installed and run that Release successfully.
+**Progress checkpoint:** each group has merged at least one reviewed pull request in the Backend repo.
 
 ## Session 3: Defensive engineering with pytest and CI
 
 **Duration:** 170 minutes
 
-**Core technologies:** pytest, fixtures, `pytest.approx`, GitHub Actions.
+**Core technologies:** pytest, fixtures, `pytest.approx`, GitHub Actions, semantic-release, git tags, `pip install git+`.
 
 ### Topics
 
 - Declared processing behavior and invalid-input handling as tests.
 - Shared test fixtures and explicit numerical tolerances.
 - Switching on the commented-out test job in the CI workflow; reading CI results.
+- A Release: after a pull request is approved and merged, CI creates the version tag with semantic-release, and anyone can install that pinned version with `pip install git+https://…@v0.1.0` ([decision record](docs/adr/0002-distribute-by-git-tag-not-registry.md)). PyPI and TestPyPI are discussed as what a mature package would use.
 
 ### Guided practice
 
