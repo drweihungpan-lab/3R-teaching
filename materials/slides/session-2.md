@@ -617,7 +617,7 @@ COMMON PROBLEMS:
 
 **Today:** a reviewed, merged pull request in your Backend repo.
 
-**Homework:** 2 hours + practice.
+**At home:** finish the exercise (about 2 hours).
 
 **Next:** tests, CI, and automatic Releases.
 

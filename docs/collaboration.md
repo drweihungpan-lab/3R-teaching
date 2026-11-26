@@ -97,5 +97,5 @@ These [search filters](https://docs.github.com/en/search-github/searching-on-git
 locate evidence; inspect the actual review to judge its substance. Keep closed
 and merged PRs accessible. Each student should explain their own contribution.
 Assessment is pass/fail, entirely at the final presentation, with no separate
-submission, resubmission, or reassessment. Homework is preparation. Authoring this
+submission, resubmission, or reassessment. Exercises are preparation. Authoring this
 guide requires no actual student repositories or manufactured participation.

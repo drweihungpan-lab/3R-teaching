@@ -1,6 +1,6 @@
 # Session 4 instructor notes: an API, containers, and Compose
 
-Hour one adds a FastAPI service to the Backend repo; hour two adds the Dockerfile and runs both services with Docker Compose, using the supplied Frontend repo. Use the [slides](../slides/session-4.md), [guided exercise](../exercises/session-4.md), and the [glossary](../../GLOSSARY.md). The local-versus-Docker comparison is homework.
+Hour one adds a FastAPI service to the Backend repo; hour two adds the Dockerfile and runs both services with Docker Compose, using the supplied Frontend repo. Use the [slides](../slides/session-4.md), [guided exercise](../exercises/session-4.md), and the [glossary](../../GLOSSARY.md). The local-versus-Docker comparison is the exercise's last step (§5), done at home.
 
 ## Prepare before class
 
@@ -18,7 +18,7 @@ Hour one adds a FastAPI service to the Backend repo; hour two adds the Dockerfil
 | 60–70 | Break | | 10 minutes. |
 | 70–100 | Explanation | An image is a recipe's built result; Read the Dockerfile; Compose connects two services; Addresses depend on who is calling; Started is different from ready | Hour two. Stress service names inside Compose versus `localhost`. |
 | 100–130 | Demonstration | Demo: add the API and run it; Demo: run both services; Demo: a controlled connection fault | Perform all three live, including the wrong `BACKEND_URL` port and reading the logs. |
-| 130–170 | Hands-on | The course's three Rs; Homework preview; Hands-on: 40 minutes; Checkpoint | Show the two practical-R slides briefly, then [exercise](../exercises/session-4.md) §§1–4. |
+| 130–170 | Hands-on | The course's three Rs; Last exercise step: compare local and Docker; Hands-on: 40 minutes; Checkpoint | Show the two practical-R slides briefly, then [exercise](../exercises/session-4.md) §§1–4. |
 
 ## Cues and expected observations
 
@@ -31,4 +31,4 @@ Hour one adds a FastAPI service to the Backend repo; hour two adds the Dockerfil
 - [ ] The Frontend repo tag exists and builds from its git URL.
 - [ ] `docker compose up --build` shows both services and a healthy backend.
 - [ ] The fault and its fix work as written.
-- [ ] The homework preview matches the comparison you will assign.
+- [ ] The slide's comparison matches §5 of the exercise.

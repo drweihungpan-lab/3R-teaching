@@ -51,5 +51,5 @@ _Avoid_: Deploy, publish
 ## Class activities
 
 **Show-and-tell**:
-An informal sharing at the start of a session, where students say what they did in the previous exercise or homework and what was difficult. Nothing is prepared or graded.
+An informal sharing at the start of a session, where students say what they did in the previous session's exercise and what was difficult. Nothing is prepared or graded.
 _Avoid_: Presentation, demo

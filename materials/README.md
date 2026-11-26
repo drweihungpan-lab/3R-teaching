@@ -2,13 +2,13 @@
 
 Start with the [syllabus](../SYLLABUS.md) for course facts and the [glossary](../GLOSSARY.md). The course uses four repositories; the syllabus lists their roles.
 
-| Session | Markdown source | Editable PowerPoint | Guided exercise | Mandatory homework | Instructor notes |
-| --- | --- | --- | --- | --- | --- |
-| 1: Environment and Git | [Source](slides/session-1.md) | [Deck](slides/session-1.pptx) | [Exercise](exercises/session-1.md) | [Homework](homework/session-1.md) | [Notes](instructor/session-1.md) |
-| 2: A package others can install | [Source](slides/session-2.md) | [Deck](slides/session-2.pptx) | [Exercise](exercises/session-2.md) | [Homework](homework/session-2.md) | [Notes](instructor/session-2.md) |
-| 3: Tests and CI | [Source](slides/session-3.md) | [Deck](slides/session-3.pptx) | [Exercise](exercises/session-3.md) | [Homework](homework/session-3.md) | [Notes](instructor/session-3.md) |
-| 4: API, containers, Compose | [Source](slides/session-4.md) | [Deck](slides/session-4.pptx) | [Exercise](exercises/session-4.md) | [Homework](homework/session-4.md) | [Notes](instructor/session-4.md) |
-| 5: Final showcase | [Source](slides/session-5.md) | [Deck](slides/session-5.pptx) | Final presentation | No additional homework | [Notes](instructor/session-5.md) |
+| Session | Markdown source | Editable PowerPoint | Guided exercise | Instructor notes |
+| --- | --- | --- | --- | --- |
+| 1: Environment and Git | [Source](slides/session-1.md) | [Deck](slides/session-1.pptx) | [Exercise](exercises/session-1.md) | [Notes](instructor/session-1.md) |
+| 2: A package others can install | [Source](slides/session-2.md) | [Deck](slides/session-2.pptx) | [Exercise](exercises/session-2.md) | [Notes](instructor/session-2.md) |
+| 3: Tests and CI | [Source](slides/session-3.md) | [Deck](slides/session-3.pptx) | [Exercise](exercises/session-3.md) | [Notes](instructor/session-3.md) |
+| 4: API, containers, Compose | [Source](slides/session-4.md) | [Deck](slides/session-4.pptx) | [Exercise](exercises/session-4.md) | [Notes](instructor/session-4.md) |
+| 5: Final showcase | [Source](slides/session-5.md) | [Deck](slides/session-5.pptx) | Final presentation | [Notes](instructor/session-5.md) |
 
 ## Session 0: required setup before Session 1
 
@@ -22,4 +22,4 @@ Session 0 is a self-paced pre-course step with no classroom hours. Students foll
 
 Surveys support course evaluation and are not graded.
 
-Homework briefs are placeholders until the homework is defined.
+There is no separate homework: students finish each session's guided exercise at home (about 2 hours).

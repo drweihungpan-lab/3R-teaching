@@ -84,6 +84,6 @@ Their output must match the reference checksum. If installation fails, read the 
 
 ## Checkpoint
 
-Your group has a public Backend repo with a tagged Release that someone else installed and ran, matching the reference checksum. Finish anything unfinished at home, in addition to the homework.
+Your group has a public Backend repo with a tagged Release that someone else installed and ran, matching the reference checksum. Finish the exercise at home (about 2 hours).
 
 Optional, if you finish early: change `__version__` to `0.1.1` through a PR, merge, and tag `v0.1.1`. Notice that `@v0.1.0` still installs the old code.

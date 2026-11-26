@@ -20,6 +20,7 @@ Get the starter files from the `session-4-starter` folder of the [Sandbox](https
 | 10–20 min | `docker compose up --build`, upload in the page | The page's table matches `limits.csv` |
 | 20–35 min | The controlled connection fault | Found from the message and logs, fixed |
 | 35–40 min | Record | Notes in the README |
+| At home | Compare local and Docker | Comparison recorded in the README |
 
 ## 1. Run the API locally — 10 minutes
 
@@ -67,6 +68,18 @@ Restore the port, restart, and confirm the upload works.
 
 Add a short note to your README: how to start both services, and what the fault looked like. Commit and push the branch, open a PR, and request a teammate's review.
 
+## 5. Compare local and Docker — at home
+
+Decide what must agree before you compare. The limit dates are whole days, so they are compared exactly.
+
+1. Run the command-line tool locally on `data/device_counts.csv` and keep the `limits.csv` it writes.
+2. Start both services with `docker compose up --build` and send the same CSV to the API: `curl -F file=@data/device_counts.csv http://127.0.0.1:8000/predict`.
+3. Compare the dates in `limits.csv` with the API's JSON, device by device.
+4. Write the result in your README: what you compared, the criterion (exact match on dates), and whether they agreed.
+5. If they differ, record the Python and library versions for both environments before changing anything.
+
+Keep this note for Session 5, where you demonstrate matching local and Docker outputs.
+
 ## Checkpoint
 
-Both services run together from your Backend repo. The local-versus-Docker comparison is part of the homework; keep your `limits.csv` and the API's JSON for it. Finish anything unfinished at home, in addition to the homework.
+Both services run together from your Backend repo, and you have recorded the local-versus-Docker comparison. Finish the exercise at home (about 2 hours).

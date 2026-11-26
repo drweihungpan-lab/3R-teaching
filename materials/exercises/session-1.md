@@ -565,4 +565,4 @@ You have:
 - Committed and pushed to your Backend repo.
 - Verified the files are public on GitHub.
 
-Finish any unfinished steps at home, in addition to the homework. See the [glossary](../../GLOSSARY.md) for repository terms.
+Finish the exercise at home (about 2 hours). See the [glossary](../../GLOSSARY.md) for repository terms.

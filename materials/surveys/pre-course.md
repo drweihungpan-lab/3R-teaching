@@ -109,7 +109,7 @@ For each row, choose one readiness code:
 
 | ID | Readiness check | Response (R, P, H, or U) |
 | --- | --- | --- |
-| READY-01 | I have a computer I can use during class and homework, with permission to install the course tools. | |
+| READY-01 | I have a computer I can use during class and for exercises at home, with permission to install the course tools. | |
 | READY-02 | I can use a terminal and a text editor to work with local Python files. | |
 | READY-03 | I can run Python 3.12 on that computer and check its version. | |
 | READY-04 | I can create a Python virtual environment with `venv` and install packages inside it with pip. | |

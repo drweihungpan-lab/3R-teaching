@@ -16,7 +16,7 @@ Put one function behind two interfaces, then run the whole system with one comma
 - 70–130: Hour two — Dockerfile, images, containers, Compose.
 - 130–170: Hands-on — run, trace, and fix a controlled fault.
 
-Unfinished practice continues at home. The local-versus-Docker comparison is homework.
+Finish the exercise at home (about 2 hours). Its last step is the local-versus-Docker comparison.
 
 ---
 
@@ -235,7 +235,7 @@ The page now says it could not connect to the backend at that address.
 
 ---
 
-## Homework preview: compare local and Docker
+## Last exercise step: compare local and Docker
 
 Decide what must agree before you compare.
 
@@ -244,7 +244,7 @@ Decide what must agree before you compare.
 - Compare the dates from `limits.csv` with the API's JSON, and write down the result.
 - If they differ, record Python and library versions for both before changing anything.
 
-Details of the homework will be posted separately.
+Steps are in §5 of [the exercise](../exercises/session-4.md).
 
 ---
 
@@ -263,7 +263,7 @@ Use [the exercise](../exercises/session-4.md) when stuck.
 
 Today's checkpoint: both services run together from your Backend repo.
 
-- Mandatory homework is approximately two hours; includes the local-versus-Docker comparison.
+- Finish the exercise at home (about 2 hours), including the local-versus-Docker comparison.
 - Prepare to demonstrate startup, an upload, your tests and CI, and Releases in Session 5.
 - Keep links to your pull requests, reviews, and CI runs ready.
 

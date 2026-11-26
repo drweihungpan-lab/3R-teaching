@@ -22,7 +22,7 @@ Slide titles are the actual Markdown headings. Each slide face carries speaker n
 
 | Clock | Mode | Slides | Delivery |
 | --- | --- | --- | --- |
-| 0–10 | Opening | Welcome to 3R; Class rules | Introduce yourself. Walk through the 7 rules (hands-on, S0 prereq, mandatory homework with show-and-tell, unfinished continues, public repos, pass/fail final-only, AI encouraged). Check if anyone's setup is broken; offer help after. |
+| 0–10 | Opening | Welcome to 3R; Class rules | Introduce yourself. Walk through the 7 rules (hands-on, S0 prereq, exercise finished at home with show-and-tell, unfinished continues, public repos, pass/fail final-only, AI encouraged). Check if anyone's setup is broken; offer help after. |
 | 10–15 | Opening | Your bubble tea shop | Ask 4 students at random, one at a time. Do not steer toward the three Rs. Write 2–3 answers on the board; return to them in 2 slides. Keep to 5 minutes total. |
 | 15–25 | Overview | How the five sessions build on each other | Show the visual stack. Point out that each session adds a layer, and the device example will climb the stack alongside. By Session 5 students see it containerized. |
 | 25–35 | Device example | Why is Jupyter not enough? | Pause 20 seconds and ask students for answers. Collect 4–5 concerns on the board (different versions, missing packages, edited cells, out-of-order runs, no history). Then synthesize into the three needs: isolation, package structure, version control. |

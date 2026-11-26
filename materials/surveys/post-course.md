@@ -71,7 +71,7 @@ Response (A, B, C, or N): ______
 
 These questions ask about your experience of the course. Honest feedback, including difficulties and suggestions, helps improve teaching. You may answer even if you left the comparison code blank.
 
-**FEED-01 — Workload:** The course planned approximately two hours of mandatory homework after each of Sessions 1–4 (eight hours total), alongside 14 hours 10 minutes of classroom time. About how many hours did you spend outside class after each session? Include setup, homework, group work, and presentation preparation. Enter an estimate, 0 if none, or “not sure.”
+**FEED-01 — Workload:** The course planned approximately two hours of outside-class exercise time after each of Sessions 1–4 (eight hours total), alongside 14 hours 10 minutes of classroom time. About how many hours did you spend outside class after each session? Include setup, finishing exercises, group work, and presentation preparation. Enter an estimate, 0 if none, or “not sure.”
 
 | After session | Approximate hours outside class |
 | --- | --- |
@@ -98,7 +98,7 @@ Which topics or activities needed more or less time? You can comment on the bala
 
 Response: ____________________________________________________________
 
-**FEED-03 — Useful activities:** Which activities or materials helped you learn most, and why? For example: the device example, demonstrations, guided exercises, homework, pull requests and peer review, investigating failures, output comparisons, or the final showcase. “None” or “not sure” is also useful feedback.
+**FEED-03 — Useful activities:** Which activities or materials helped you learn most, and why? For example: the device example, demonstrations, guided exercises, pull requests and peer review, investigating failures, output comparisons, or the final showcase. “None” or “not sure” is also useful feedback.
 
 Response: ____________________________________________________________
 

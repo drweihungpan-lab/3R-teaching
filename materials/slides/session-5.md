@@ -48,7 +48,7 @@
 
 - Every engineering requirement and every student's participation requirement is mandatory; no weighted grades.
 - Assessment happens only at this presentation. The result is final: no separate submission, resubmission, reassessment, or later retry.
-- Homework and checkpoints were preparation. Modeling is optional; scientific correctness, conclusions, model complexity, and UI polish are not graded.
+- Exercises and checkpoints were preparation. Modeling is optional; scientific correctness, conclusions, model complexity, and UI polish are not graded.
 - Tests and comparisons must still check your declared processing behavior. See the [assessment policy](../../SYLLABUS.md#assessment-policy).
 
 ---

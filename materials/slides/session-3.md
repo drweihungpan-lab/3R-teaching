@@ -16,7 +16,7 @@ Protect the behavior you declared, and let GitHub check it for you.
 - 70–130: Demonstration — add tests, switch on CI, a controlled failure.
 - 130–170: Hands-on — in your Backend repo.
 
-Unfinished practice continues at home, in addition to the homework.
+Finish the exercise at home (about 2 hours).
 
 ---
 
@@ -207,7 +207,7 @@ Use [the exercise](../exercises/session-3.md) when stuck.
 
 Today's checkpoint: passing local tests and passing CI in the Backend repo, with a review on the pull request.
 
-- Mandatory homework is approximately two hours; details will be posted separately.
+- Finish the exercise at home (about 2 hours).
 - Next session: put an API in front of the same function, containerize it, and run it with the supplied frontend.
 
 See the [syllabus](../../SYLLABUS.md).
