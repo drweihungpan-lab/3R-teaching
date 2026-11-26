@@ -33,7 +33,7 @@ not found, files in the wrong folder, hyphens in package_name.
 
 1. **Finish cookiecutter**
 2. **The three Rs**
-3. **One repo, one venv**
+3. **venv, pip, and the CLI**
 4. **Git and branches**
 5. **Pull requests and review**
 6. **Hands-on**
@@ -292,6 +292,109 @@ branch demo.
 
 This is what every group has right now. The template gives the shape: the
 package, the command, the logs. The processing is ours to write.
+```
+
+---
+
+### PACKAGING · PIP INSTALL
+## What Does `pip install .` Do?
+
+```text
+pip install .
+→ reads setup.cfg
+→ installs click (install_requires)
+→ copies device_analysis into .venv
+→ creates the device_analysis command
+```
+
+**One command** turns the folder into an installed package.
+
+> [!TIP] **`setup.cfg` is the recipe; pip follows it.**
+
+```notes
+The "." means "the package in this folder". pip reads setup.cfg (and
+pyproject.toml for the build tool), installs every library listed under
+install_requires, copies the package into the venv's site-packages, and
+writes a small launcher script into .venv/bin.
+
+Show it live: ls .venv/bin shows device_analysis; pip show device_analysis
+shows the version and where it was installed. After this, import
+device_analysis works from any folder while the venv is active.
+```
+
+---
+
+### TEMPLATE ANATOMY · MAKEFILE
+## You Already Have It: `make install`
+
+```bash
+make help          # list the targets
+make install       # pip install .
+make install-dev   # pip install -e .[test,dev]
+```
+
+The template's `Makefile` **names the commands**, so everyone types the same thing.
+
+> [!TIP] **CI runs the same targets:** `make install-test`.
+
+```notes
+Open the Makefile live. Each target is a name for one or more commands;
+make help lists them with their descriptions. make install is exactly
+pip install . (a copy). make install-dev is the editable install plus the
+test and dev tools: the one you want while developing. Remember the
+difference; it comes back in the branch demo.
+
+Open .github/workflows/github_actions.yml: CI calls make install-test and
+make test-... . The same names on your laptop and in CI means "it works on
+my machine" and "it works in CI" run the same commands.
+```
+
+---
+
+### COMMAND LINE · WHY
+## Why a Command-Line Tool?
+
+1. **Anyone can run it.** No notebook, no Python prompt.
+2. **Same command** on any laptop and in CI.
+3. **Docker calls it:** `ENTRYPOINT ["device_analysis"]`.
+4. **Options are the interface:** `--input`, `--help`, `--version`.
+
+```notes
+A function is only usable by someone who writes Python around it. A
+command is usable by anyone with a terminal: a teammate, a script, a CI
+job, a container. That is replicability in practice: the same command,
+typed the same way, on a different machine.
+
+Show the template's Dockerfile: its ENTRYPOINT is the command, so running
+the container runs the tool. The options are the contract: --help documents
+them for free. In Session 4 the same function also gets an API; the CLI
+stays.
+```
+
+---
+
+### COMMAND LINE · ENTRY POINT
+## Where the Command Comes From
+
+```text
+[options.entry_points]
+console_scripts =
+    device_analysis =
+        device_analysis.scripts.
+        device_analysis_script:device_analysis_cli
+```
+
+`pip install` reads this and **creates the command**.
+
+Name on the left. **Python function** on the right.
+
+```notes
+In the real setup.cfg the right-hand side is one line:
+device_analysis.scripts.device_analysis_script:device_analysis_cli
+module path, a colon, then the function. Open the script live: a small
+click function that reads the options and calls the processing function.
+The processing does not know about the command line; click is a thin
+layer around it. Change the entry point, and you must reinstall.
 ```
 
 ---

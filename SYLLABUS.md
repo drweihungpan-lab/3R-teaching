@@ -110,6 +110,8 @@ Create a new GitHub repository. Clone the course cookiecutter template, run cook
 - Why a cookiecutter template rather than copying a repo: readability, shareability, and maintenance; the hyphen pitfall in `package_name`.
 - The three Rs in one slide: repeatability, replicability, and reproducibility, and why a virtual environment protects replicability.
 - One repo, one virtual environment: creating, activating, and checking which Python is in use; `pip install .` versus `pip install -e .`.
+- What `pip install .` does with `setup.cfg`, and the template's `Makefile` targets (`make install`, `make install-dev`) that CI also uses.
+- Why a command-line tool: anyone, any machine, CI and Docker run the same command; where the command comes from (the `console_scripts` entry point).
 - Data in, data out: on a branch, the Reference Backend repo's command reads a CSV and reports the mean `daily_count` per device.
 - Git in three places (working folder, local repo, GitHub): `clone`, `commit`, `push`, and `pull`.
 - Why branches, and how a branch works: a label on a commit.
