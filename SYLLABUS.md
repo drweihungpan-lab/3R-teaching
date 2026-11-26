@@ -121,7 +121,7 @@ Create a new GitHub repository. Clone the course cookiecutter template, run cook
 
 ### Guided practice
 
-In your Backend repo, create one virtual environment, install the package, see stale output, and switch to an editable install. Then, on a feature branch, add your own function and command-line option, push, open a pull request, and post its link in the Sandbox's Session 2 check-in issue. Review a classmate's pull request (Approve plus at least one line comment), and merge your own only after approval. Finish the exercise at home (about 2 hours).
+In your Backend repo, create one virtual environment, install the dependencies and the package the way the Dockerfile does (`pip install -r requirements.txt`, then `pip install .`), and reinstall after each code change. Then, on a feature branch, add your own function and command-line option, push, open a pull request, and post its link in the Sandbox's Session 2 check-in issue. Review a classmate's pull request (Approve plus at least one line comment), and merge your own only after approval. Finish the exercise at home (about 2 hours).
 
 **Progress checkpoint:** before Session 3, each student has merged one approved pull request in their Backend repo and reviewed one classmate's.
 

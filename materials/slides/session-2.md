@@ -802,7 +802,7 @@ teammate, not an error.
 ### HANDS-ON
 ## Hands-On
 
-1. **venv**, then `pip install -e .`
+1. **venv**, then install like the Dockerfile.
 2. **Branch:** your own function and CLI.
 3. **Push, open a PR,** post the link.
 4. **Review** one PR. Merge after approval.
@@ -821,7 +821,9 @@ check-in comment. Merge your own PR only after it is approved.
 
 COMMON PROBLEMS:
   - venv not activated: which python shows the system Python
-  - Stale output after editing: installed with pip install . (no -e)
+  - Stale output after editing: forgot to rerun pip install .
+  - Install order, as in the Dockerfile: pip install -r requirements.txt,
+    then pip install .
   - Pushing to main instead of the branch
   - Forgot git pull after merge: local main is behind
 ```

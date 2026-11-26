@@ -23,7 +23,7 @@ Delivery and rehearsal notes. Students set up one virtual environment in their o
 | 60–75 | Git | Git: Three Places; `git clone`; `git commit`; `git push`; `git pull` | Names for last week's commands; demo `pull` after a web edit. |
 | 75–95 | Branches | Why Branches? ×2; How a Branch Works; Working With Branches; On the Branch: Mean per Device; Pitfall: The Old Code Still Runs; `pip install -e .` | Create `feature/device-summary` live, make the change, show the stale `Hello world`, then fix with `-e`. |
 | 95–110 | Pull requests | From Branch to Pull Request; Code Review on GitHub; optional CI and conflict slides | Push, open the PR, review it live, author merges, `git pull`. Skip the optional slides if short of time. |
-| 110–170 | Hands-on | Hands-On; Prepare for Session 3 | [Exercise](../exercises/session-2.md) §§1–4 in class; §§5–6 at home. |
+| 110–170 | Hands-on | Hands-On; Prepare for Session 3 | [Exercise](../exercises/session-2.md) §§1–3 in class; §§4–5 at home. |
 
 ## Check-in and review rules
 
