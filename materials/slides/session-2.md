@@ -286,8 +286,8 @@ Hello world!: hello
 It runs. **But it does not process any data yet.**
 
 ```notes
-Inside the activated venv. Note: pip install . WITHOUT -e, on purpose. It
-copies the package into the venv. Remember this; it comes back in the
+Inside the activated venv. Note: pip install . copies the package into
+the venv. Remember this; it comes back in the
 branch demo.
 
 This is what every group has right now. The template gives the shape: the
@@ -383,7 +383,7 @@ versions we tested with.
 ## Update `requirements.txt`
 
 ```bash
-make install-dev            # includes pip-tools
+pip install pip-tools        # once per venv
 make update-requirements    # pip-compile setup.cfg
 git add setup.cfg requirements.txt
 ```
@@ -393,8 +393,8 @@ Run it **after you change `install_requires`**.
 > [!WARNING] **Never edit it by hand.** It is generated.
 
 ```notes
-make update-requirements runs pip-compile from pip-tools, which is in the
-dev extra, so run make install-dev first. pip-compile reads setup.cfg,
+make update-requirements runs pip-compile from pip-tools, so install
+pip-tools once in the venv first. pip-compile reads setup.cfg,
 resolves the newest versions that fit, and writes them all pinned into
 requirements.txt, with a comment saying which package needed each one.
 
@@ -696,24 +696,33 @@ Editing the folder afterwards changes nothing in the venv.
 
 ---
 
-### SOLUTION · EDITABLE INSTALL
-## `pip install -e .`: Run What You Edit
+### SOLUTION · REINSTALL
+## Reinstall After Every Change
 
 ```bash
-pip install -e .
+make update-requirements
+pip install -r requirements.txt
+pip install .
 device_analysis --input ../3R-device-example/data/device_counts.csv
 ```
 
-`-e` links the venv to **your folder**. Edits take effect at once.
+`pip install .` copies **today's code** into the venv.
 
-> [!WARNING] **Reinstall when `setup.cfg` changes.**
+> [!TIP] **Edit, reinstall, run.**
 
 ```notes
-Now the mean per device appears. The reinstall also installed pandas,
-because we added it to install_requires. Then run make update-requirements
-so requirements.txt pins pandas too. With -e, code edits need no
-reinstall, but new dependencies or a new entry point in setup.cfg do.
-The venv must match the code.
+Now the mean per device appears. Because we added pandas to
+install_requires, first regenerate requirements.txt so it pins pandas,
+then install in the same order as the Dockerfile: the pinned dependencies,
+then the package. For a code-only change, pip install . alone is enough
+(or make install).
+
+The venv must match the code. If the output looks old, the first question
+is: did I reinstall?
+
+Some developers use pip install -e . (an editable install) so edits apply
+without reinstalling. We do not need it in this course; reinstalling keeps
+your venv the same as the Docker image.
 ```
 
 ---

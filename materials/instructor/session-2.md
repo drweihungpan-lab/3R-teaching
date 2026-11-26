@@ -1,6 +1,6 @@
 # Session 2 instructor notes: venv, Git and a reviewed pull request
 
-Delivery and rehearsal notes. Students set up one virtual environment in their own Backend repo, see why an editable install matters, add their own function on a branch, open a pull request, and review a classmate's. Use the [slides](../slides/session-2.md), [guided exercise](../exercises/session-2.md) and the [glossary](../../GLOSSARY.md). Slide titles below are the Markdown headings.
+Delivery and rehearsal notes. Students set up one virtual environment in their own Backend repo, see why they must reinstall after a code change, add their own function on a branch, open a pull request, and review a classmate's. Use the [slides](../slides/session-2.md), [guided exercise](../exercises/session-2.md) and the [glossary](../../GLOSSARY.md). Slide titles below are the Markdown headings.
 
 ## Prepare before class
 
@@ -21,7 +21,7 @@ Delivery and rehearsal notes. Students set up one virtual environment in their o
 | 35–50 | pip + CLI | What Does `pip install .` Do?; You Already Have It: `make install`; `setup.cfg` or `requirements.txt`?; Update `requirements.txt`; Why a Command-Line Tool?; Where the Command Comes From; Logs Tell You What Ran | Show `ls .venv/bin`, `make help`, the CI workflow's `make install-test`, the Dockerfile `ENTRYPOINT`, and the `console_scripts` entry in `setup.cfg`. |
 | 50–60 | Break | | 10 minutes. |
 | 60–75 | Git | Git: Three Places; `git clone`; `git commit`; `git push`; `git pull` | Names for last week's commands; demo `pull` after a web edit. |
-| 75–95 | Branches | Why Branches? ×2; How a Branch Works; Working With Branches; On the Branch: Mean per Device; Pitfall: The Old Code Still Runs; `pip install -e .` | Create `feature/device-summary` live, make the change, show the stale `Hello world`, then fix with `-e`. |
+| 75–95 | Branches | Why Branches? ×2; How a Branch Works; Working With Branches; On the Branch: Mean per Device; Pitfall: The Old Code Still Runs; Reinstall After Every Change | Create `feature/device-summary` live, make the change, show the stale `Hello world`, then `make update-requirements`, `pip install -r requirements.txt`, `pip install .`. |
 | 95–110 | Pull requests | From Branch to Pull Request; Code Review on GitHub; optional CI and conflict slides | Push, open the PR, review it live, author merges, `git pull`. Skip the optional slides if short of time. |
 | 110–170 | Hands-on | Hands-On; Prepare for Session 3 | [Exercise](../exercises/session-2.md) §§1–3 in class; §§4–5 at home. |
 
@@ -34,12 +34,12 @@ Delivery and rehearsal notes. Students set up one virtual environment in their o
 
 ## Cues and expected observations
 
-- After `pip install .`, editing `device_analysis.py` changes nothing: the command still prints `Hello world!`. `--input` fails with `No such option`. After `pip install -e .` the edit shows and pandas is installed.
+- After `pip install .`, editing `device_analysis.py` changes nothing: the command still prints `Hello world!`. `--input` fails with `No such option`. After reinstalling (`pip install -r requirements.txt`, then `pip install .`) the edit shows and pandas is installed.
 - Common failures: venv not activated (`which python` shows the system Python); a stale install; pushing to `main`; forgetting `git pull` after merge; a student merging before approval; two students reviewing the same PR (check the 👍s).
 
 ## Rehearsal checklist
 
 - [ ] `device_analysis_demo` `main` installs with `pip install .` and runs `device_analysis --message hello`.
-- [ ] The stale-output and `pip install -e .` sequence behaves as above.
+- [ ] The stale-output and reinstall sequence behaves as above.
 - [ ] The mean-per-device command prints the three expected means.
 - [ ] The Session 2 check-in issue exists and is pinned in the Sandbox.
