@@ -351,6 +351,60 @@ my machine" and "it works in CI" run the same commands.
 
 ---
 
+### PACKAGING · DEPENDENCIES
+## `setup.cfg` or `requirements.txt`?
+
+```text
+setup.cfg          click          any version
+requirements.txt   click==8.1.3   exact pin
+```
+
+`pip install .` reads **`setup.cfg` only**.
+
+`pip install -r requirements.txt` installs **the exact pins**.
+
+```notes
+A common misunderstanding: pip install . does NOT read requirements.txt.
+It installs what install_requires in setup.cfg asks for, at whatever
+version is newest today.
+
+requirements.txt pins every package, including the packages your packages
+need, to one exact version. CI and the Dockerfile install it first
+(pip install -r requirements.txt), then the package, so every run gets the
+same versions. That is repeatability and replicability for dependencies.
+
+setup.cfg says what the package needs; requirements.txt records the exact
+versions we tested with.
+```
+
+---
+
+### PACKAGING · DEPENDENCIES
+## Update `requirements.txt`
+
+```bash
+make install-dev            # includes pip-tools
+make update-requirements    # pip-compile setup.cfg
+git add setup.cfg requirements.txt
+```
+
+Run it **after you change `install_requires`**.
+
+> [!WARNING] **Never edit it by hand.** It is generated.
+
+```notes
+make update-requirements runs pip-compile from pip-tools, which is in the
+dev extra, so run make install-dev first. pip-compile reads setup.cfg,
+resolves the newest versions that fit, and writes them all pinned into
+requirements.txt, with a comment saying which package needed each one.
+
+Commit setup.cfg and requirements.txt in the same PR, so the reviewer sees
+both. In the branch demo we add pandas to install_requires: that is
+exactly when to run it.
+```
+
+---
+
 ### COMMAND LINE · WHY
 ## Why a Command-Line Tool?
 
@@ -656,7 +710,8 @@ device_analysis --input ../3R-device-example/data/device_counts.csv
 
 ```notes
 Now the mean per device appears. The reinstall also installed pandas,
-because we added it to install_requires. With -e, code edits need no
+because we added it to install_requires. Then run make update-requirements
+so requirements.txt pins pandas too. With -e, code edits need no
 reinstall, but new dependencies or a new entry point in setup.cfg do.
 The venv must match the code.
 ```
@@ -667,7 +722,7 @@ The venv must match the code.
 ## From Branch to Pull Request
 
 ```bash
-git add src/ setup.cfg
+git add src/ setup.cfg requirements.txt
 git commit -m "Report mean daily count per device"
 git push -u origin feature/device-summary
 ```

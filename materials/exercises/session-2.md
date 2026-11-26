@@ -70,7 +70,7 @@ git switch -c feature/your-change
 Write **one function of your own choice** in your package and expose it through the command-line tool. Ideas: the mean or maximum of a column in a CSV, a count of rows per group, a unit conversion. Keep it small.
 
 - The function goes in your module (for example `device_analysis.py`); the click option goes in `scripts/…_script.py`.
-- If it needs a library such as pandas, add it to `install_requires` in `setup.cfg` and run `pip install -e .` again.
+- If it needs a library such as pandas, add it to `install_requires` in `setup.cfg` and run `pip install -e .` again. Then update the pinned versions: `make install-dev` (once, for pip-tools) and `make update-requirements`. Never edit `requirements.txt` by hand.
 - If it reads a file, use **synthetic** data: a small CSV you make up, or `../3R-device-example/data/device_counts.csv` without copying it into your repo.
 - Run your command and check the output by hand.
 
@@ -80,7 +80,7 @@ The Reference Backend repo's example is `feature/device-summary`: `device_analys
 
 ```bash
 git status
-git add src/ setup.cfg
+git add src/ setup.cfg requirements.txt
 git commit -m "Add <what your function does>"
 git push -u origin feature/your-change
 ```
