@@ -1,89 +1,111 @@
-# Session 2 guided practice: generate, tag, and install a package
+# Session 2 guided practice: venv, a branch, and a reviewed pull request
 
-Spend about 40 minutes in your group of three or four. You will generate your group's **Backend repo** from the course cookiecutter, run the command-line tool on the device data, merge it through a reviewed pull request, tag a **Release**, and install a teammate's Release in a fresh environment. A module is a Python file; a package groups related modules so other code can install and import them.
+Start in class (60 minutes) and finish at home (about 2 hours). Everything happens in **your own Backend repo** from Session 1. You will set up one virtual environment, install the package the way the Dockerfile does, write your own function on a branch, open a pull request, and review a classmate's pull request.
 
-This is preparation for the final presentation, not a separate submission. From now on, your authored PRs and reviews in the Backend repo count as evidence: every student must author at least one PR and review a teammate's.
+**Deadline:** your PR approved and merged, and your review done, **before Session 3 starts**.
+
+The [Reference Backend repo](https://github.com/drweihungpan-lab/device_analysis_demo) shows each step first. Replace `device_analysis` below with your own `package_name`.
 
 ## Before you start
 
-Python 3.12, Git, an SSH key, and an editor from Session 0. One member creates an **empty, public** repository on GitHub (no README, no license) named as your group agreed. Everyone in the group uses that name as `REPO`. The data are synthetic; never put real data or secrets in a public repo.
+```bash
+cd YOUR-BACKEND-REPO
+git switch main
+git pull
+```
 
-| Time | Activity | Checkpoint |
+> Your repo is public. Any data you add must be **synthetic**: never real data, personal information, or secrets.
+
+| When | Activity | Checkpoint |
 | --- | --- | --- |
-| 0–10 min | Clone, generate, install, run | The checksum equals the reference |
-| 10–20 min | Pull request, review, merge | CI shows a green check |
-| 20–25 min | Tag and push the Release | `v0.1.0` appears on GitHub |
-| 25–40 min | Install a teammate's Release | Their output matches the reference |
+| In class | 1. One venv, install like the Dockerfile | The template command runs |
+| In class | 2. Branch, your own function and CLI | Your command runs on the branch |
+| In class or at home | 3. Commit, push, open a PR, post the link | Link posted in the check-in issue |
+| At home | 4. Review a classmate's PR | Approve, line comment, 👍 |
+| At home | 5. Merge after approval, pull `main` | Your command runs on `main` |
 
-## 1. Clone, generate, install, run — 10 minutes
+## 1. One repo, one venv
 
 ```bash
-git clone git@github.com:ORG/REPO.git
-cd REPO
-python3.12 -m venv .venv
+python -m venv .venv
 source .venv/bin/activate
-python -m pip install cookiecutter
-cookiecutter -f git@github.com:drweihungpan-lab/devops-python-package-template.git --directory course_template -o ..
+which python
 ```
 
-Answer the five questions. Use `REPO` for `repo_name`; keep the defaults for `package_name` and `module_name` unless your group agrees otherwise. The `-o ..` writes the files into your clone. Then:
+`which python` must end in `.venv/bin/python`. If it shows a system path, the venv is not active. Check that `.venv/` is listed in `.gitignore`; never commit it.
+
+Install the same way the template's `Dockerfile` does: first the pinned dependencies, then the package.
 
 ```bash
-pip install -e '.[test]'
-device_limit --input data/device_counts.csv --output limits.csv
-cat limits.csv
-shasum -a 256 limits.csv
-cat data/expected_limits.sha256
+pip install -r requirements.txt
+pip install .
+device_analysis --message "hello"
 ```
 
-The two SHA-256 values must be equal. If they differ, stop and ask: do not edit the reference.
+You see three log lines (INFO, WARNING, ERROR) and `Hello world!: hello`. Put `LOGLEVEL=DEBUG` in front of the command to see the fourth.
 
-## 2. Pull request, review, merge — 10 minutes
+`pip install .` **copies** your package into `.venv`. If you edit the code later, run `pip install .` again, or the command keeps running the old copy.
+
+## 2. Branch: your own function and CLI
 
 ```bash
-git switch -c feature/generate-package
-git add .
-git commit -m "Generate package from course template"
-git push -u origin feature/generate-package
+git switch -c feature/your-change
 ```
 
-Open the PR. Watch the check named **test-formatting-linting** run and turn green. A teammate reviews it with a specific comment (for example, what the `--input` option accepts), you reply, and the teammate approves. Merge on GitHub, then:
+Write **one function of your own choice** in your package and expose it through the command-line tool. Ideas: the mean or maximum of a column in a CSV, a count of rows per group, a unit conversion. Keep it small.
+
+- The function goes in your module (for example `device_analysis.py`); the click option goes in `scripts/…_script.py`.
+- After **every** code change, run `pip install .` again (or `make install`), then your command. Without the reinstall, the venv still runs the old copy.
+- If it needs a library such as pandas, add it to `install_requires` in `setup.cfg`. Then update the pinned versions with `pip install pip-tools` (once) and `make update-requirements`, and install again: `pip install -r requirements.txt` and `pip install .`. Never edit `requirements.txt` by hand.
+- If it reads a file, use **synthetic** data: a small CSV you make up, or `../3R-device-example/data/device_counts.csv` without copying it into your repo.
+- Run your command and check the output by hand.
+
+The Reference Backend repo's example is `feature/device-summary`: `device_analysis --input ../3R-device-example/data/device_counts.csv` prints the mean `daily_count` per device.
+
+## 3. Commit, push, open a PR, post the link
+
+```bash
+git status
+git diff
+git add src/ setup.cfg requirements.txt
+git commit -m "Add <what your function does>"
+git push -u origin feature/your-change
+```
+
+On GitHub, open a pull request from your branch into `main`. In the description write what the function does and the exact command to run it.
+
+Then go to the [Sandbox issues](https://github.com/drweihungpan-lab/3R-sandbox/issues), open **Session 2 check-in**, and post one comment with your PR link. **Do not merge yet.**
+
+## 4. Review a classmate's PR
+
+In the check-in issue, find the **nearest earlier comment without a 👍** and review that PR. If you posted first, review the **last** link.
+
+On their PR:
+
+1. Open **Files changed**.
+2. Click a line and leave **at least one specific comment**: a question, a suggestion, or what you checked. Not just "LGTM".
+3. Select **Review changes → Approve → Submit review**.
+
+Then add a 👍 to their comment in the check-in issue, so nobody else picks the same PR.
+
+## 5. Merge after approval
+
+Wait until your PR is **approved**. Reply to the review comments, push a fix if needed, then merge on GitHub. You, the author, merge; the reviewer does not.
 
 ```bash
 git switch main
-git pull --ff-only origin main
+git pull
+pip install .
+device_analysis --help
 ```
 
-## 3. Tag the Release — 5 minutes
-
-The version is already `0.1.0` in `src/<package>/__init__.py`.
-
-```bash
-git tag v0.1.0
-git push origin v0.1.0
-```
-
-Check that the tag appears under **Releases/Tags** on GitHub.
-
-## 4. Install a teammate's Release — 15 minutes
-
-Pick another member's repository. In a new folder, with a new environment:
-
-```bash
-mkdir try-release && cd try-release
-python3.12 -m venv .venv
-source .venv/bin/activate
-pip install "git+https://github.com/ORG/THEIR-REPO.git@v0.1.0"
-device_limit --version
-curl -O https://raw.githubusercontent.com/ORG/THEIR-REPO/v0.1.0/data/device_counts.csv
-device_limit --input device_counts.csv --output limits.csv
-shasum -a 256 limits.csv
-```
-
-Their output must match the reference checksum. If installation fails, read the error: a wrong tag, a private repository, or a typo in the URL are the usual causes.
+Run your new command on `main` and check it works.
 
 ## Checkpoint
 
-Your group has a public Backend repo with a tagged Release that someone else installed and ran, matching the reference checksum. Finish anything unfinished at home, in addition to the homework.
+Before Session 3 starts:
 
-Optional, if you finish early: change `__version__` to `0.1.1` through a PR, merge, and tag `v0.1.1`. Notice that `@v0.1.0` still installs the old code.
+- Your PR in your Backend repo is approved and merged, and your command runs on `main`.
+- You approved one classmate's PR with at least one line comment, and gave a 👍 on their check-in comment.
+
+From now on, authored PRs and reviews in your Backend repo count as evidence for the final presentation.

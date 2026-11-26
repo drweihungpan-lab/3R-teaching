@@ -1,28 +1,11 @@
 ### 3R COURSE · SESSION 2
 # Session 2: venv and Git
 
-**Today:** Share last week. One repo, one venv. Data in, data out. Git and branches.
+**Today:** Share last week. Finish cookiecutter. One repo, one venv. Git, branches, review.
 
 ```notes
 Open warmly. Today builds directly on the Backend repo every group pushed in
 Session 1. Nothing new is generated today: we use what you already have.
-```
-
----
-
-### COURSE FORMAT
-## Today's Plan
-
-1. **Show-and-tell**
-2. **Why cookiecutter**
-3. **One repo, one venv**
-4. **Data in, data out**
-5. **Git, branches, pull requests**
-6. **Hands-on**
-
-```notes
-No timings on purpose. Keep the Show-and-tell short and informal, and let
-the difficulties feed the cookiecutter recap.
 ```
 
 ---
@@ -37,10 +20,28 @@ the difficulties feed the cookiecutter recap.
 Nothing to prepare. Just tell us.
 
 ```notes
-Informal sharing, not a presentation. Ask several students, one at a time.
-Write every difficulty on the board: you will come back to them in the next
-few slides. Expect: SSH keys, cookiecutter not found, files in the wrong
-folder, hyphens in package_name, CI red on first push.
+Keep this short: two or three students, a few minutes in total. Informal
+sharing, not a presentation. Write every difficulty on the board: you will
+come back to them in the cookiecutter slides. Expect: SSH keys, cookiecutter
+not found, files in the wrong folder, hyphens in package_name.
+```
+
+---
+
+### COURSE FORMAT
+## Today's Plan
+
+1. **Finish cookiecutter**
+2. **The three Rs**
+3. **venv, pip, and the CLI**
+4. **Git and branches**
+5. **Pull requests and review**
+6. **Hands-on**
+
+```notes
+No timings on purpose. The cookiecutter part closes what Session 1 started;
+the three Rs slide explains why the venv matters; then the Git part, which
+ends in a pull request that a classmate reviews.
 ```
 
 ---
@@ -56,6 +57,31 @@ folder, hyphens in package_name, CI red on first push.
 Ask 2–3 students. Steer toward: only if the recipe is written down, in the
 same place, in the same shape, every time. That is what a template gives
 a repository.
+```
+
+---
+
+### FAILURE MODES · COPYING
+## Why Not Just Copy a Repo?
+
+1. **Old names** stay in `setup.cfg`, imports and the entry point.
+2. Their `.git` **comes along**: you push to their repo.
+3. A copied `.venv` **breaks**.
+4. **Template fixes** never arrive.
+
+```notes
+The tempting shortcut: copy a friend's repo folder and rename it. Walk
+through each card.
+
+1. Their package name is still in setup.cfg, in every import and in the
+   console_scripts entry point. Missing one of them breaks the command.
+2. The hidden .git folder is copied too, with their history and their
+   remote. git push then goes to THEIR repo, or is rejected.
+3. A .venv contains absolute paths to the original folder. It looks fine,
+   then fails with confusing errors.
+4. When the template is fixed, a copied repo never hears about it.
+
+Cookiecutter avoids all four: it asks for your names and writes fresh files.
 ```
 
 ---
@@ -115,8 +141,8 @@ extra tools (such as cruft) and is out of scope for this course.
 ## Pitfall: Hyphens in Names
 
 ```text
-package_name = 3R-package-demo
-→ from 3R-package-demo.3R-package-demo import hello_world
+package_name = device-analysis-demo
+→ from device-analysis-demo import hello_world
 → SyntaxError
 ```
 
@@ -124,7 +150,7 @@ package_name = 3R-package-demo
 
 > [!CAUTION] `package_name` **must be a valid Python name.**
 
-Use `device_limit`, not `3R-package-demo`.
+Use `device_analysis`, not `device-analysis-demo`.
 
 ```notes
 Python names cannot start with a digit or contain "-". pip install may still
@@ -138,21 +164,48 @@ again. That template change is coming.
 
 ---
 
+### THE THREE RS
+## Three Ways Results Should Agree
+
+1. **Repeatability:** same conditions. Run twice on your laptop.
+2. **Replicability:** slightly different. A classmate's laptop and venv.
+3. **Reproducibility:** very different. Independent re-implementation.
+
+> [!TIP] **Today's venv protects replicability.**
+
+```notes
+Course definitions, from GLOSSARY.md:
+- Repeatability: agreement between results from successive runs of the
+  same process under the same conditions.
+- Replicability: agreement from the same process under slightly different
+  conditions, such as another machine or a fresh environment.
+- Reproducibility: agreement under very different conditions, such as an
+  independent re-implementation of the analysis.
+
+Terminology varies between disciplines; in this course these meanings
+govern. The venv is what lets a classmate's laptop run the same code with
+the same declared packages: replicability.
+```
+
+---
+
 ### REFERENCE REPO
 ## The Reference Backend Repo
 
 My own Backend repo, **generated from the same template as yours.**
 
-[3R-package-demo](https://github.com/drweihungpan-lab/3R-package-demo)
+[device_analysis_demo](https://github.com/drweihungpan-lab/device_analysis_demo)
 
 I show each step there first. You do it in yours.
 
 ```notes
-Reference Backend repo: same template, same structure, package_name
-device_limit. Its main branch is exactly the template output, like yours.
+Reference Backend repo: same template, same structure. Package name
+device_analysis, command device_analysis. Its main branch is the template
+output, like yours: hello_world with a --message option.
 
-Instructor prep: main must be regenerated with package_name = device_limit,
-and feature/data-in-data-out prepared, before this session.
+Instructor prep: clone 3R-device-example next to it, so that
+../3R-device-example/data/device_counts.csv exists. Rehearse the
+mean-per-device change on a local branch and keep it as a fallback.
 ```
 
 ---
@@ -161,8 +214,8 @@ and feature/data-in-data-out prepared, before this session.
 ## One Repo, One venv
 
 ```bash
-cd 3R-package-demo
-python3.12 -m venv .venv
+cd device_analysis_demo
+python -m venv .venv
 source .venv/bin/activate
 ```
 
@@ -218,53 +271,12 @@ If a command is "not found", check which python first.
 
 ---
 
-### FAILURE MODES · STAGE 3
-## Stage 3: Dependencies Declared
-
-Stage 2 crashed on a newer pandas. Stage 3 adds `requirements.txt`.
-
-```text
-Run in order:        DEV-C reaches the limit on 2026-01-16
-Rerun one cell:      DEV-C reaches the limit on 2026-01-04
-```
-
-> [!WARNING] **The answer depends on which cells ran.**
-
-```notes
-Still a notebook plus helper files. The tool for this pain: functions with
-inputs and outputs, in a package. That is what the Reference Backend repo
-shows next.
-```
-
----
-
-### FAILURE MODES · STAGE 4
-## Stage 4: An Installable Package
-
-The analysis is now `device_limit`. Run from another folder:
-
-```text
-FileNotFoundError: 'data/device_counts.csv'
-```
-
-A harmless cleanup moves DEV-C from 2026-01-16 to 2026-01-06.
-
-> [!WARNING] **No warning.** The answer changed silently.
-
-```notes
-Two pains remain: the data path is relative to where you stand, and nothing
-checks the answer. Session 3's tool: tests. Files: the device-example
-folder of the Sandbox (https://github.com/drweihungpan-lab/3R-sandbox).
-```
-
----
-
 ### TEMPLATE ANATOMY
 ## On `main`: The Template
 
 ```bash
-pip install -e '.[test]'
-device_limit --message "hello"
+pip install .
+device_analysis --message "hello"
 ```
 
 ```text
@@ -274,82 +286,169 @@ Hello world!: hello
 It runs. **But it does not process any data yet.**
 
 ```notes
-Inside the activated venv. This is what every group has right now. The
-template gives the shape: the package, the command, the logs. The
-processing is ours to write.
+Inside the activated venv. Note: pip install . copies the package into
+the venv. Remember this; it comes back in the
+branch demo.
+
+This is what every group has right now. The template gives the shape: the
+package, the command, the logs. The processing is ours to write.
 ```
 
 ---
 
-### SOLUTION · REPEATABILITY
-## Data In, Data Out
+### PACKAGING · PIP INSTALL
+## What Does `pip install .` Do?
 
 ```text
-device_counts.csv  →  device_limit  →  limits.csv
-(device_id, date,      predict the       (device_id,
- daily_count)          limit date        limit_date)
+pip install .
+→ reads setup.cfg
+→ installs click (install_requires)
+→ copies device_analysis into .venv
+→ creates the device_analysis command
 ```
 
-> [!TIP] **Same input, same output, every time.**
+**One command** turns the folder into an installed package.
+
+> [!TIP] `setup.cfg` **is the recipe; pip follows it.**
 
 ```notes
-This is the shape of every Backend repo in the course: a CSV goes in, a CSV
-comes out, from the command line. In Session 4 the same function sits
-behind an API, and in Session 5 it runs on your own data.
+The "." means "the package in this folder". pip reads setup.cfg (and
+pyproject.toml for the build tool), installs every library listed under
+install_requires, copies the package into the venv's site-packages, and
+writes a small launcher script into .venv/bin.
+
+Show it live: ls .venv/bin shows device_analysis; pip show device_analysis
+shows the version and where it was installed. After this, import
+device_analysis works from any folder while the venv is active.
 ```
 
 ---
 
-### BRANCHES · PREVIEW
-## Another Version of the Code
+### TEMPLATE ANATOMY · MAKEFILE
+## You Already Have It: `make install`
 
 ```bash
-git switch feature/data-in-data-out
-pip install -e '.[test]'
+make help          # list the targets
+make install       # pip install .
+make install-dev   # pip install -e .[test,dev]
 ```
 
-**I just switched to another version of the code.**
+The template's `Makefile` **names the commands**, so everyone types the same thing.
 
-How? We will see in a moment.
+> [!TIP] **CI runs the same targets:** `make install-test`.
 
 ```notes
-The hook for the Git part. Do not explain branches yet: let the question
-hang. Reinstall because the branch adds pandas to install_requires; the
-venv must match the code.
+Open the Makefile live. Each target is a name for one or more commands;
+make help lists them with their descriptions. make install is exactly
+pip install . (a copy). make install-dev is the editable install plus the
+test and dev tools: the one you want while developing. Remember the
+difference; it comes back in the branch demo.
+
+Open .github/workflows/github_actions.yml: CI calls make install-test and
+make test-... . The same names on your laptop and in CI means "it works on
+my machine" and "it works in CI" run the same commands.
 ```
 
 ---
 
-### COMMAND LINE
-## Run It From the Command Line
+### PACKAGING · DEPENDENCIES
+## `setup.cfg` or `requirements.txt`?
+
+```text
+setup.cfg          click          any version
+requirements.txt   click==8.1.3   exact pin
+```
+
+`pip install .` reads `setup.cfg` **only**.
+
+`pip install -r requirements.txt` installs **the exact pins**.
+
+```notes
+A common misunderstanding: pip install . does NOT read requirements.txt.
+It installs what install_requires in setup.cfg asks for, at whatever
+version is newest today.
+
+requirements.txt pins every package, including the packages your packages
+need, to one exact version. CI and the Dockerfile install it first
+(pip install -r requirements.txt), then the package, so every run gets the
+same versions. That is repeatability and replicability for dependencies.
+
+setup.cfg says what the package needs; requirements.txt records the exact
+versions we tested with.
+```
+
+---
+
+### PACKAGING · DEPENDENCIES
+## Update `requirements.txt`
 
 ```bash
-device_limit --input data/device_counts.csv --output limits.csv
-cat limits.csv
+pip install pip-tools        # once per venv
+make update-requirements    # pip-compile setup.cfg
+git add setup.cfg requirements.txt
 ```
 
-**Three rows: DEV-A, DEV-B, DEV-C.** One `limit_date` each.
+Run it **after you change** `install_requires`.
+
+> [!WARNING] **Never edit it by hand.** It is generated.
 
 ```notes
-Point out the processing (predict_limit_dates) does not know about the
-command line; click is a thin layer around it.
+make update-requirements runs pip-compile from pip-tools, so install
+pip-tools once in the venv first. pip-compile reads setup.cfg,
+resolves the newest versions that fit, and writes them all pinned into
+requirements.txt, with a comment saying which package needed each one.
+
+Commit setup.cfg and requirements.txt in the same PR, so the reviewer sees
+both. In the branch demo we add pandas to install_requires: that is
+exactly when to run it.
 ```
 
 ---
 
-### COMMAND LINE · INTERFACE
-## The Command-Line Tool
+### COMMAND LINE · WHY
+## Why a Command-Line Tool?
 
-`--input`: an existing CSV with `device_id`, `date`, `daily_count`.
-
-`--output`: the file to write.
-
-A missing column **stops the run** with a clear message. No half answers.
+1. **Anyone can run it,** no notebook needed.
+2. **Same command** on any laptop and in CI.
+3. **Docker runs it** as `ENTRYPOINT`.
+4. **Options are the interface:** `--input`, `--help`, `--version`.
 
 ```notes
-Demo the failure too: remove a column from a copy of the CSV and run it.
-The error message is part of the design. --version prints the package
-version.
+A function is only usable by someone who writes Python around it. A
+command is usable by anyone with a terminal: a teammate, a script, a CI
+job, a container. That is replicability in practice: the same command,
+typed the same way, on a different machine.
+
+Show the template's Dockerfile: its ENTRYPOINT is the command, so running
+the container runs the tool. The options are the contract: --help documents
+them for free. In Session 4 the same function also gets an API; the CLI
+stays.
+```
+
+---
+
+### COMMAND LINE · ENTRY POINT
+## Where the Command Comes From
+
+```text
+[options.entry_points]
+console_scripts =
+    device_analysis =
+        device_analysis.scripts.
+        device_analysis_script:device_analysis_cli
+```
+
+`pip install` reads this and **creates the command**.
+
+Name on the left. **Python function** on the right.
+
+```notes
+In the real setup.cfg the right-hand side is one line:
+device_analysis.scripts.device_analysis_script:device_analysis_cli
+module path, a colon, then the function. Open the script live: a small
+click function that reads the options and calls the processing function.
+The processing does not know about the command line; click is a thin
+layer around it. Change the entry point, and you must reinstall.
 ```
 
 ---
@@ -358,34 +457,23 @@ version.
 ## Logs Tell You What Ran
 
 ```text
-INFO: Read 1095 rows from data/device_counts.csv
+INFO: This is INFO level log message
+WARNING: This is WARN level log message
+ERROR: This is ERROR level log message
 ```
 
-Logs go to the **terminal**. The result goes to the **output file**.
+Logs go to the **terminal**, beside the result.
 
-`LOGLEVEL=DEBUG` shows more. `WARNING` shows less.
+`LOGLEVEL=DEBUG` shows more. `LOGLEVEL=ERROR` shows less.
 
 ```notes
+hello_world logs at four levels: DEBUG, INFO, WARNING, ERROR. The default
+level is INFO, so DEBUG is hidden. Each real line also starts with a
+timestamp and the function name. Demo:
+  LOGLEVEL=DEBUG device_analysis --message hi    # four log lines
+  LOGLEVEL=ERROR device_analysis --message hi    # one log line
 Prefer logging over print, so you can change the detail without editing
 code. The logger comes from the template: you got it for free.
-```
-
----
-
-### REPEATABILITY · VERIFICATION
-## Check the Answer: Checksum
-
-```bash
-shasum -a 256 limits.csv
-```
-
-Same SHA-256 means **byte-for-byte identical** files.
-
-Compare with `data/expected_limits.sha256`.
-
-```notes
-A checksum is a short fingerprint of a file. Every student who runs the
-branch must get the same value: repeatability, checked by a machine.
 ```
 
 ---
@@ -413,7 +501,7 @@ today moves changes along one arrow.
 ## `git clone`: Get a Copy
 
 ```bash
-git clone git@github.com:drweihungpan-lab/3R-package-demo.git
+git clone git@github.com:drweihungpan-lab/device_analysis_demo.git
 ```
 
 Copies the **whole history** from GitHub to your computer.
@@ -423,6 +511,29 @@ You do this **once** per repo.
 ```notes
 Run it live in a scratch folder. Point out it is not a download of files
 only: git log works immediately, because the history came too.
+```
+
+---
+
+### GIT · INSPECT
+## Look Before You Commit
+
+```bash
+git status    # which files changed?
+git diff      # which lines changed?
+git log       # the history so far
+```
+
+> [!TIP] **Read the diff before every commit.**
+
+```notes
+git status lists changed, new and staged files. git diff shows the exact
+lines, red removed, green added: what your reviewer will see in Files
+changed. git log lists the commits, newest first; git log --oneline is
+shorter.
+
+Check: if .venv/, data you should not share, or a stray file appears in
+git status, stop and fix .gitignore before you add anything.
 ```
 
 ---
@@ -439,7 +550,9 @@ git commit -m "Describe the device example in README"
 A commit is a **snapshot with a message**. Say **what and why**.
 
 ```notes
-git add chooses what goes into the next snapshot; git commit records it in
+git add puts changes in the staging area: the list of what goes into the
+next snapshot. It sits between the working folder and the local repo in
+the three-places diagram. git commit records the staged snapshot in
 the local repo. Nothing is on GitHub yet. A good message lets a reviewer
 understand the change without opening the files.
 ```
@@ -482,6 +595,32 @@ on GitHub's web editor, commit there, then git pull locally and show it.
 
 ---
 
+### GIT · UNDO
+## Undo Before You Commit
+
+```bash
+git restore README.md           # discard my edits
+git restore --staged README.md  # unstage, keep edits
+```
+
+No need to delete the folder and clone again.
+
+> [!WARNING] `git restore` **throws your edits away.** There is no undo.
+
+```notes
+The two everyday rescues. git status even prints these commands as hints.
+The first returns a file to the last commit: useful after an experiment
+goes wrong. The second takes a file out of the staging area but keeps your
+edits in the folder.
+
+Many beginners panic, delete the folder and re-clone. That loses every
+uncommitted change and the venv. Ask first: what does git status say?
+Undoing a commit that is already pushed is out of scope today: ask the
+instructor.
+```
+
+---
+
 ### BRANCHES · WHY
 ## Why Branches? (1/2)
 
@@ -489,9 +628,8 @@ on GitHub's web editor, commit there, then git pull locally and show it.
 2. **Work in progress stays isolated** until it is reviewed.
 
 ```notes
-Back to the hook: feature/data-in-data-out is unfinished work. main is
-still the working template. Switching branches is how I showed both
-versions in the same folder.
+main is the working template. The change we are about to make is
+unfinished work: it lives on a branch until someone has reviewed it.
 ```
 
 ---
@@ -510,11 +648,36 @@ before it lands.
 
 ---
 
+### BRANCHES · MENTAL MODEL
+## How a Branch Works
+
+```text
+A --- B --- C              <-- main
+             \
+              D --- E      <-- feature/device-summary
+```
+
+A branch is a **label on a commit**.
+
+A new commit **moves the label** forward.
+
+> [!TIP] **Merging moves** `main` **to include D and E.**
+
+```notes
+Draw it on the board. Commits are the snapshots; a branch is only a name
+pointing at one of them. git switch -c creates a new label on the current
+commit, which is why it is instant and free. Committing on the branch moves
+only that label; main stays at C. After the PR is merged, main includes D
+and E, and git pull brings that to everyone's computer.
+```
+
+---
+
 ### BRANCHES · COMMANDS
 ## Working With Branches
 
 ```bash
-git switch -c feature/readme-update   # create and switch
+git switch -c feature/device-summary  # create and switch
 git branch                            # list branches
 git switch main                       # go back
 ```
@@ -522,8 +685,95 @@ git switch main                       # go back
 > [!TIP] **Name the branch after the change.**
 
 ```notes
--c creates the branch. A branch is just a movable label on a commit:
-creating one is instant and free. Use the feature/ prefix in this course.
+-c creates the branch. Use the feature/ prefix in this course. Create
+feature/device-summary live in device_analysis_demo: it is the branch for
+the next three slides.
+```
+
+---
+
+### SOLUTION · DATA IN, DATA OUT
+## On the Branch: Mean per Device
+
+```bash
+device_analysis --input ../3R-device-example/data/device_counts.csv
+```
+
+```text
+DEV-A  174.00
+DEV-B  209.94
+DEV-C  254.77
+```
+
+**A CSV goes in. One mean** `daily_count` **per device comes out.**
+
+```notes
+Live demo on feature/device-summary in device_analysis_demo:
+- In device_analysis.py, replace hello_world with a function that reads the
+  CSV with pandas and returns the mean daily_count per device_id.
+- In the CLI script, replace --message with --input.
+- In setup.cfg, add pandas to install_requires.
+The CSV has columns device_id, date, daily_count. It stays in the
+3R-device-example folder; do not copy it into the repo.
+
+The processing function does not know about the command line; click is a
+thin layer around it. Exact formatting of the output depends on how you
+print it.
+```
+
+---
+
+### PITFALL · STALE INSTALL
+## Pitfall: The Old Code Still Runs
+
+```bash
+device_analysis --message "hello"
+```
+
+```text
+Hello world!: hello
+```
+
+I changed the code. **The venv still runs the copy from** `pip install .`
+
+```notes
+Show this deliberately. Run the old command: it still prints Hello world,
+although hello_world no longer exists in the folder. Running with --input
+fails with "No such option: --input" for the same reason.
+
+pip install . (without -e) copied the package into .venv at install time.
+Editing the folder afterwards changes nothing in the venv.
+```
+
+---
+
+### SOLUTION · REINSTALL
+## Reinstall After Every Change
+
+```bash
+make update-requirements
+pip install -r requirements.txt
+pip install .
+device_analysis --input ../3R-device-example/data/device_counts.csv
+```
+
+`pip install .` copies **today's code** into the venv.
+
+> [!TIP] **Edit, reinstall, run.**
+
+```notes
+Now the mean per device appears. Because we added pandas to
+install_requires, first regenerate requirements.txt so it pins pandas,
+then install in the same order as the Dockerfile: the pinned dependencies,
+then the package. For a code-only change, pip install . alone is enough
+(or make install).
+
+The venv must match the code. If the output looks old, the first question
+is: did I reinstall?
+
+Some developers use pip install -e . (an editable install) so edits apply
+without reinstalling. We do not need it in this course; reinstalling keeps
+your venv the same as the Docker image.
 ```
 
 ---
@@ -532,37 +782,45 @@ creating one is instant and free. Use the feature/ prefix in this course.
 ## From Branch to Pull Request
 
 ```bash
-git push -u origin feature/data-in-data-out
+git add src/ setup.cfg requirements.txt
+git commit -m "Report mean daily count per device"
+git push -u origin feature/device-summary
 ```
 
-Open the PR. A teammate **reviews**. Then **merge**.
-
-```bash
-git switch main
-git pull
-```
+Open the PR on GitHub: **compare your branch with** `main`.
 
 ```notes
-Open the PR live for feature/data-in-data-out. A meaningful review names a
-specific line or behavior, not just "LGTM". After merge, everyone pulls
-main to get the change.
+origin is the name Git gave the GitHub copy when you cloned. -u links
+your local branch to the one on GitHub, so later a plain git push or git
+pull is enough. Push the branch live, then open the PR from the banner
+GitHub shows. Write
+a title and a short description: what changed and how to run it. Point
+out the Files changed tab: it is where the review happens next.
 ```
 
 ---
 
-### CONTINUOUS INTEGRATION
-## The Check on Your PR
+### PULL REQUESTS · REVIEW
+## Code Review on GitHub
 
-Your repo ships `.github/workflows/github_actions.yml`.
-
-GitHub runs it on **every push and pull request**.
-
-> [!WARNING] **Green means one commit passed these checks,** not that everything is right.
+1. Open **Files changed**.
+2. Click a line: leave a **comment**.
+3. **Review changes → Approve.**
+4. The **author merges.**
+5. Everyone: `git switch main && git pull`.
 
 ```notes
-Students will see this check on their own PR in the hands-on. Today: only
-what it is. The test job is commented out with #; in Session 3 you switch
-it on and add tests.
+Demo on the PR you just opened, with a student or a second account as the
+reviewer. A meaningful review names a specific line or behaviour, not just
+"LGTM": for example, "what happens if daily_count is missing?".
+
+The reviewer approves; the author, not the reviewer, merges. After merge,
+everyone switches to main and pulls to get the change. Show git log: main
+now includes the branch's commits, as in the branch diagram.
+
+Next piece of work: start from the updated main with a new branch. Do not
+keep committing on the merged branch. Deleting it on GitHub is safe; its
+commits are already in main.
 ```
 
 ---
@@ -594,20 +852,48 @@ teammate, not an error.
 ### HANDS-ON
 ## Hands-On
 
-1. **One venv** in your Backend repo. Install. Run the template command.
-2. Branch, small change, commit, push.
-3. PR, review, merge, `git pull`.
+1. **venv**, then install like the Dockerfile.
+2. **Branch:** your own function and CLI.
+3. **Push, open a PR,** post the link.
+4. **Review** one PR. Merge after approval.
 
-[Exercise](../exercises/session-2.md) has the steps.
+[Exercise](../exercises/session-2.md) steps.
 
 ```notes
-Circulate constantly. Your Backend repo is where the PR and review count as
-final evidence; the Sandbox does not count.
+60 minutes. Circulate constantly. Work happens in each student's own
+Backend repo; the Sandbox only holds the "Session 2 check-in" issue where
+PR links are posted. Any data in the repo must be synthetic.
+
+Review rule: review the nearest earlier link in the check-in issue that
+has no thumbs-up yet (the first poster reviews the last link). A review is
+Approve plus at least one line comment; then add a thumbs-up to that
+check-in comment. Merge your own PR only after it is approved.
 
 COMMON PROBLEMS:
   - venv not activated: which python shows the system Python
+  - Stale output after editing: forgot to rerun pip install .
+  - Install order, as in the Dockerfile: pip install -r requirements.txt,
+    then pip install .
   - Pushing to main instead of the branch
   - Forgot git pull after merge: local main is behind
+```
+
+---
+
+### OPTIONAL · CONTINUOUS INTEGRATION
+## Optional: The Check on Your PR
+
+Your repo ships `.github/workflows/github_actions.yml`.
+
+GitHub runs it on **every push and pull request**.
+
+> [!WARNING] **Green means one commit passed these checks,** not that everything is right.
+
+```notes
+Backup slide: use it only if time allows, or if someone asks about the
+check on their PR. Students will see this check on their own
+PR in the hands-on. Today: only what it is. The test job is commented out
+with #; in Session 3 you switch it on and add tests.
 ```
 
 ---
@@ -615,14 +901,16 @@ COMMON PROBLEMS:
 ### NEXT SESSION
 ## Prepare for Session 3
 
-**Today:** a reviewed, merged pull request in your Backend repo.
+**Today:** a pull request in your Backend repo, link posted.
 
-**Homework:** 2 hours + practice.
+**At home:** review, get approved, merge. Before Session 3.
 
 **Next:** tests, CI, and automatic Releases.
 
 ```notes
-Session 3: once a PR is approved and merged, CI runs the tests and creates
-the Release with semantic-release. Remind: Show-and-tell again at the start
-of Session 3. Anyone may be asked.
+The exercise is finished at home (about 2 hours): review, approval and
+merge must all be done before Session 3 starts. Session 3: once a PR is
+approved and merged, CI runs the tests and creates the Release with
+semantic-release. Remind: Show-and-tell again at the start of Session 3.
+Anyone may be asked.
 ```

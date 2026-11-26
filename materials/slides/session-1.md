@@ -24,16 +24,16 @@ not just listen. If setup is broken, offer help after. Let them ask questions.
 
 ---
 
-## Mandatory Homework + Checklist
+## Exercise + Checklist
 
-After Sessions 1–4: **2-hour homework** plus unfinished practice.
+After Sessions 1–4: **finish the session's exercise at home** (about 2 hours).
 
 At the start of the next session: **I will ask someone to show their work.**
 
 Anyone. Be ready.
 
 ```notes
-This establishes accountability. Homework is not optional. You will check
+This establishes accountability. The exercise is not optional. You will check
 their work, and they know this upfront.
 ```
 
@@ -80,7 +80,7 @@ avoid understanding.
 - **100–170:** 70-minute hands-on.
 
 ```notes
-Then homework: 2 hours tonight, plus unfinished practice.
+Then finish the exercise at home (about 2 hours).
 
 This is a visual timeline. Each session builds one layer. By Session 5 it all
 comes together: venv (Session 1) + git (Session 2) + tests (Session 3) + API +
@@ -523,7 +523,7 @@ The exercise covers all of these.
 
 **Today:** Backend repo created and pushed.
 
-**Homework:** 2 hours + practice.
+**At home:** finish the exercise (about 2 hours).
 
 **Next:** Branches, pull requests, reviews, Releases.
 

@@ -19,7 +19,7 @@ The course uses four repositories (see [GLOSSARY.md](GLOSSARY.md) for the terms)
 
 - **Audience:** 20 statistics students familiar with Python functions, pandas, and basic regression.
 - **Classroom time:** 14 hours 10 minutes across five sessions of 170 minutes each (see [session shape](#session-shape)).
-- **Mandatory homework:** approximately two hours after each of Sessions 1–4, eight hours in total. Guided practice not finished in class is completed at home, in addition to this time. Homework content is to be defined.
+- **Outside-class work:** finish the session's guided exercise at home, about two hours after each of Sessions 1–4, eight hours in total. There is no separate homework; the exercise is the outside-class work.
 - **Group size:** three or four students, with one public Backend repo per group.
 - **Language:** English.
 
@@ -57,7 +57,7 @@ Every session has the same shape, 170 minutes in all:
 | Instruction 2 | 50 | Explanation and demonstration |
 | Hands-on | 60 | Guided practice in groups |
 
-Guided practice not finished in the 60 minutes continues at home. Session 5 keeps the 170-minute length with a showcase schedule.
+Guided practice not finished in the 60 minutes continues at home (about 2 hours). Session 5 keeps the 170-minute length with a showcase schedule.
 
 ## Teaching approach and projects
 
@@ -94,11 +94,7 @@ Students complete the [Session 0 guide](docs/session-0.md) at home: a GitHub acc
 
 ### Guided practice
 
-Create a new GitHub repository. Clone the course cookiecutter template, run cookiecutter to generate your Backend repo with your group's information, commit the generated package structure, and push to your repository. Verify the push succeeded and the repo is public. No branches, pull requests, or reviews yet; these come in Session 2.
-
-### Mandatory homework: approximately 2 hours
-
-To be defined.
+Create a new GitHub repository. Clone the course cookiecutter template, run cookiecutter to generate your Backend repo with your group's information, commit the generated package structure, and push to your repository. Verify the push succeeded and the repo is public. No branches, pull requests, or reviews yet; these come in Session 2. Finish the exercise at home (about 2 hours).
 
 **Progress checkpoint:** each group has created a public Backend repo containing the generated cookiecutter package template, and the initial push succeeded.
 
@@ -111,24 +107,23 @@ To be defined.
 ### Topics
 
 - Show-and-tell: what students did in the Session 1 exercise and what was difficult.
-- Why a cookiecutter template: readability, shareability, and maintenance; the hyphen pitfall in `package_name`.
-- One repo, one virtual environment: creating, activating, and checking which Python is in use.
-- Data in, data out: the Reference Backend repo reads a CSV and writes a CSV from the command line.
+- Why a cookiecutter template rather than copying a repo: readability, shareability, and maintenance; the hyphen pitfall in `package_name`.
+- The three Rs in one slide: repeatability, replicability, and reproducibility, and why a virtual environment protects replicability.
+- One repo, one virtual environment: creating, activating, and checking which Python is in use; why the venv runs old code until you reinstall.
+- What `pip install .` does with `setup.cfg`, and the template's `Makefile` targets (`make install`, `make install-dev`) that CI also uses.
+- Why a command-line tool: anyone, any machine, CI and Docker run the same command; where the command comes from (the `console_scripts` entry point).
+- Data in, data out: on a branch, the Reference Backend repo's command reads a CSV and reports the mean `daily_count` per device.
 - Git in three places (working folder, local repo, GitHub): `clone`, `commit`, `push`, and `pull`.
-- Why branches: a working `main`, isolated work in progress, parallel work, and pull requests.
-- Pull requests as a collaboration tool: the purpose, how to open one, and what a meaningful review looks like.
-- A very quick look at CI: the check that runs on every push and pull request.
+- Why branches, and how a branch works: a label on a commit.
+- Pull requests and code review on GitHub: a line comment, Approve, the author merges, everyone pulls `main`.
+- Optional: a very quick look at CI, the check that runs on every push and pull request.
 - Optional: a merge conflict, and how to resolve it.
 
 ### Guided practice
 
-In your Backend repo, create one virtual environment, install the package, and run its command. Then create a feature branch, make a small change, commit, push, open a pull request, have a teammate review it with a specific comment, merge, and pull `main`.
+In your Backend repo, create one virtual environment, install the dependencies and the package the way the Dockerfile does (`pip install -r requirements.txt`, then `pip install .`), and reinstall after each code change. Then, on a feature branch, add your own function and command-line option, push, open a pull request, and post its link in the Sandbox's Session 2 check-in issue. Review a classmate's pull request (Approve plus at least one line comment), and merge your own only after approval. Finish the exercise at home (about 2 hours).
 
-### Mandatory homework: approximately 2 hours
-
-To be defined.
-
-**Progress checkpoint:** each group has merged at least one reviewed pull request in the Backend repo.
+**Progress checkpoint:** before Session 3, each student has merged one approved pull request in their Backend repo and reviewed one classmate's.
 
 ## Session 3: Defensive engineering with pytest and CI
 
@@ -145,11 +140,7 @@ To be defined.
 
 ### Guided practice
 
-Add tests to the group's Backend repo, switch on the pytest job, observe a controlled failing test turn CI red, fix it, and verify green.
-
-### Mandatory homework: approximately 2 hours
-
-To be defined.
+Add tests to the group's Backend repo, switch on the pytest job, observe a controlled failing test turn CI red, fix it, and verify green. Finish the exercise at home (about 2 hours).
 
 **Progress checkpoint:** passing local tests and passing CI in the Backend repo, plus visible review evidence.
 
@@ -163,15 +154,11 @@ To be defined.
 
 - Hour one: adding an API to the Backend repo as an optional install extra; request and response schemas as a contract; one processing function behind two interfaces (command line and API).
 - Hour two: the Dockerfile, images and containers, container networking and service names such as `http://backend:8000`, readiness, and building the Frontend repo from a pinned release in Compose.
-- Comparing outputs across repeated local runs and local/container environments (homework).
+- Comparing outputs across repeated local runs and local/container environments (last exercise step).
 
 ### Guided practice
 
-Run `docker compose up --build` with the supplied Frontend repo, trace a CSV upload from the page to the API and back, and diagnose one controlled configuration or connection fault.
-
-### Mandatory homework: approximately 2 hours
-
-To be defined; includes preparing the local-versus-Docker output comparison for Session 5.
+Run `docker compose up --build` with the supplied Frontend repo, trace a CSV upload from the page to the API and back, and diagnose one controlled configuration or connection fault. Finish the exercise at home (about 2 hours); its last step is the local-versus-Docker output comparison for Session 5.
 
 **Progress checkpoint:** both services run together from the Backend repo.
 
@@ -200,7 +187,7 @@ Each group will demonstrate its project and show the required evidence in its ow
 
 Assessment is **pass/fail**. All engineering requirements above must be met; there are no weighted scores. Statistical analysis correctness is not graded. Students must still demonstrate that tests and output comparisons check the processing behavior they have declared.
 
-All assessment takes place at the final presentation. There is no separate submission, resubmission, or reassessment. The final presentation result is final. Homework and session checkpoints support preparation for that presentation.
+All assessment takes place at the final presentation. There is no separate submission, resubmission, or reassessment. The final presentation result is final. Exercises and session checkpoints support preparation for that presentation.
 
 ## Course materials and surveys
 

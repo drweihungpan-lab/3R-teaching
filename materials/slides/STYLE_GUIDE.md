@@ -60,7 +60,7 @@ What you say out loud goes here.
 |---|---|---|
 | Cover | the first slide, `# Session N: Title` | Dark navy, amber eyebrow, large white title, short subtitle, short teal rule |
 | Content | `## Title` | Off-white canvas, coloured eyebrow, dark slate title |
-| Closing | the last slide in the deck | Dark navy like the cover: wrap-up, homework, what comes next |
+| Closing | the last slide in the deck | Dark navy like the cover: wrap-up, exercise, what comes next |
 
 ---
 

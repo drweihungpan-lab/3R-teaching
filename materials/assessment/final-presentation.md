@@ -15,7 +15,7 @@ cross-group reproduction, and new-data experiments are not required.
 
 The final presentation is the only assessment. There is no separate submission,
 resubmission, reassessment, or later retry during the final session. The result
-at your presentation is final. Homework and earlier checkpoints are preparation.
+at your presentation is final. Exercises and earlier checkpoints are preparation.
 
 ## Prepare and present
 

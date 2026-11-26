@@ -1,37 +1,45 @@
-# Session 2 instructor notes: a package other people can install
+# Session 2 instructor notes: venv, Git and a reviewed pull request
 
-Delivery and rehearsal notes. Students generate their group's Backend repo from the course cookiecutter, run the command-line tool on the device data, merge through a reviewed PR, tag a Release, and install a teammate's Release from its git URL. Use the [slides](../slides/session-2.md), [guided exercise](../exercises/session-2.md), [ADR 0002](../../docs/adr/0002-distribute-by-git-tag-not-registry.md), and the [glossary](../../GLOSSARY.md). PyPI and TestPyPI appear only as a slide.
+Delivery and rehearsal notes. Students set up one virtual environment in their own Backend repo, see why they must reinstall after a code change, add their own function on a branch, open a pull request, and review a classmate's. Use the [slides](../slides/session-2.md), [guided exercise](../exercises/session-2.md) and the [glossary](../../GLOSSARY.md). Slide titles below are the Markdown headings.
 
 ## Prepare before class
 
-- The cookiecutter lives in `drweihungpan-lab/devops-python-package-template`, directory `course_template`. Confirm that the pull request adding it is merged to `main`, otherwise the clone command in the exercise fails. Check `cookiecutter -f git@github.com:drweihungpan-lab/devops-python-package-template.git --directory course_template -o ..` from a clean clone.
-- The reference checksum is in `data/expected_limits.sha256` inside each generated repo. Run the whole path once yourself with [the rehearsal script](../../scripts/rehearse_session_2.sh).
-- Each group needs one **empty, public** GitHub repository named as agreed in Session 1. Create them in the first minutes of hands-on if students have not.
-- Make sure Actions are enabled for new repositories. The generated workflow runs on `push` and `pull_request` with Python 3.12; its test and release jobs are commented out on purpose.
-- Have a pre-generated example Backend repo with a tagged Release available for demonstration and as a fallback for a group whose generation fails.
+- The Reference Backend repo is [device_analysis_demo](https://github.com/drweihungpan-lab/device_analysis_demo): package `device_analysis`, command `device_analysis --message`, `hello_world` logging at four levels. Its `main` must stay the template output.
+- Clone `3R-device-example` next to it, so `../3R-device-example/data/device_counts.csv` exists (columns `device_id`, `date`, `daily_count`). Do not copy the CSV into the repo.
+- Rehearse the `feature/device-summary` change on a local branch: replace `hello_world` with a mean `daily_count` per device, replace `--message` with `--input`, add `pandas` to `install_requires`. Expected means: DEV-A 174.00, DEV-B 209.94, DEV-C 254.77. Keep it as a fallback; do it live in class.
+- Open a Sandbox issue titled **Session 2 check-in** and pin it. Students post their PR link there.
+- Arrange a second account or a student to review your demo PR live.
 
 ## 170-minute run sheet
 
 | Clock | Mode | Slides | Delivery |
 | --- | --- | --- | --- |
-| 0–10 | Opening | Back at the bubble tea shop; Device example, Stage 3; Stage 4 | Ask the question, then show Stages 3 → 4 from the Sandbox's `device-example` folder. |
-| 10–60 | Explanation | Data in, data out; Give each processing step a home; A cookiecutter turns answers into a repository; The five questions; What you get; setup.cfg describes the package; The command-line tool; Logs tell you what ran; Check the answer | Explain modules and packages, the template and its prompts, the layout, metadata and entry point, the tool's options, logging, and the checksum. |
-| 60–70 | Break | | 10 minutes. |
-| 70–100 | Explanation | A Release is a version someone else can pin; Install a Release from its git URL; What about PyPI? | Version → tag → pinned install. Say why it is not on PyPI: permanence, name clashes, accounts. |
-| 100–110 | Explanation | CI: a first look | Very brief: automated checks on every push; the commented-out test job returns in Session 3. |
-| 110–130 | Demonstration | Demo: generate the repository; Demo: install it and run it; Demo: pull request, merge, tag | Perform the full path live in front of the class. |
-| 130–170 | Hands-on | Hands-on: 40 minutes; Checkpoint and next step | [Exercise](../exercises/session-2.md) §§1–4. |
+| 0–5 | Opening | Show-and-Tell; Today's Plan | Short: two or three students. Write difficulties on the board. |
+| 5–17 | Cookiecutter | Back at the Bubble Tea Shop; Why Not Just Copy a Repo?; Why Cookiecutter? ×3; Pitfall: Hyphens in Names | Finish what Session 1 started. Tie board difficulties to the slides. |
+| 17–20 | Concept | Three Ways Results Should Agree | Course definitions from the glossary; the venv protects replicability. |
+| 20–35 | venv | The Reference Backend Repo; One Repo, One venv; Why One per Repo?; Which Python Am I Using?; On `main`: The Template | Live in `device_analysis_demo`. Install with `pip install .` (no `-e`) on purpose. |
+| 35–50 | pip + CLI | What Does `pip install .` Do?; You Already Have It: `make install`; `setup.cfg` or `requirements.txt`?; Update `requirements.txt`; Why a Command-Line Tool?; Where the Command Comes From; Logs Tell You What Ran | Show `ls .venv/bin`, `make help`, the CI workflow's `make install-test`, the Dockerfile `ENTRYPOINT`, and the `console_scripts` entry in `setup.cfg`. |
+| 50–60 | Break | | 10 minutes. |
+| 60–75 | Git | Git: Three Places; `git clone`; Look Before You Commit; `git commit`; `git push`; `git pull`; Undo Before You Commit | Names for last week's commands; `status`/`diff`/`log` and the staging area; demo `pull` after a web edit; `git restore` instead of re-cloning. |
+| 75–95 | Branches | Why Branches? ×2; How a Branch Works; Working With Branches; On the Branch: Mean per Device; Pitfall: The Old Code Still Runs; Reinstall After Every Change | Create `feature/device-summary` live, make the change, show the stale `Hello world`, then `make update-requirements`, `pip install -r requirements.txt`, `pip install .`. |
+| 95–110 | Pull requests | From Branch to Pull Request; Code Review on GitHub; Optional: A Merge Conflict | Explain `origin` and `-u`; push, open the PR, review it live, author merges, `git pull`, then a new branch for the next change. Skip the conflict slide if short of time. |
+| 110–170 | Hands-on | Hands-On; Optional: The Check on Your PR (backup); Prepare for Session 3 | [Exercise](../exercises/session-2.md) §§1–3 in class; §§4–5 at home. |
+
+## Check-in and review rules
+
+- Each student posts one comment with their PR link in **Session 2 check-in**.
+- Each student reviews the nearest earlier link without a 👍; the first poster reviews the last link.
+- A review is **Approve plus at least one line comment**, then a 👍 on that check-in comment.
+- The author merges only after approval. Deadline: before Session 3 starts.
 
 ## Cues and expected observations
 
-- The generated repo shows three limit dates: DEV-A 2026-06-30, DEV-B 2026-04-01, DEV-C 2026-01-16. The output's SHA-256 equals the value in `data/expected_limits.sha256`.
-- On first push, the PR shows one check, **test-formatting-linting**, which passes.
-- `device_limit --version` prints `0.1.0` for the first Release.
-- Common failures: running cookiecutter without `-o ..` (it nests the repo inside itself); a repository name that differs from `repo_name`; a private repository (the install then asks for credentials); a wrong or missing tag in the install URL; forgetting to push the tag; `shasum` not found (use `sha256sum` on Linux).
+- After `pip install .`, editing `device_analysis.py` changes nothing: the command still prints `Hello world!`. `--input` fails with `No such option`. After reinstalling (`pip install -r requirements.txt`, then `pip install .`) the edit shows and pandas is installed.
+- Common failures: venv not activated (`which python` shows the system Python); a stale install; pushing to `main`; forgetting `git pull` after merge; a student merging before approval; two students reviewing the same PR (check the 👍s).
 
 ## Rehearsal checklist
 
-- [ ] The cookiecutter PR is merged and the clone command works from a clean machine.
-- [ ] Generate, install, run and compare the checksum on the demo machine.
-- [ ] Push, tag, and install the Release from the git URL in a fresh environment.
-- [ ] The lint check passes on the first PR.
+- [ ] `device_analysis_demo` `main` installs with `pip install .` and runs `device_analysis --message hello`.
+- [ ] The stale-output and reinstall sequence behaves as above.
+- [ ] The mean-per-device command prints the three expected means.
+- [ ] The Session 2 check-in issue exists and is pinned in the Sandbox.

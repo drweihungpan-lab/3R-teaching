@@ -80,4 +80,4 @@ Ask a teammate to review the PR with a specific comment about the tests or clari
 
 ## Checkpoint
 
-Passing local tests and passing CI in your Backend repo, with a review on the PR. Finish anything unfinished at home, in addition to the homework.
+Passing local tests and passing CI in your Backend repo, with a review on the PR. Finish the exercise at home (about 2 hours).
