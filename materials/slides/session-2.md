@@ -1,3 +1,4 @@
+### 3R COURSE · SESSION 2
 # Session 2: venv and Git
 
 **Today:** Share last week. One repo, one venv. Data in, data out. Git and branches.
@@ -9,6 +10,7 @@ Session 1. Nothing new is generated today: we use what you already have.
 
 ---
 
+### COURSE FORMAT
 ## Today's Plan
 
 1. **Show-and-tell**
@@ -25,6 +27,7 @@ the difficulties feed the cookiecutter recap.
 
 ---
 
+### WARM-UP
 ## Show-and-Tell
 
 **What did you do in the Session 1 exercise?**
@@ -42,6 +45,7 @@ folder, hyphens in package_name, CI red on first push.
 
 ---
 
+### ANALOGY
 ## Back at the Bubble Tea Shop
 
 **Your best staff member is sick today.**
@@ -56,13 +60,14 @@ a repository.
 
 ---
 
+### TEMPLATES · READABILITY
 ## Why Cookiecutter? Readability
 
 Every group's repo has the **same shape**.
 
 `src/`, `tests/`, `setup.cfg`, `Makefile`: always in the same place.
 
-**Open any repo and you already know where to look.**
+> [!TIP] **Open any repo and you already know where to look.**
 
 ```notes
 Readability is about the structure, not the code. A newcomer, a reviewer,
@@ -72,6 +77,7 @@ in tests/ without asking anyone.
 
 ---
 
+### TEMPLATES · SHAREABILITY
 ## Why Cookiecutter? Shareability
 
 A teammate can **review** your repo.
@@ -88,6 +94,7 @@ project setup, in the course sense of the word.
 
 ---
 
+### TEMPLATES · MAINTENANCE
 ## Why Cookiecutter? Maintenance
 
 **Fix the template once.**
@@ -104,6 +111,7 @@ extra tools (such as cruft) and is out of scope for this course.
 
 ---
 
+### FAILURE MODES
 ## Pitfall: Hyphens in Names
 
 ```text
@@ -112,7 +120,9 @@ package_name = 3R-package-demo
 → SyntaxError
 ```
 
-`repo_name` may contain hyphens. **`package_name` must be a valid Python name.**
+`repo_name` may contain hyphens.
+
+> [!CAUTION] `package_name` **must be a valid Python name.**
 
 Use `device_limit`, not `3R-package-demo`.
 
@@ -128,6 +138,7 @@ again. That template change is coming.
 
 ---
 
+### REFERENCE REPO
 ## The Reference Backend Repo
 
 My own Backend repo, **generated from the same template as yours.**
@@ -146,6 +157,7 @@ and feature/data-in-data-out prepared, before this session.
 
 ---
 
+### ENVIRONMENTS
 ## One Repo, One venv
 
 ```bash
@@ -156,7 +168,7 @@ source .venv/bin/activate
 
 The venv lives **inside the repo folder**.
 
-`.venv/` is in `.gitignore`: **never committed.**
+> [!CAUTION] **Never commit** `.venv/`. It is listed in `.gitignore`.
 
 ```notes
 A virtual environment is a separate Python with its own installed packages.
@@ -167,6 +179,7 @@ package's declared dependencies, never copied or pushed. Do NOT copy a
 
 ---
 
+### ENVIRONMENTS · ISOLATION
 ## Why One per Repo?
 
 ```text
@@ -175,7 +188,7 @@ repo B needs pandas 2.2
 one shared Python → one of them breaks
 ```
 
-**Each repo gets its own Python and its own packages.**
+> [!TIP] **Each repo gets its own Python and its own packages.**
 
 ```notes
 Ask: "What happens if both repos install into the same Python?" The second
@@ -185,6 +198,7 @@ installing for one project can never break another.
 
 ---
 
+### ENVIRONMENTS · CHECK
 ## Which Python Am I Using?
 
 ```bash
@@ -194,7 +208,7 @@ which python      # after: .venv/bin/python
 pip list          # only this repo's packages
 ```
 
-**Activate in every new terminal.**
+> [!WARNING] **Activate in every new terminal.**
 
 ```notes
 Run both before and after activation live. MOST COMMON MISTAKE: activation
@@ -204,6 +218,7 @@ If a command is "not found", check which python first.
 
 ---
 
+### FAILURE MODES · STAGE 3
 ## Stage 3: Dependencies Declared
 
 Stage 2 crashed on a newer pandas. Stage 3 adds `requirements.txt`.
@@ -213,7 +228,7 @@ Run in order:        DEV-C reaches the limit on 2026-01-16
 Rerun one cell:      DEV-C reaches the limit on 2026-01-04
 ```
 
-**The answer depends on which cells ran.**
+> [!WARNING] **The answer depends on which cells ran.**
 
 ```notes
 Still a notebook plus helper files. The tool for this pain: functions with
@@ -223,6 +238,7 @@ shows next.
 
 ---
 
+### FAILURE MODES · STAGE 4
 ## Stage 4: An Installable Package
 
 The analysis is now `device_limit`. Run from another folder:
@@ -231,7 +247,9 @@ The analysis is now `device_limit`. Run from another folder:
 FileNotFoundError: 'data/device_counts.csv'
 ```
 
-A harmless cleanup moves DEV-C from 2026-01-16 to 2026-01-06. **No warning.**
+A harmless cleanup moves DEV-C from 2026-01-16 to 2026-01-06.
+
+> [!WARNING] **No warning.** The answer changed silently.
 
 ```notes
 Two pains remain: the data path is relative to where you stand, and nothing
@@ -241,6 +259,7 @@ folder of the Sandbox (https://github.com/drweihungpan-lab/3R-sandbox).
 
 ---
 
+### TEMPLATE ANATOMY
 ## On `main`: The Template
 
 ```bash
@@ -262,6 +281,7 @@ processing is ours to write.
 
 ---
 
+### SOLUTION · REPEATABILITY
 ## Data In, Data Out
 
 ```text
@@ -270,7 +290,7 @@ device_counts.csv  →  device_limit  →  limits.csv
  daily_count)          limit date        limit_date)
 ```
 
-**Same input, same output, every time.**
+> [!TIP] **Same input, same output, every time.**
 
 ```notes
 This is the shape of every Backend repo in the course: a CSV goes in, a CSV
@@ -280,6 +300,7 @@ behind an API, and in Session 5 it runs on your own data.
 
 ---
 
+### BRANCHES · PREVIEW
 ## Another Version of the Code
 
 ```bash
@@ -299,6 +320,7 @@ venv must match the code.
 
 ---
 
+### COMMAND LINE
 ## Run It From the Command Line
 
 ```bash
@@ -315,6 +337,7 @@ command line; click is a thin layer around it.
 
 ---
 
+### COMMAND LINE · INTERFACE
 ## The Command-Line Tool
 
 `--input`: an existing CSV with `device_id`, `date`, `daily_count`.
@@ -331,6 +354,7 @@ version.
 
 ---
 
+### COMMAND LINE · LOGGING
 ## Logs Tell You What Ran
 
 ```text
@@ -348,6 +372,7 @@ code. The logger comes from the template: you got it for free.
 
 ---
 
+### REPEATABILITY · VERIFICATION
 ## Check the Answer: Checksum
 
 ```bash
@@ -365,6 +390,7 @@ branch must get the same value: repeatability, checked by a machine.
 
 ---
 
+### GIT · MENTAL MODEL
 ## Git: Three Places
 
 ```text
@@ -383,6 +409,7 @@ today moves changes along one arrow.
 
 ---
 
+### GIT · CLONE
 ## `git clone`: Get a Copy
 
 ```bash
@@ -400,6 +427,7 @@ only: git log works immediately, because the history came too.
 
 ---
 
+### GIT · COMMIT
 ## `git commit`: Save a Snapshot
 
 ```bash
@@ -418,6 +446,7 @@ understand the change without opening the files.
 
 ---
 
+### GIT · PUSH
 ## `git push`: Share It
 
 ```bash
@@ -435,6 +464,7 @@ rejected, someone else pushed first: that is what pull is for.
 
 ---
 
+### GIT · PULL
 ## `git pull`: Get Their Work
 
 ```bash
@@ -443,7 +473,7 @@ git pull
 
 Brings a teammate's commits **from GitHub to your computer**.
 
-**Pull before you start working.**
+> [!TIP] **Pull before you start working.**
 
 ```notes
 New for most students: last week only one person pushed. Demo: edit a file
@@ -452,11 +482,11 @@ on GitHub's web editor, commit there, then git pull locally and show it.
 
 ---
 
+### BRANCHES · WHY
 ## Why Branches? (1/2)
 
-**1. `main` must always work.** Others install it and use it.
-
-**2. Work in progress stays isolated** until it is reviewed.
+1. `main` **must always work.** Others install it and use it.
+2. **Work in progress stays isolated** until it is reviewed.
 
 ```notes
 Back to the hook: feature/data-in-data-out is unfinished work. main is
@@ -466,11 +496,11 @@ versions in the same folder.
 
 ---
 
+### BRANCHES · WHY
 ## Why Branches? (2/2)
 
-**3. Several people work at once** without overwriting each other.
-
-**4. A pull request needs a branch.** Review happens there.
+3. **Several people work at once** without overwriting each other.
+4. **A pull request needs a branch.** Review happens there.
 
 ```notes
 Each teammate works on their own branch. The pull request compares a
@@ -480,6 +510,7 @@ before it lands.
 
 ---
 
+### BRANCHES · COMMANDS
 ## Working With Branches
 
 ```bash
@@ -488,7 +519,7 @@ git branch                            # list branches
 git switch main                       # go back
 ```
 
-**Name the branch after the change.**
+> [!TIP] **Name the branch after the change.**
 
 ```notes
 -c creates the branch. A branch is just a movable label on a commit:
@@ -497,6 +528,7 @@ creating one is instant and free. Use the feature/ prefix in this course.
 
 ---
 
+### PULL REQUESTS
 ## From Branch to Pull Request
 
 ```bash
@@ -518,13 +550,14 @@ main to get the change.
 
 ---
 
+### CONTINUOUS INTEGRATION
 ## The Check on Your PR
 
 Your repo ships `.github/workflows/github_actions.yml`.
 
 GitHub runs it on **every push and pull request**.
 
-**Green means one commit passed these checks, not that everything is right.**
+> [!WARNING] **Green means one commit passed these checks,** not that everything is right.
 
 ```notes
 Students will see this check on their own PR in the hands-on. Today: only
@@ -534,6 +567,7 @@ it on and add tests.
 
 ---
 
+### OPTIONAL · CONFLICTS
 ## Optional: A Merge Conflict
 
 Two branches change **the same line**.
@@ -557,6 +591,7 @@ teammate, not an error.
 
 ---
 
+### HANDS-ON
 ## Hands-On
 
 1. **One venv** in your Backend repo. Install. Run the template command.
@@ -577,6 +612,7 @@ COMMON PROBLEMS:
 
 ---
 
+### NEXT SESSION
 ## Prepare for Session 3
 
 **Today:** a reviewed, merged pull request in your Backend repo.
