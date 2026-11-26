@@ -65,8 +65,8 @@ a repository.
 ## Why Not Just Copy a Repo?
 
 1. **Old names** stay in `setup.cfg`, imports and the entry point.
-2. **Their `.git`** comes along: you push to their repo.
-3. A copied **`.venv`** breaks.
+2. Their `.git` **comes along**: you push to their repo.
+3. A copied `.venv` **breaks**.
 4. **Template fixes** never arrive.
 
 ```notes
@@ -309,7 +309,7 @@ pip install .
 
 **One command** turns the folder into an installed package.
 
-> [!TIP] **`setup.cfg` is the recipe; pip follows it.**
+> [!TIP] `setup.cfg` **is the recipe; pip follows it.**
 
 ```notes
 The "." means "the package in this folder". pip reads setup.cfg (and
@@ -359,7 +359,7 @@ setup.cfg          click          any version
 requirements.txt   click==8.1.3   exact pin
 ```
 
-`pip install .` reads **`setup.cfg` only**.
+`pip install .` reads `setup.cfg` **only**.
 
 `pip install -r requirements.txt` installs **the exact pins**.
 
@@ -388,7 +388,7 @@ make update-requirements    # pip-compile setup.cfg
 git add setup.cfg requirements.txt
 ```
 
-Run it **after you change `install_requires`**.
+Run it **after you change** `install_requires`.
 
 > [!WARNING] **Never edit it by hand.** It is generated.
 
@@ -408,9 +408,9 @@ exactly when to run it.
 ### COMMAND LINE · WHY
 ## Why a Command-Line Tool?
 
-1. **Anyone can run it.** No notebook, no Python prompt.
+1. **Anyone can run it,** no notebook needed.
 2. **Same command** on any laptop and in CI.
-3. **Docker calls it:** `ENTRYPOINT ["device_analysis"]`.
+3. **Docker runs it** as `ENTRYPOINT`.
 4. **Options are the interface:** `--input`, `--help`, `--version`.
 
 ```notes
@@ -605,7 +605,7 @@ git restore --staged README.md  # unstage, keep edits
 
 No need to delete the folder and clone again.
 
-> [!WARNING] **`git restore` throws your edits away.** There is no undo.
+> [!WARNING] `git restore` **throws your edits away.** There is no undo.
 
 ```notes
 The two everyday rescues. git status even prints these commands as hints.
@@ -661,7 +661,7 @@ A branch is a **label on a commit**.
 
 A new commit **moves the label** forward.
 
-> [!TIP] **Merging moves `main` to include D and E.**
+> [!TIP] **Merging moves** `main` **to include D and E.**
 
 ```notes
 Draw it on the board. Commits are the snapshots; a branch is only a name
@@ -705,7 +705,7 @@ DEV-B  209.94
 DEV-C  254.77
 ```
 
-**A CSV goes in. One mean `daily_count` per device comes out.**
+**A CSV goes in. One mean** `daily_count` **per device comes out.**
 
 ```notes
 Live demo on feature/device-summary in device_analysis_demo:
@@ -734,7 +734,7 @@ device_analysis --message "hello"
 Hello world!: hello
 ```
 
-I changed the code. **The venv still runs the copy from `pip install .`**
+I changed the code. **The venv still runs the copy from** `pip install .`
 
 ```notes
 Show this deliberately. Run the old command: it still prints Hello world,
@@ -787,7 +787,7 @@ git commit -m "Report mean daily count per device"
 git push -u origin feature/device-summary
 ```
 
-Open the PR on GitHub: **compare your branch with `main`.**
+Open the PR on GitHub: **compare your branch with** `main`.
 
 ```notes
 origin is the name Git gave the GitHub copy when you cloned. -u links
