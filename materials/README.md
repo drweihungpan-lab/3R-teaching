@@ -5,7 +5,7 @@ Start with the [syllabus](../SYLLABUS.md) for course facts and the [glossary](..
 | Session | Markdown source | Editable PowerPoint | Guided exercise | Instructor notes |
 | --- | --- | --- | --- | --- |
 | 1: Environment and Git | [Source](slides/session-1.md) | [Deck](slides/session-1.pptx) | [Exercise](exercises/session-1.md) | [Notes](instructor/session-1.md) |
-| 2: A package others can install | [Source](slides/session-2.md) | [Deck](slides/session-2.pptx) | [Exercise](exercises/session-2.md) | [Notes](instructor/session-2.md) |
+| 2: venv and Git | [Source](slides/session-2.md) | [Deck](slides/session-2.pptx) | [Exercise](exercises/session-2.md) | [Notes](instructor/session-2.md) |
 | 3: Tests and CI | [Source](slides/session-3.md) | [Deck](slides/session-3.pptx) | [Exercise](exercises/session-3.md) | [Notes](instructor/session-3.md) |
 | 4: API, containers, Compose | [Source](slides/session-4.md) | [Deck](slides/session-4.pptx) | [Exercise](exercises/session-4.md) | [Notes](instructor/session-4.md) |
 | 5: Final showcase | [Source](slides/session-5.md) | [Deck](slides/session-5.pptx) | Final presentation | [Notes](instructor/session-5.md) |

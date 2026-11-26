@@ -107,20 +107,21 @@ Create a new GitHub repository. Clone the course cookiecutter template, run cook
 ### Topics
 
 - Show-and-tell: what students did in the Session 1 exercise and what was difficult.
-- Why a cookiecutter template: readability, shareability, and maintenance; the hyphen pitfall in `package_name`.
-- One repo, one virtual environment: creating, activating, and checking which Python is in use.
-- Data in, data out: the Reference Backend repo reads a CSV and writes a CSV from the command line.
+- Why a cookiecutter template rather than copying a repo: readability, shareability, and maintenance; the hyphen pitfall in `package_name`.
+- The three Rs in one slide: repeatability, replicability, and reproducibility, and why a virtual environment protects replicability.
+- One repo, one virtual environment: creating, activating, and checking which Python is in use; `pip install .` versus `pip install -e .`.
+- Data in, data out: on a branch, the Reference Backend repo's command reads a CSV and reports the mean `daily_count` per device.
 - Git in three places (working folder, local repo, GitHub): `clone`, `commit`, `push`, and `pull`.
-- Why branches: a working `main`, isolated work in progress, parallel work, and pull requests.
-- Pull requests as a collaboration tool: the purpose, how to open one, and what a meaningful review looks like.
-- A very quick look at CI: the check that runs on every push and pull request.
+- Why branches, and how a branch works: a label on a commit.
+- Pull requests and code review on GitHub: a line comment, Approve, the author merges, everyone pulls `main`.
+- Optional: a very quick look at CI, the check that runs on every push and pull request.
 - Optional: a merge conflict, and how to resolve it.
 
 ### Guided practice
 
-In your Backend repo, create one virtual environment, install the package, and run its command. Then create a feature branch, make a small change, commit, push, open a pull request, have a teammate review it with a specific comment, merge, and pull `main`. Finish the exercise at home (about 2 hours).
+In your Backend repo, create one virtual environment, install the package, see stale output, and switch to an editable install. Then, on a feature branch, add your own function and command-line option, push, open a pull request, and post its link in the Sandbox's Session 2 check-in issue. Review a classmate's pull request (Approve plus at least one line comment), and merge your own only after approval. Finish the exercise at home (about 2 hours).
 
-**Progress checkpoint:** each group has merged at least one reviewed pull request in the Backend repo.
+**Progress checkpoint:** before Session 3, each student has merged one approved pull request in their Backend repo and reviewed one classmate's.
 
 ## Session 3: Defensive engineering with pytest and CI
 
