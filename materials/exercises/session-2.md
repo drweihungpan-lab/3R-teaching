@@ -66,6 +66,7 @@ The Reference Backend repo's example is `feature/device-summary`: `device_analys
 
 ```bash
 git status
+git diff
 git add src/ setup.cfg requirements.txt
 git commit -m "Add <what your function does>"
 git push -u origin feature/your-change

@@ -20,10 +20,10 @@ Delivery and rehearsal notes. Students set up one virtual environment in their o
 | 20–35 | venv | The Reference Backend Repo; One Repo, One venv; Why One per Repo?; Which Python Am I Using?; On `main`: The Template | Live in `device_analysis_demo`. Install with `pip install .` (no `-e`) on purpose. |
 | 35–50 | pip + CLI | What Does `pip install .` Do?; You Already Have It: `make install`; `setup.cfg` or `requirements.txt`?; Update `requirements.txt`; Why a Command-Line Tool?; Where the Command Comes From; Logs Tell You What Ran | Show `ls .venv/bin`, `make help`, the CI workflow's `make install-test`, the Dockerfile `ENTRYPOINT`, and the `console_scripts` entry in `setup.cfg`. |
 | 50–60 | Break | | 10 minutes. |
-| 60–75 | Git | Git: Three Places; `git clone`; `git commit`; `git push`; `git pull` | Names for last week's commands; demo `pull` after a web edit. |
+| 60–75 | Git | Git: Three Places; `git clone`; Look Before You Commit; `git commit`; `git push`; `git pull`; Undo Before You Commit | Names for last week's commands; `status`/`diff`/`log` and the staging area; demo `pull` after a web edit; `git restore` instead of re-cloning. |
 | 75–95 | Branches | Why Branches? ×2; How a Branch Works; Working With Branches; On the Branch: Mean per Device; Pitfall: The Old Code Still Runs; Reinstall After Every Change | Create `feature/device-summary` live, make the change, show the stale `Hello world`, then `make update-requirements`, `pip install -r requirements.txt`, `pip install .`. |
-| 95–110 | Pull requests | From Branch to Pull Request; Code Review on GitHub; optional CI and conflict slides | Push, open the PR, review it live, author merges, `git pull`. Skip the optional slides if short of time. |
-| 110–170 | Hands-on | Hands-On; Prepare for Session 3 | [Exercise](../exercises/session-2.md) §§1–3 in class; §§4–5 at home. |
+| 95–110 | Pull requests | From Branch to Pull Request; Code Review on GitHub; Optional: A Merge Conflict | Explain `origin` and `-u`; push, open the PR, review it live, author merges, `git pull`, then a new branch for the next change. Skip the conflict slide if short of time. |
+| 110–170 | Hands-on | Hands-On; Optional: The Check on Your PR (backup); Prepare for Session 3 | [Exercise](../exercises/session-2.md) §§1–3 in class; §§4–5 at home. |
 
 ## Check-in and review rules
 

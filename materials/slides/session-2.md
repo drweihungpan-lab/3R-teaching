@@ -515,6 +515,29 @@ only: git log works immediately, because the history came too.
 
 ---
 
+### GIT · INSPECT
+## Look Before You Commit
+
+```bash
+git status    # which files changed?
+git diff      # which lines changed?
+git log       # the history so far
+```
+
+> [!TIP] **Read the diff before every commit.**
+
+```notes
+git status lists changed, new and staged files. git diff shows the exact
+lines, red removed, green added: what your reviewer will see in Files
+changed. git log lists the commits, newest first; git log --oneline is
+shorter.
+
+Check: if .venv/, data you should not share, or a stray file appears in
+git status, stop and fix .gitignore before you add anything.
+```
+
+---
+
 ### GIT · COMMIT
 ## `git commit`: Save a Snapshot
 
@@ -527,7 +550,9 @@ git commit -m "Describe the device example in README"
 A commit is a **snapshot with a message**. Say **what and why**.
 
 ```notes
-git add chooses what goes into the next snapshot; git commit records it in
+git add puts changes in the staging area: the list of what goes into the
+next snapshot. It sits between the working folder and the local repo in
+the three-places diagram. git commit records the staged snapshot in
 the local repo. Nothing is on GitHub yet. A good message lets a reviewer
 understand the change without opening the files.
 ```
@@ -566,6 +591,32 @@ Brings a teammate's commits **from GitHub to your computer**.
 ```notes
 New for most students: last week only one person pushed. Demo: edit a file
 on GitHub's web editor, commit there, then git pull locally and show it.
+```
+
+---
+
+### GIT · UNDO
+## Undo Before You Commit
+
+```bash
+git restore README.md           # discard my edits
+git restore --staged README.md  # unstage, keep edits
+```
+
+No need to delete the folder and clone again.
+
+> [!WARNING] **`git restore` throws your edits away.** There is no undo.
+
+```notes
+The two everyday rescues. git status even prints these commands as hints.
+The first returns a file to the last commit: useful after an experiment
+goes wrong. The second takes a file out of the staging area but keeps your
+edits in the folder.
+
+Many beginners panic, delete the folder and re-clone. That loses every
+uncommitted change and the venv. Ask first: what does git status say?
+Undoing a commit that is already pushed is out of scope today: ask the
+instructor.
 ```
 
 ---
@@ -739,7 +790,10 @@ git push -u origin feature/device-summary
 Open the PR on GitHub: **compare your branch with `main`.**
 
 ```notes
-Push the branch live, then open the PR from the banner GitHub shows. Write
+origin is the name Git gave the GitHub copy when you cloned. -u links
+your local branch to the one on GitHub, so later a plain git push or git
+pull is enough. Push the branch live, then open the PR from the banner
+GitHub shows. Write
 a title and a short description: what changed and how to run it. Point
 out the Files changed tab: it is where the review happens next.
 ```
@@ -763,23 +817,10 @@ reviewer. A meaningful review names a specific line or behaviour, not just
 The reviewer approves; the author, not the reviewer, merges. After merge,
 everyone switches to main and pulls to get the change. Show git log: main
 now includes the branch's commits, as in the branch diagram.
-```
 
----
-
-### OPTIONAL · CONTINUOUS INTEGRATION
-## Optional: The Check on Your PR
-
-Your repo ships `.github/workflows/github_actions.yml`.
-
-GitHub runs it on **every push and pull request**.
-
-> [!WARNING] **Green means one commit passed these checks,** not that everything is right.
-
-```notes
-Optional, only if time allows. Students will see this check on their own
-PR in the hands-on. Today: only what it is. The test job is commented out
-with #; in Session 3 you switch it on and add tests.
+Next piece of work: start from the updated main with a new branch. Do not
+keep committing on the merged branch. Deleting it on GitHub is safe; its
+commits are already in main.
 ```
 
 ---
@@ -835,6 +876,24 @@ COMMON PROBLEMS:
     then pip install .
   - Pushing to main instead of the branch
   - Forgot git pull after merge: local main is behind
+```
+
+---
+
+### OPTIONAL · CONTINUOUS INTEGRATION
+## Optional: The Check on Your PR
+
+Your repo ships `.github/workflows/github_actions.yml`.
+
+GitHub runs it on **every push and pull request**.
+
+> [!WARNING] **Green means one commit passed these checks,** not that everything is right.
+
+```notes
+Backup slide: use it only if time allows, or if someone asks about the
+check on their PR. Students will see this check on their own
+PR in the hands-on. Today: only what it is. The test job is commented out
+with #; in Session 3 you switch it on and add tests.
 ```
 
 ---
