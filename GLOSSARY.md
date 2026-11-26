@@ -36,6 +36,10 @@ _Avoid_: Practice repo, demo repo
 A group's single repository, started in Session 1 and holding its processing package from Session 2 onward. Public, and containing only synthetic or non-sensitive data.
 _Avoid_: Group repo, project repo
 
+**Reference Backend repo**:
+The instructor's own Backend repo, generated from the same template as the groups' repos, used to demonstrate each session's step before students do it in theirs.
+_Avoid_: Demo repo, example repo
+
 **Frontend repo**:
 The one instructor-owned repository holding the CSV upload page. Groups run it from a pinned release and do not fork or edit it.
 _Avoid_: UI repo
@@ -43,3 +47,9 @@ _Avoid_: UI repo
 **Release**:
 A version of a package fixed by a version tag, so anyone installing that tag gets identical code. Nothing is uploaded to a package registry.
 _Avoid_: Deploy, publish
+
+## Class activities
+
+**Show-and-tell**:
+An informal sharing at the start of a session, where students say what they did in the previous exercise or homework and what was difficult. Nothing is prepared or graded.
+_Avoid_: Presentation, demo
